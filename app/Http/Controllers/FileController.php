@@ -46,7 +46,7 @@ class FileController extends Controller
         // Save the file info to the database
         $newFile = new File;
         $newFile->name = $filename;
-        $newFile->path = '/storage/app/public' . $filename;
+        $newFile->path = '/storage/app/public/' . $filename;
         $newFile->save();
 
         return response()->json($newFile);

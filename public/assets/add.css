@@ -1,0 +1,554 @@
+.tires-chars__text {
+    display: flex;
+    gap: 16px;
+    text-transform: uppercase;
+    align-items: center;
+}
+
+.tires-chars__text * {
+    text-transform: uppercase;
+}
+
+.tires-chars__title {
+    margin-bottom: 22px;
+    text-transform: uppercase;
+    font-size: 16px;
+}
+
+.tires-chars__box {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    place-items: center;
+    border: 1px solid #000000;
+    border-radius: 4px;
+}
+
+.tires-line {
+    border-bottom: 1px solid #222;
+    width: 215px;
+    margin: 30px 0;
+}
+
+
+.tires-photo img {
+    height: 260px;
+    cursor: pointer;
+}
+
+.components__item .item__image {
+    cursor: pointer;
+    object-fit: cover;
+}
+
+.condition__value img {
+    width: 43px;
+    height: 43px;
+    object-fit: contain;
+}
+
+.condition__side {
+    height: fit-content;
+    width: 100%;
+    position: relative;
+}
+
+.condition__side > img {
+    width: 100%;
+}
+
+.condition__side .Hood {
+    top: 44.44%;
+    left: 22.86%;
+}
+
+.condition__side .Back-cover {
+    top: 32.54%;
+    left: 21.43%;
+}
+
+.condition__side .Front-left-door {
+    top: 51.59%;
+    left: 58.33%;
+}
+
+.condition__side .Front-right-door {
+    top: 44.44%;
+    right: 19.05%;
+}
+
+.condition__side .Left-rear-door {
+    top: 46.83%;
+    left: 70.95%;
+}
+
+.condition__side .Right-rear-door {
+    top: 44.44%;
+    left: 62.86%;
+}
+
+.condition__side .Left-front-wing {
+    top: 51.59%;
+    left: 46.43%;
+}
+
+.condition__side .Right-front-wing {
+    top: 42.46%;
+    right: 8.33%;
+}
+
+.condition__side .Left-rear-wing {
+    top: 37.30%;
+    right: 10.48%;
+}
+
+.condition__side .Right-rear-wing {
+    top: 36.90%;
+    left: 44.05%;
+}
+
+.condition__side .Left-front-rack {
+    top: 28.17%;
+    left: 55.95%;
+}
+
+.condition__side .Right-front-rack {
+    top: 24.21%;
+    right: 22.14%;
+}
+
+.condition__side .Left-rear-rack {
+    top: 28.57%;
+    right: 19.05%;
+}
+
+.condition__side .Right-rear-rack {
+    top: 25.79%;
+    left: 53.10%;
+}
+
+.condition__side .Left-middle-rack {
+    top: 28.97%;
+    left: 64.52%;
+}
+
+.condition__side .Right-middle-rack {
+    top: 24.60%;
+    right: 30%;
+}
+
+.condition__side .Roof {
+    top: 19.84%;
+    left: 50.48%;
+}
+
+.condition__side .Mirrors {
+    top: 32.54%;
+    left: 28.10%;
+}
+
+.condition__side .Front-bumper {
+    top: 65.87%;
+    left: 18.57%;
+}
+
+.condition__side .Rear-bumper {
+    top: 49.60%;
+    left: 21.43%;
+}
+
+
+@media screen and (max-width: 560px) {
+    .condition__value img {
+        width: 20px;
+        height: 20px;
+    }
+
+    /*.condition__side .Hood {*/
+    /*    top: 55px;*/
+    /*    left: 52px;*/
+    /*}*/
+    /*.condition__side .Back-cover {*/
+    /*    top: 41px;*/
+    /*    left: 45px;*/
+    /*}*/
+    /*.condition__side .Front-left-door {*/
+    /*    top: 62px;*/
+    /*    left: 122px;*/
+    /*}*/
+    /*.condition__side .Front-right-door {*/
+    /*    top: 56px;*/
+    /*    right: 37px;*/
+    /*}*/
+    /*.condition__side .Left-rear-door {*/
+    /*    top: 59px;*/
+    /*    left: 149px;*/
+    /*}*/
+    /*.condition__side .Right-rear-door {*/
+    /*    top: 56px;*/
+    /*    left: 132px;*/
+    /*}*/
+    /*.condition__side .Left-front-wing {*/
+    /*    top: 62px;*/
+    /*    left: 89px;*/
+    /*}*/
+    /*.condition__side .Right-front-wing {*/
+    /*    top: 53px;*/
+    /*    right: 16px;*/
+    /*}*/
+    /*.condition__side .Left-rear-wing {*/
+    /*    top: 47px;*/
+    /*    right: 22px;*/
+    /*}*/
+    /*.condition__side .Right-rear-wing {*/
+    /*    top: 46px;*/
+    /*    left: 92px;*/
+    /*}*/
+    /*.condition__side .Left-front-rack {*/
+    /*    top: 35px;*/
+    /*    left: 117px;*/
+    /*}*/
+    /*.condition__side .Right-front-rack {*/
+    /*    top: 30px;*/
+    /*    right: 53px;*/
+    /*}*/
+    /*.condition__side .Left-rear-rack {*/
+    /*    top: 36px;*/
+    /*    right: 40px;*/
+    /*}*/
+    /*.condition__side .Right-rear-rack {*/
+    /*    top: 32px;*/
+    /*    left: 111px;*/
+    /*}*/
+    /*.condition__side .Left-middle-rack {*/
+    /*    top: 36px;*/
+    /*    left: 135px;*/
+    /*}*/
+    /*.condition__side .Right-middle-rack {*/
+    /*    top: 32px;*/
+    /*    right: 73px;*/
+    /*}*/
+    /*.condition__side .Roof {*/
+    /*    top: 25px;*/
+    /*    left: 106px;*/
+    /*}*/
+    /*.condition__side .Mirrors {*/
+    /*    top: 41px;*/
+    /*    left: 59px;*/
+    /*}*/
+    /*.condition__side .Front-bumper {*/
+    /*    top: 83px;*/
+    /*    left: 39px;*/
+    /*}*/
+    /*.condition__side .Rear-bumper {*/
+    /*    top: 62px;*/
+    /*    left: 45px;*/
+    /*}*/
+}
+
+.condition__side-front .Back-cover,
+.condition__side-front .Front-right-door,
+.condition__side-front .Right-rear-door,
+.condition__side-front .Right-front-wing,
+.condition__side-front .Right-rear-wing,
+.condition__side-front .Right-front-rack,
+.condition__side-front .Right-rear-rack,
+.condition__side-front .Right-middle-rack,
+.condition__side-front .Rear-bumper {
+    display: none;
+}
+
+.condition__side-back .Hood,
+.condition__side-back .Front-left-door,
+.condition__side-back .Left-rear-door,
+.condition__side-back .Left-front-wing,
+.condition__side-back .Left-rear-wing,
+.condition__side-back .Left-front-rack,
+.condition__side-back .Left-rear-rack,
+.condition__side-back .Left-middle-rack,
+.condition__side-back .Roof,
+.condition__side-back .Mirrors,
+.condition__side-back .Front-bumper {
+    display: none;
+}
+
+.tires-logo {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    place-items: center;
+}
+
+img {
+    max-height: 470px;
+    object-fit: cover;
+}
+
+.report__slider.slider-for .slide__image {
+    max-height: 470px;
+
+}
+
+.item__icon {
+    height: 20px;
+}
+
+.report__slider.slider-for .slide {
+    justify-content: center;
+}
+
+.tires-logo {
+    width: 215px;
+    height: 215px;
+    border-radius: 6px;
+    border: 1px solid #222;
+    place-items: center;
+    padding: 23px;
+}
+
+/*.recommendation > .flex{*/
+/*    justify-content: space-between;*/
+/*}*/
+.recommendation__text {
+    padding: 30px;
+    background: #4E2EE1;
+    border-radius: 6px;
+    color: white;
+}
+
+@media (max-width: 560px) {
+    .recommendation__text {
+        padding: 0;
+    }
+}
+
+.header__logo, .header__logo img {
+    max-height: 87px;
+}
+
+.overview__name {
+    width: 200px;
+}
+
+@media (max-width: 568px) {
+    .carousel__button {
+        display: none;
+    }
+}
+
+.overview__equipment .equipment__item .item__icon img {
+    object-fit: contain;
+}
+
+
+/* index.c9ba42bb.css | http://trackback.ffox.site/assets/index.c9ba42bb.css */
+
+@media screen and (max-width: 1440px) {
+    .report__slider.slider-nav .slide .slide__image-wrapper {
+        /* height: 200px; */
+        height: 180px;
+    }
+}
+
+@media screen and (max-width: 1440px) {
+    .report__slider.slider-nav .slide {
+        /* min-height: 240px; */
+        min-height: 190px;
+    }
+}
+
+@media screen and (max-width: 1440px) {
+    .report__slider.slider-nav .slide.slide:not(.slick-center) .slide__image-wrapper {
+        /* height: 153px; */
+        height: 143px;
+    }
+}
+
+.footer .header__container img {
+    height: 51px;
+    object-fit: contain;
+}
+
+.report {
+    margin-top: 80px;
+    padding-bottom: 50px;
+}
+
+@media (max-width: 568px) {
+    .report {
+        margin-top: 40px;
+        padding-bottom: 30px;
+
+    }
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.recommendation__cost img {
+    object-fit: contain;
+}
+
+
+@media screen and (max-width: 1024px) {
+    .tires-flex {
+        gap: 20px;
+        justify-content: start !important;
+    }
+}
+
+.footer__btn {
+    transition: .3s;
+    text-decoration: none !important;
+    border-color: #4E2FE2;
+
+    background: #4E2FE2;
+    color: white
+}
+
+.footer__btn:hover {
+    background: white;
+    color: #222;
+    border-color: #222;
+}
+
+.footer .header__contacts {
+    margin-right: 0 !important;
+}
+
+
+/* index.c9ba42bb.css | http://trackback.ffox.site/assets/index.c9ba42bb.css */
+
+@media screen and (max-width: 560px) {
+    .overview__equipment .equipment__grid {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 560px) {
+    .technical__title {
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 560px) {
+    body {
+        font-size: 16px;
+    }
+}
+
+/* index.c9ba42bb.css | http://trackback.ffox.site/assets/index.c9ba42bb.css */
+
+@media screen and (max-width: 560px) {
+    .header__date .date__title {
+        /* font-size: 10px; */
+        font-size: 14px;
+    }
+
+    .tires-line {
+        margin: 20px 0;
+    }
+}
+
+
+.overview__content .overview__name {
+    max-width: 240px;
+    width: 240px;
+}
+
+@media (max-width: 470px) {
+    .overview__content .overview__name {
+        max-width: 42vw;
+        width: 174px;
+    }
+}
+
+* {
+    outline: none !important;
+}
+
+
+.footer-head {
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer-head .footer__date {
+    display: none;
+}
+
+
+@media screen and (max-width: 568px) {
+
+    .footer .header__logo img {
+        height: 35px;
+    }
+
+    .footer .header__contacts {
+        font-size: 13px;
+    }
+
+    .footer-head .footer__date {
+        display: block;
+    }
+
+    .footer__container .footer__date {
+        display: none;
+    }
+
+}
+
+.overview__logo img {
+    max-width: 120px;
+    max-height: 120px;
+    object-fit: contain;
+}
+
+.components__item img {
+    border-radius: 6px;
+}
+
+.tires-photo {
+    max-width: 100%;
+
+}
+
+.tires-photo img {
+    max-width: 100%;
+    border-radius: 6px;
+
+}
+
+@media screen and (max-width: 560px) {
+    .tires-photo img {
+        width: 90vw;
+        min-height: 213px;
+        height: auto;
+    }
+}
+
+.slide__image img {
+    cursor: pointer;
+}
+.tyres-photo{
+    margin-top: 15px;
+    position: relative;
+}
+
+.tyres-photo img{
+    width: 100%;
+    max-width: 100%;
+    max-height: 348px;
+}
+.cost__value.accent{
+    margin-top: 12px;
+}
+
+.tyres-logo img{
+    max-width: 100%;
+}

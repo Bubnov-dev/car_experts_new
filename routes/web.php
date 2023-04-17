@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/pdf/{lang}/{id}', [\App\Http\Controllers\ReportController::class, 'getReportPdf']);
+
+Route::get('/translate', [\App\Http\Controllers\ReportController::class, 'translate2']);
+Route::get('/{lang}/{id}', [\App\Http\Controllers\ReportController::class, 'getReport']);

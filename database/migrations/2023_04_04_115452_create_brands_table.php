@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
-            $table->foreignIdFor(\App\Models\File::class)->nullable()->constrained()->onDelete('cascade');
+            $table->string('image')->nullable();
         });
     }
 

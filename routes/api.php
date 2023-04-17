@@ -21,3 +21,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/brands', [\App\Http\Controllers\BrandController::class, 'all']);
 Route::get('/tyreBrands', [\App\Http\Controllers\TyreBrandController::class, 'all']);
 Route::post('/uploadFile', [\App\Http\Controllers\FileController::class, 'storeFile']);
+Route::controller(\App\Http\Controllers\ReportController::class)->prefix('reports')
+    ->group(function () {
+        Route::post('', 'create');
+        Route::put('', 'update');
+        Route::put('/save', 'save');
+        Route::get('', 'get');
+    });
