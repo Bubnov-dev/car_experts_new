@@ -65,7 +65,7 @@ class ReportController extends Controller
     {
         $data = $request->all();
 
-        $report = Report::where('status', 'new')->where('pseudo_id', $request->input('id'))->where('master_lang',  $data['master']['lang'])->update([
+        $report = Report::where('status', 'new')->where('pseudo_id', $request->input('id'))->where('master_lang', $data['master']['lang'])->update([
             'vin' => $data['vin'],
             'brand' => $data['brand'],
             'model' => $data['model'],
@@ -106,7 +106,8 @@ class ReportController extends Controller
         return response()->json($report);
     }
 
-    public function save(Request $request){
+    public function save(Request $request)
+    {
 
 
         $data = $request->all();
@@ -149,9 +150,9 @@ class ReportController extends Controller
         ]);
 
 //        return;
-        $fieldsToTranslate = ['master_name', 'master_lastname', 'body', 'body_color', 'drive', 'specification', 'photo_external_damage', 'photo_internal_damage', 'comment',  'gearbox', 'functions_problems'];
+        $fieldsToTranslate = ['master_name', 'master_lastname', 'body_color', 'drive', 'photo_external_damage', 'photo_internal_damage', 'comment', 'gearbox', 'functions_problems'];
 
-        $report = Report::where('status', 'new')->where('pseudo_id', $request->input('id'))->where('master_lang',  $data['master']['lang'])->first();
+        $report = Report::where('status', 'new')->where('pseudo_id', $request->input('id'))->where('master_lang', $data['master']['lang'])->first();
         if ($report->master_lang == 'en') {
             $targetLang = 'ru';
             $sourceLang = 'en'; // Set the source language as English
@@ -159,17 +160,28 @@ class ReportController extends Controller
             $targetLang = 'en';
             $sourceLang = 'ru'; // Set the source language as Russian
         }
-        $reportToUpdate = Report::where('status', 'new')->where('pseudo_id', $request->input('id'))->where('master_lang',$targetLang)->first();
-
+        $reportToUpdate = Report::where('status', 'new')->where('pseudo_id', $request->input('id'))->where('master_lang', $targetLang)->first();
 
 
         $attributesToCopy = $report->attributesToArray();
         unset($attributesToCopy['id']); // Exclude the id field
         $reportToUpdate->fill($attributesToCopy);
         foreach ($fieldsToTranslate as $field) {
-            if ($report->$field){
-                $reportToUpdate->setAttribute($field, $this->translate($report->$field,
-                    $sourceLang,  $targetLang));
+            if ($report->$field) {
+                if ($field == 'gearbox') {
+                    $trarr = [
+                        'ручная' => 'manual',
+                        'manual' => 'ручная',
+                        'automatic' => 'автоматическая',
+                        'автоматическая' => 'automatic'
+                    ];
+                    $reportToUpdate->setAttribute($field, $trarr[$report->$field]);
+
+                } else {
+
+                    $reportToUpdate->setAttribute($field, $this->translate($report->$field,
+                        $sourceLang, $targetLang));
+                }
             }
         }
 
@@ -181,7 +193,8 @@ class ReportController extends Controller
         return $report;
     }
 
-    public function saveCheck(Request $request){
+    public function saveCheck(Request $request)
+    {
         $this->save($request);
         return response()->json(Report::where('pseudo_id', $request->id)->update(['status' => 'checking']));
     }
@@ -246,10 +259,9 @@ class ReportController extends Controller
         $report->photo_tech_info = Service::getFullPath($report->photo_tech_info);
         $report->video = Service::getFullPath($report->video);
 
-        if ($request->lang == 'ru'){
+        if ($request->lang == 'ru') {
             return view('car', ['report' => $report]);
-        }
-        else {
+        } else {
             return view('car_en', ['report' => $report]);
 
         }
@@ -304,7 +316,7 @@ class ReportController extends Controller
 
         if ($request->lang == 'ru') {
             $pdf->loadView('car_pdf', ['report' => $report]);
-        }else{
+        } else {
             $pdf->loadView('car_pdf_en', ['report' => $report]);
         }
 
@@ -312,8 +324,8 @@ class ReportController extends Controller
         $paper_size = [0.0, 0.0, 1600, 2265];
         $pdf->set_paper($paper_size);
         Log::info('before return pdf');
-        return $pdf->download('Inspection report by CAR Experts - '.$report->brand . ' ' . $report->model
-            .' - '.date_create($report->updated_at)->format('d-m-Y').'.pdf');
+        return $pdf->download('Inspection report by CAR Experts - ' . $report->brand . ' ' . $report->model
+            . ' - ' . date_create($report->updated_at)->format('d-m-Y') . '.pdf');
     }
 
     public function quickRandom($length = 10)
@@ -323,9 +335,11 @@ class ReportController extends Controller
         return substr(str_shuffle(str_repeat($pool, 5)), 0, $length);
     }
 
-    public function translate($text, $from, $to){
+    public function translate($text, $from, $to)
+    {
 
-        if(is_string($text)){
+
+        if (is_string($text)) {
             $json = false;
         } else {
             $json = true;
@@ -343,13 +357,15 @@ class ReportController extends Controller
         ]);
         $ret = $result['text'];
 
-        if ($json){
+        if ($json) {
             $ret = json_decode(html_entity_decode($ret));
         }
         return $ret;
     }
-    public function translate2(Request $request){
-        $text= $request->text;
+
+    public function translate2(Request $request)
+    {
+        $text = $request->text;
         $to = $request->to;
         $translate = new TranslateClient([
             'key' => 'AIzaSyBsQHEMJKyYdOyhdtQ3ONoAUQQ8sMeENjo'

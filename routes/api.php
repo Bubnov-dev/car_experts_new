@@ -26,5 +26,6 @@ Route::controller(\App\Http\Controllers\ReportController::class)->prefix('report
         Route::post('', 'create');
         Route::put('', 'update');
         Route::put('/save', 'save');
+        Route::post('/saveCheck', 'saveCheck');
         Route::get('', 'get');
     });
