@@ -65,7 +65,7 @@ class ReportController extends Controller
     {
         $data = $request->all();
 
-        $report = Report::where('pseudo_id', $request->input('id'))->where('master_lang',  $data['master']['lang'])->update([
+        $report = Report::where('status', 'new')->where('pseudo_id', $request->input('id'))->where('master_lang',  $data['master']['lang'])->update([
             'vin' => $data['vin'],
             'brand' => $data['brand'],
             'model' => $data['model'],
@@ -111,7 +111,7 @@ class ReportController extends Controller
 
         $data = $request->all();
 
-        $report = Report::where('pseudo_id', $request->input('id'))->where('master_lang', $data['master']['lang'])->update([
+        $report = Report::where('status', 'new')->where('pseudo_id', $request->input('id'))->where('master_lang', $data['master']['lang'])->update([
             'vin' => $data['vin'],
             'brand' => $data['brand'],
             'model' => $data['model'],
@@ -149,9 +149,9 @@ class ReportController extends Controller
         ]);
 
 //        return;
-        $fieldsToTranslate = ['master_name', 'master_lastname', 'body', 'body_color', 'drive', 'specification', 'photo_external_damage', 'photo_internal_damage', 'photo_external', 'photo_internal', 'comment',  'gearbox', 'functions_problems'];
+        $fieldsToTranslate = ['master_name', 'master_lastname', 'body', 'body_color', 'drive', 'specification', 'photo_external_damage', 'photo_internal_damage', 'comment',  'gearbox', 'functions_problems'];
 
-        $report = Report::where('pseudo_id', $request->input('id'))->where('master_lang',  $data['master']['lang'])->first();
+        $report = Report::where('status', 'new')->where('pseudo_id', $request->input('id'))->where('master_lang',  $data['master']['lang'])->first();
         if ($report->master_lang == 'en') {
             $targetLang = 'ru';
             $sourceLang = 'en'; // Set the source language as English
@@ -159,7 +159,7 @@ class ReportController extends Controller
             $targetLang = 'en';
             $sourceLang = 'ru'; // Set the source language as Russian
         }
-        $reportToUpdate = Report::where('pseudo_id', $request->input('id'))->where('master_lang',$targetLang)->first();
+        $reportToUpdate = Report::where('status', 'new')->where('pseudo_id', $request->input('id'))->where('master_lang',$targetLang)->first();
 
 
 
@@ -181,9 +181,14 @@ class ReportController extends Controller
         return $report;
     }
 
+    public function saveCheck(Request $request){
+        $this->save($request);
+        return response()->json(Report::where('pseudo_id', $request->id)->update(['status' => 'checking']));
+    }
+
     public function get(Request $request)
     {
-        $report = Report::where('pseudo_id', $request->input('id'))->where('master_lang',
+        $report = Report::where('status', 'new')->where('pseudo_id', $request->input('id'))->where('master_lang',
             $request->input('lang'))
             ->firstOrFail();
 

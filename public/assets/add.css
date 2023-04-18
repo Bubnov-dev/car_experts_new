@@ -552,3 +552,82 @@ body {
 .tyres-logo img{
     max-width: 100%;
 }
+
+.coupe-mode .condition__side .Right-rear-door {
+    display: none;
+}
+
+.coupe-mode .condition__side .Front-right-door {
+    right: 27.05%;
+}
+
+.coupe-mode .condition__side .Right-front-wing {
+    top: 43.46%;
+    right: 15.33%;
+}
+
+.coupe-mode .condition__side .Rear-bumper {
+    top: 52.6%;
+    left: 11.43%;
+}
+
+.coupe-mode .condition__side .Back-cover {
+    top: 35.54%;
+    left: 13.43%;
+}
+
+.coupe-mode .condition__side .Right-rear-rack {
+    left: 41.1%;
+}
+
+.coupe-mode .condition__side .Right-middle-rack {
+    right: 38%;
+}
+
+.coupe-mode .condition__side .Right-front-rack {
+    top: 27.21%;
+    right: 27.14%;
+}
+
+.coupe-mode .condition__side .Front-left-door {
+    top: 43.59%;
+    left: 65.33%;
+}
+
+.coupe-mode .condition__side .Left-rear-door {
+    display: none;
+}
+
+.coupe-mode .condition__side .Left-middle-rack {
+    top: 24.97%;
+    left: 68.52%;
+}
+
+.coupe-mode .condition__side .Left-rear-rack {
+    top: 22.57%;
+    right: 18.05%;
+}
+
+.coupe-mode .condition__side .Roof {
+    top: 13.84%;
+    left: 54.48%;
+}
+
+.coupe-mode .condition__side .Hood {
+    top: 40.44%;
+    left: 27.86%;
+}
+
+.crossover-mode .condition__side .Rear-bumper {
+    top: 57.6%;
+}
+
+.crossover-mode .condition__side .Right-rear-rack {
+    top: 22.79%;
+    left: 45.1%;
+}
+
+.crossover-mode .condition__side .Left-rear-rack {
+    top: 26%;
+    right: 14.95%;
+}
