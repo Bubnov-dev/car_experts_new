@@ -297,11 +297,11 @@
 
             @endphp
             <div class="condition__content
-                @if($report->body == 'coupe')
+                @if($report->body == 'купе')
                     coupe-mode
-@elseif($report->body == 'crossover')
-                    crossover-mode
-@endif">
+                @elseif($report->body == 'кроссовер')
+                                    crossover-mode
+                @endif">
                 <div class="condition__side condition__side-front">
                     @foreach($report->colored as $part => $value)
                         <div class="condition__value {{ $translate[$part] }}">
@@ -323,9 +323,9 @@
                     {{--                            <img src="/assets/paint-1000.png" alt="">--}}
                     {{--                    </div>--}}
                     {{--                @endforeach--}}
-                    @if($report->body == 'coupe')
+                    @if($report->body == 'купе')
                         <img src="/assets/car-front-coupe.png" alt="car-front">
-                    @elseif($report->body == 'crossover')
+                    @elseif($report->body == 'кроссовер')
                         <img src="/assets/car-front-crossover.png" alt="car-front">
                     @else
                         <img src="/assets/car-front.png" alt="car-front">
@@ -354,9 +354,9 @@
                         </div>
                     @endforeach
 
-                    @if($report->body == 'coupe')
+                    @if($report->body == 'купе')
                         <img src="/assets/car-back-coupe.png" alt="car-front">
-                    @elseif($report->body == 'crossover')
+                    @elseif($report->body == 'кроссовер')
                         <img src="/assets/car-back-crossover.png" alt="car-front">
                     @else
                         <img src="/assets/car-back.png" alt="car-front">
@@ -424,7 +424,7 @@
                                 {{--                                        <img src="/assets/alert.png" alt="">--}}
                                 {{--                                    @endif--}}
                                 {{--                                </div>--}}
-                                {{ $report->tyres_year }}
+                                {{ $report->tyre_year }}
                             </div>
                         </div>
                     </div>
@@ -605,7 +605,7 @@
 {{--                            <img src="/assets/alert.png" alt="">--}}
 {{--                        @endif--}}
 {{--                    </div>--}}
-{{--                    {{ $report->tyres_year }}--}}
+{{--                    {{ $report->tyre_year }}--}}
 
 {{--                </div>--}}
 {{--            </div>--}}

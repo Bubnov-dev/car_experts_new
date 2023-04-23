@@ -1236,6 +1236,91 @@
         .tires-components table{
             width: 100%;
         }
+
+        /* Inline таблица стилей #6 | http://127.0.0.1:8000/EN/I9qHYeRDIC */
+
+        .coupe-mode .condition__side .Hood {
+            /* top: 128.766px; */
+            /* left: 133.089px; */
+            top: 106.8px;
+            left: 111.1px;
+        }
+
+        .coupe-mode .condition__side .Roof {
+            /* top: 44.101px; */
+            /* left: 258.738px; */
+            top: 40.1px;
+            left: 236.7px;
+        }
+
+        .coupe-mode .condition__side .Front-left-door {
+            /* top: 143.662px; */
+            /* left: 292.526px; */
+            top: 112.7px;
+            left: 273.5px;
+        }
+
+        .coupe-mode .condition__side .Left-middle-rack {
+            /* top: 78.883px; */
+            /* left: 305.458px; */
+            top: 60.9px;
+            left: 294.5px;
+        }
+
+        .coupe-mode .condition__side .Back-cover {
+            /* top: 116.934px; */
+            top: 92.9px;
+        }
+
+        .coupe-mode .condition__side .Rear-bumper {
+            /* top: 172.582px; */
+            /* left: 51.314px; */
+            top: 131.6px;
+            left: 54.3px;
+        }
+
+        .coupe-mode .condition__side .Right-rear-rack {
+            /* left: 191.7px; */
+            left: 171.7px;
+        }
+
+        .coupe-mode .condition__side .Right-front-wing {
+            /* top: 143.237px; */
+            top: 110.2px;
+        }
+
+        .coupe-mode .condition__side .Right-front-rack {
+            /* top: 85.253px; */
+            top: 65.3px;
+        }
+
+        .coupe-mode .condition__side .Right-middle-rack {
+            /* right: 175.244px; */
+            right: 169.2px;
+        }
+
+        /* Inline таблица стилей #6 | http://127.0.0.1:8000/EN/I9qHYeRDIC */
+
+        .crossover-mode .condition__side .Left-rear-rack {
+            /* top: 87.545px; */
+            /* right: 57.47px; */
+            top: 70.545px;
+            right: 66.47px;
+        }
+
+        .crossover-mode .condition__side .Rear-bumper {
+            /* top: 196.017px; */
+            top: 138.017px;
+        }
+
+        .crossover-mode .condition__side .Right-rear-rack {
+            /* top: 76.086px; */
+            /* left: 162.446px; */
+            top: 55.086px;
+            left: 194.446px;
+        }
+
+
     </style>
 </head>
 <body>
@@ -1546,7 +1631,13 @@
 <section class="condition">
     <div class="container">
         <div class="h2">Состояние кузова</div>
-        <table class="condition__content container">
+        <table class="condition__content container
+                @if($report->body == 'купе')
+                    coupe-mode
+                @elseif($report->body == 'кроссовер')
+                                    crossover-mode
+                @endif
+                ">
             <tr>
                 @php
                     $translate = [
@@ -1593,7 +1684,13 @@
                         @endforeach
                         {{--                        <div class="image-color bonner">--}}
 
-                        <img src="{{url('/assets/car-front.png') }}" alt="car-front">
+                            @if($report->body == 'купе')
+                                <img src="{{url('/assets/car-front-coupe.png') }}" alt="car-front">
+                            @elseif($report->body == 'кроссовер')
+                                <img src="{{url('/assets/car-front-crossover.png') }}" alt="car-front">
+                            @else
+                                <img src="{{url('/assets/car-front.png') }}" alt="car-front">
+                            @endif
                     </div>
                     <div class="condition__side condition__side-back">
                         @foreach($report->colored as $part => $value)
@@ -1612,7 +1709,13 @@
                             </div>
                         @endforeach
 
-                        <img src="{{url('/assets/car-back.png') }}" alt="car-back">
+                        @if($report->body == 'купе')
+                            <img src="{{url('/assets/car-back-coupe.png') }}" alt="car-front">
+                        @elseif($report->body == 'кроссовер')
+                            <img src="{{url('/assets/car-back-crossover.png') }}" alt="car-front">
+                        @else
+                            <img src="{{url('/assets/car-back.png') }}" alt="car-front">
+                        @endif
                     </div>
                 </td>
 
@@ -1926,7 +2029,7 @@
                                 </div>
                                 <div class="tires-chars__text-text">
 
-                                    {{ $report->tyres_year }}
+                                    {{ $report->tyre_year }}
                                 </div>
 
                             </div>

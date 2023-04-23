@@ -420,7 +420,7 @@
                                 Year of Manufacture
                             </div>
                             <div class="tyres-chars__text">
-                                {{ $report->tyres_year }}
+                                {{ $report->tyre_year }}
                             </div>
                         </div>
                     </div>

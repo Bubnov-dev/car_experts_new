@@ -150,7 +150,8 @@ class ReportController extends Controller
         ]);
 
 //        return;
-        $fieldsToTranslate = ['master_name', 'master_lastname', 'body_color', 'drive', 'photo_external_damage', 'photo_internal_damage', 'comment', 'gearbox', 'functions_problems'];
+        $fieldsToTranslate = ['master_name', 'master_lastname', 'body', 'body_color', 'drive',
+        'photo_external_damage', 'photo_internal_damage', 'comment', 'gearbox', 'functions_problems'];
 
         $report = Report::where('status', 'new')->where('pseudo_id', $request->input('id'))->where('master_lang', $data['master']['lang'])->first();
         if ($report->master_lang == 'en') {
