@@ -21,6 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/brands', [\App\Http\Controllers\BrandController::class, 'all']);
 Route::get('/tyreBrands', [\App\Http\Controllers\TyreBrandController::class, 'all']);
 Route::post('/uploadFile', [\App\Http\Controllers\FileController::class, 'storeFile']);
+Route::post('/uploadFiles', [\App\Http\Controllers\FileController::class, 'storeFiles']);
 Route::controller(\App\Http\Controllers\ReportController::class)->prefix('reports')
     ->group(function () {
         Route::post('', 'create');

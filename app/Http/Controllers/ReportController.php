@@ -32,9 +32,8 @@ class ReportController extends Controller
         }
         $report = Report::create([
             'master_name' => $data['master']['name'],
-            'master_lastname' => $data['master']['lastname'],
             'master_lang' => 'en',
-
+            'client' => $data['client'],
             'colored' => [],
             'photo_external_damage' => [],
             'photo_internal_damage' => [],
@@ -45,7 +44,6 @@ class ReportController extends Controller
         ]);
         $report = Report::create([
             'master_name' => $data['master']['name'],
-            'master_lastname' => $data['master']['lastname'],
             'master_lang' => 'ru',
 
             'colored' => [],
@@ -80,6 +78,8 @@ class ReportController extends Controller
             'guarantee_check' => $data['guarantee_check'],
             'guarantee_year' => $data['guarantee']['year'],
             'guarantee_month' => $data['guarantee']['month'],
+            'guarantee_mileage' => $data['guarantee']['mileage'],
+
             'tyre_manufacturer' => $data['tyre']['manufacturer'],
             'tyre_year' => $data['tyre']['year'],
             'tyre_photo' => $data['tyre']['photo'],
@@ -127,6 +127,7 @@ class ReportController extends Controller
             'guarantee_check' => $data['guarantee_check'],
             'guarantee_year' => $data['guarantee']['year'],
             'guarantee_month' => $data['guarantee']['month'],
+            'guarantee_mileage' => $data['guarantee']['mileage'],
             'tyre_manufacturer' => $data['tyre']['manufacturer'],
             'tyre_year' => $data['tyre']['year'],
             'tyre_photo' => $data['tyre']['photo'],
@@ -150,8 +151,10 @@ class ReportController extends Controller
         ]);
 
 //        return;
-        $fieldsToTranslate = ['master_name', 'master_lastname', 'body', 'body_color', 'drive',
-        'photo_external_damage', 'photo_internal_damage', 'comment', 'gearbox', 'functions_problems'];
+        $fieldsToTranslate = ['master_name', 'client', 'body', 'body_color', 'drive',
+         'comment', 'gearbox', 'functions_problems'];
+
+        $descFieldsToTranslate = ['photo_internal_damage', 'photo_external_damage'];
 
         $report = Report::where('status', 'new')->where('pseudo_id', $request->input('id'))->where('master_lang', $data['master']['lang'])->first();
         if ($report->master_lang == 'en') {
@@ -171,10 +174,10 @@ class ReportController extends Controller
             if ($report->$field) {
                 if ($field == 'gearbox') {
                     $trarr = [
-                        'ручная' => 'manual',
-                        'manual' => 'ручная',
-                        'automatic' => 'автоматическая',
-                        'автоматическая' => 'automatic'
+                        'Ручная' => 'Manual',
+                        'Manual' => 'Ручная',
+                        'Automatic' => 'Автоматическая',
+                        'Автоматическая' => 'Automatic'
                     ];
                     $reportToUpdate->setAttribute($field, $trarr[$report->$field]);
 
@@ -185,6 +188,14 @@ class ReportController extends Controller
                 }
             }
         }
+        foreach ($descFieldsToTranslate as $field) {
+            foreach ($report->$field as $item){
+                $item['description'] = $this->translate($item['description'], $sourceLang,
+                    $targetLang);
+            }
+            $reportToUpdate->setAttribute($field, $report->$field);
+        }
+
 
         $reportToUpdate->master_lang = $targetLang;
 
@@ -259,9 +270,10 @@ class ReportController extends Controller
         $report->photo_vin = Service::getFullPath($report->photo_vin);
         $report->photo_tech_info = Service::getFullPath($report->photo_tech_info);
         $report->video = Service::getFullPath($report->video);
+        $report->computer_diag = Service::getFullPath($report->computer_diag);
 
         if ($request->lang == 'ru') {
-            return view('car', ['report' => $report]);
+            return view('car_pdf_en', ['report' => $report]);
         } else {
             return view('car_en', ['report' => $report]);
 

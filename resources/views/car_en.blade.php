@@ -29,11 +29,7 @@
         </div>
         <div class="header__date">
             <div class="date__title">
-                @if($report->updated_at && $report->updated_at != $report->created_at)
-                    Updated
-                @else
                     Created
-                @endif
             </div>
             <div class="date__date accent">
 
@@ -127,53 +123,55 @@
                             'door_closers' => '4A',
                         ];
                         $vocabulary = [
-                            'tire_pressure_sensor' => 'Tire pressure sensor',
-                            'adaptive_light' => 'Adaptive light',
-                            'automatic_high_beam' => 'Automatic high beam',
-                            'tow_hitch' => 'Tow hitch',
-                            'cruise_control' => 'Cruise control',
-                            'parking_assistance_system' => 'Parking assistance system',
-                            'camera' => 'Camera',
-                            'camera_360' => '360° camera',
-                            'head_up_display' => 'Head-up display',
-                            'hands_free_trunk_opening' => 'Hands-free trunk opening',
-                            'digital_instrument_panel' => 'Digital instrument panel',
-                            'keyless_entry' => 'Keyless entry',
-                            'electric_folding_mirrors' => 'Electric folding mirrors',
-                            'start_stop_system' => 'Start-stop system',
-                            'leather_interior' => 'Leather interior',
-                            'sunroof' => 'Sunroof',
-                            'panoramic_roof' => 'Panoramic roof',
-                            'heated_steering_wheel' => 'Heated steering wheel',
-                            'third_row_of_seats' => 'Third row of seats',
-                            'electric_seat_adjustment' => 'Electric seat adjustment',
-                            'seat_position_memory' => 'Seat position memory',
-                            'heated_seats' => 'Heated seats',
-                            'ventilated_seats' => 'Ventilated seats',
-                            'premium_audio_system' => 'Premium audio system',
-                            'rear_passenger_multimedia_system' => 'Rear passenger multimedia system',
-                            'navigation_system' => 'Navigation system',
-                            'android_auto_carplay' => 'Android Auto/CarPlay',
-                            'power_outlet_220v' => '220V power outlet',
-                            'seat_massage' => 'Seat massage',
-                            'door_closers' => 'Door closers',
-                        ];
+'tire_pressure_sensor' => 'Tire Pressure Sensor',
+'cruise_control' => 'Cruise Control',
+'parking_sensors' => 'Parking Sensors',
+'camera' => 'Camera',
+'start_stop' => 'Start-Stop',
+'leather' => 'Leather Interior',
+'third_seat_rows' => 'Third Row Seats',
+'seats_heating' => 'Heated Seats',
+'multimedia_lcd_screen' => 'Multimedia LCD Screen',
+'adaptive_cruise_control' => 'Adaptive Cruise Control',
+'camera_360' => '360 Camera',
+'keyless_entry' => 'Keyless Entry',
+'sunroof' => 'Sunroof',
+'panoramic_roof' => 'Panoramic Roof',
+'electric_seats' => 'Electric Seats',
+'seats_memory' => 'Seat Memory',
+'steering_wheel_heating' => 'Heated Steering Wheel',
+'seats_ventilation' => 'Seat Ventilation',
+'android_auto_carplay' => 'Android Auto / CarPlay',
+'electric_folding_mirrors' => 'Electric Folding Mirrors',
+'electric_trunk_lid' => 'Electric Trunk Lid',
+'virtual_dashboard' => 'Virtual Dashboard',
+'power_steering' => 'Power Steering',
+'adaptive_lights' => 'Adaptive Lights',
+'automatic_high_beam' => 'Automatic High Beam',
+'autopilot' => 'Autopilot',
+'self_parking' => 'Self-Parking',
+'premium_seats_ventilation' => 'Premium Seat Ventilation',
+'seats_massage' => 'Seat Massage',
+'multimedia_system_rear_passengers' => 'Rear Passenger Multimedia System',
+'premium_audiosystem' => 'Premium Audio System',
+'windshield_projection' => 'Windshield Projection',
+'door_closers' => 'Door Closers',
+];
                     @endphp
 
-                    @foreach($report->equipment as $item)
-                        @if($item['value'])
+                    @foreach($report->equipment as $key => $value)
+                        @if($value)
                             <div class="equipment__item">
                                 <div class="item__icon">
-                                    <img
-                                            src="/assets/icons/{{ isset($equipmentIco[$item['name']]) ? $equipmentIco[$item['name']] : 'no-icon'  }}.png"
-                                            alt="icon">
+                                    <img src="/assets/icons/{{ isset($equipmentIco[$key]) ? $equipmentIco[$key] : 'no-icon' }}.png" alt="icon">
                                 </div>
                                 <div class="item__name">
-                                    {{ $vocabulary[$item['name']] }}
+                                    {{ $vocabulary[$key] }}
                                 </div>
                             </div>
                         @endif
                     @endforeach
+
                 </div>
             </div>
         </div>
@@ -182,92 +180,91 @@
 <section class="technical">
     <div class="container">
         <div class="h2">Technical Specifications</div>
-        <table class="technical__table">
-            <tr>
-                <td>
-                    <div class="technical__title">
-                        Year of production
-                    </div>
-                    <div class="technical__value">
-                        {{ $report->year }}
-                    </div>
-                </td>
-                <td>
-                    <div class="technical__title">
-                        Mileage
-                    </div>
-                    <div class="technical__value">
-                        {{ number_format($report->mileage, 0, ' ', ' ') }} km
-                    </div>
-                </td>
-                <td>
-                    <div class="technical__title">
-                        Engine
-                    </div>
-                    <div class="technical__value">
-                        {{ $report->engine_volume }} L / {{ $report->engine_power }} hp
-                    </div>
-                </td>
-                <td>
-                    <div class="technical__title">
-                        Drive
-                    </div>
-                    <div class="technical__value">
-                        {{ $report->drive }}
-                    </div>
-                </td>
-                <td>
-                    <div class="technical__title">
-                        VIN
-                    </div>
-                    <div class="technical__value">
-                        {{ strtoupper($report->vin) }}
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div class="technical__title">
-                        Color
-                    </div>
-                    <div class="technical__value">
-                        {{ $report->body_color }}
-                    </div>
-                </td>
-                <td>
-                    <div class="technical__title">
-                        Gearbox
-                    </div>
-                    <div class="technical__value">
-                        {{ $report->gearbox }}
-                    </div>
-                </td>
-                <td>
-                    <div class="technical__title">
-                        Accident history
-                    </div>
-                    <div class="technical__value">
-                        {{ $report->crashes ? 'Yes': 'No' }}
-                    </div>
-                </td>
-                <td>
-                    <div class="technical__title">
-                        Specification
-                    </div>
-                    <div class="technical__value">
-                        {{ $report->specification }}
-                    </div>
-                </td>
-                <td>
-                    <div class="technical__title">
-                        Warranty
-                    </div>
-                    <div class="technical__value">
-                        {{ $report->guarantee_check ? 'Until ' .$report->guarantee_month . ' / ' .$report->guarantee_year : 'None' }}
-                    </div>
-                </td>
-            </tr>
-        </table>
+
+        <div class="technical__grid">
+            <div class="technical__item">
+                <div class="technical__title">
+                    Year of manufacture
+                </div>
+                <div class="technical__value">
+                    {{ $report->year }}
+                </div>
+            </div>
+            <div class="technical__item">
+                <div class="technical__title">
+                    Mileage
+                </div>
+                <div class="technical__value">
+                    {{ number_format($report->mileage, 0, ' ', ' ') }} km
+                </div>
+            </div>
+            <div class="technical__item">
+                <div class="technical__title">
+                    Engine
+                </div>
+                <div class="technical__value">
+                    {{ $report->engine_volume }} L / {{ $report->engine_power }} hp
+                </div>
+            </div>
+            <div class="technical__item">
+                <div class="technical__title">
+                    Drive
+                </div>
+                <div class="technical__value">
+                    {{ $report->drive }}
+                </div>
+            </div>
+            <div class="technical__item">
+                <div class="technical__title">
+                    Gearbox
+                </div>
+                <div class="technical__value">
+                    {{ $report->gearbox }}
+                </div>
+            </div>
+            <div class="technical__item">
+                <div class="technical__title">
+                    Accidents (base)
+                </div>
+                <div class="technical__value">
+                    {{ $report->crashes ? 'Yes': 'No' }}
+                </div>
+            </div>
+            <div class="technical__item">
+                <div class="technical__title">
+                    Specification
+                </div>
+                <div class="technical__value">
+                    {{ $report->specification }}
+                </div>
+            </div>
+            <div class="technical__item">
+                <div class="technical__title">
+                    Warranty
+                </div>
+                <div class="technical__value">
+                    {{ $report->guarantee_check ? 'Until ' . ($report->guarantee_mileage ? $report->guarantee_mileage . ' / ' : '') . ($report->guarantee_month ? $report->guarantee_month . ' / ' : ' ')  .$report->guarantee_year : 'No' }}
+                </div>
+            </div>
+            <div class="technical__item technical__item--vin">
+                <div class="technical__title">
+                    VIN
+                </div>
+                <div class="technical__value">
+                    {{ strtoupper($report->vin) }}
+                </div>
+            </div>
+            <div class="technical__item technical__item--color">
+                <div class="technical__title">
+                    Color
+                </div>
+                <div class="technical__value">
+                    {{ $report->body_color }}
+                </div>
+            </div>
+        </div>
+
+
     </div>
 </section>
 
@@ -311,13 +308,13 @@
                             @if($value == "5")
                                 <img src="/assets/1000.png" alt="">
                             @elseif($value == "4")
-                                <img src="/assets/800.png" alt="">
+                                <img src="/assets/1000.png" alt="">
                             @elseif($value == 3)
-                                <img src="/assets/500.png" alt="">
+                                <img src="/assets/800.png" alt="">
                             @elseif($value == 2)
-                                <img src="/assets/300.png" alt="">
+                                <img src="/assets/500.png" alt="">
                             @elseif($value == 1)
-                                <img src="/assets/100.png" alt="">
+                                <img src="/assets/300.png" alt="">
                             @endif
                         </div>
                     @endforeach
@@ -346,13 +343,13 @@
                             @if($value == "5")
                                 <img src="/assets/1000.png" alt="">
                             @elseif($value == "4")
-                                <img src="/assets/800.png" alt="">
+                                <img src="/assets/1000.png" alt="">
                             @elseif($value == 3)
-                                <img src="/assets/500.png" alt="">
+                                <img src="/assets/800.png" alt="">
                             @elseif($value == 2)
-                                <img src="/assets/300.png" alt="">
+                                <img src="/assets/500.png" alt="">
                             @elseif($value == 1)
-                                <img src="/assets/100.png" alt="">
+                                <img src="/assets/300.png" alt="">
                             @endif
                         </div>
                     @endforeach
@@ -524,6 +521,30 @@
                     </div>
                 </div>
             @endif
+        </div>
+    </div>
+</section>
+
+<section class="diagnostic">
+    <div class="container">
+        <div class="diagnostic-results">
+            <div class="diagnostic-results__img">
+                <svg width="131" height="126" viewBox="0 0 131 126" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M72.8819 0.877686H63.3275V125.5H72.8819V107.222H100.714L116.915 93.0982H123.146V98.4985H138.516L143.086 93.0982V51.142L138.516 46.5726H123.146V53.2191H116.915V44.9109H100.714L90.7445 34.5257H75.7898V30.3716H90.7445V19.9864H72.8819V0.877686Z" fill="white"/>
+                    <path d="M57.9272 19.9864H38.4031V30.3716H53.3577V33.6949H38.8185L31.3411 47.8188H15.971V62.7735H11.4016V47.8188H0.185547V71.9124H2.67799V93.5136H11.4016V78.559H15.971V93.5136L30.0949 93.929L41.7263 106.391H57.9272V100.576H45.0496L32.1719 86.8671H23.033V54.4653H35.0798L42.5571 40.3414H57.9272V19.9864Z" fill="white"/>
+                </svg>
+            </div>
+            <div class="diagnostic-results__text">Результаты компьютерной диагностики</div>
+
+            <a href="{{$report->computer_diag}}" target="_blank" class="diagnostic-results__btn">
+                <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4.89144 12.8676C4.89144 12.5355 4.66097 12.3374 4.25432 12.3374C4.08827 12.3374 3.97581 12.3538 3.91699 12.3695V13.4351C3.98664 13.4508 4.07226 13.456 4.19027 13.456C4.62372 13.456 4.89144 13.2371 4.89144 12.8676Z" fill="black"/>
+                    <path d="M7.4087 12.3486C7.2266 12.3486 7.10891 12.3644 7.03931 12.3807V14.7408C7.10895 14.7571 7.22141 14.7571 7.32308 14.7571C8.06183 14.7624 8.54364 14.3557 8.54364 13.4941C8.54887 12.7448 8.10983 12.3486 7.4087 12.3486Z" fill="black"/>
+                    <path d="M12.0858 0.000244141H4.05294C2.87942 0.000244141 1.92431 0.956025 1.92431 2.12888V10.0002H1.7164C1.24276 10.0002 0.858643 10.3839 0.858643 10.858V16.06C0.858643 16.534 1.24272 16.9177 1.7164 16.9177H1.92431V17.8716C1.92431 19.0457 2.87942 20.0002 4.05294 20.0002H15.0134C16.1861 20.0002 17.1414 19.0457 17.1414 17.8716V5.03816L12.0858 0.000244141ZM3.1089 11.7968C3.36028 11.7543 3.71362 11.7223 4.21145 11.7223C4.71454 11.7223 5.0731 11.8183 5.31403 12.0112C5.54417 12.193 5.69948 12.493 5.69948 12.8461C5.69948 13.1991 5.58179 13.4992 5.36767 13.7025C5.08916 13.9647 4.67728 14.0824 4.19547 14.0824C4.08824 14.0824 3.99213 14.0771 3.91697 14.0667V15.3566H3.1089V11.7968ZM15.0134 18.6966H4.05294C3.59855 18.6966 3.22854 18.3266 3.22854 17.8716V16.9177H13.4459C13.9196 16.9177 14.3037 16.534 14.3037 16.06V10.858C14.3037 10.3839 13.9196 10.0002 13.4459 10.0002H3.22854V2.12888C3.22854 1.67515 3.59859 1.30513 4.05294 1.30513L11.5981 1.29725V4.08619C11.5981 4.90081 12.259 5.5624 13.0743 5.5624L15.8063 5.55456L15.8371 17.8715C15.8371 18.3266 15.4677 18.6966 15.0134 18.6966ZM6.22053 15.3402V11.7968C6.52024 11.7491 6.91087 11.7223 7.32311 11.7223C8.00823 11.7223 8.4525 11.8452 8.80061 12.1073C9.17523 12.3858 9.41056 12.8298 9.41056 13.4671C9.41056 14.1575 9.15918 14.6341 8.81102 14.9283C8.43117 15.244 7.85296 15.3938 7.14657 15.3938C6.72354 15.3938 6.42383 15.367 6.22053 15.3402ZM12.0623 13.2423V13.9058H10.7668V15.3566H9.94795V11.7491H12.1531V12.4178H10.7668V13.2423H12.0623Z" fill="black"/>
+                </svg>
+
+                Посмотреть отчёт
+            </a>
         </div>
     </div>
 </section>

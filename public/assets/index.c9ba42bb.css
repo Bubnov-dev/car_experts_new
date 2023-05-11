@@ -348,7 +348,7 @@ h3, .h3 {
     .overview__logo-wrapper {
         position: relative;
         width: 90vw;
-        height: 90vw;
+        /*height: 90vw;*/
         border-radius: 6px;
         overflow: hidden;
     }
@@ -364,7 +364,7 @@ h3, .h3 {
         position: absolute;
         top: 10px;
         left: 10px;
-        padding: 20px;
+        padding: 5px;
         min-width: unset;
         width: 57px;
         height: 57px;
@@ -414,6 +414,7 @@ h3, .h3 {
 @media screen and (max-width: 560px) {
     .overview .recommendation__cost {
         display: flex;
+        align-items: center;
         flex-direction: row;
         justify-content: center;
         align-items: center;
@@ -1191,7 +1192,7 @@ h3, .h3 {
 @media screen and (max-width: 560px) {
     .report__slider.slider-for .slide__image {
         width: 80vw;
-        height: 75vw;
+        height: 60vw;
     }
 }
 
@@ -1384,7 +1385,7 @@ h3, .h3 {
 
 @media screen and (max-width: 1024px) {
     .components .flex {
-        gap: 20px;
+        gap: 25px;
         justify-content: center
     }
 }
@@ -1472,7 +1473,7 @@ h3, .h3 {
 
 @media screen and (max-width: 560px) {
     .components__item .item__desc {
-        margin-top: 20px
+        margin-top: 15px
     }
 }
 

@@ -16,6 +16,7 @@ class Report extends Model
         'photo_external' => 'json',
         'photo_internal' => 'json',
         'equipment' => 'json',
+        'functions_check' =>  'boolean'
 
     ];
 }

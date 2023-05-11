@@ -162,8 +162,8 @@
 
 @media screen and (max-width: 560px) {
     .condition__value img {
-        width: 20px;
-        height: 20px;
+        width: 24px;
+        height: 24px;
     }
 
     /*.condition__side .Hood {*/
@@ -346,6 +346,11 @@ img {
 
 /* index.c9ba42bb.css | http://trackback.ffox.site/assets/index.c9ba42bb.css */
 
+@media screen and (max-width: 768px) {
+    .report__slider.slider-for .slide__image {
+        padding: 0 15px;
+    }
+}
 @media screen and (max-width: 1440px) {
     .report__slider.slider-nav .slide .slide__image-wrapper {
         /* height: 200px; */
@@ -503,11 +508,11 @@ body {
 
 }
 
-.overview__logo img {
-    max-width: 120px;
-    max-height: 120px;
-    object-fit: contain;
-}
+/*.overview__logo img {*/
+/*    max-width: 120px;*/
+/*    max-height: 120px;*/
+/*    object-fit: contain;*/
+/*}*/
 
 .components__item img {
     border-radius: 6px;
@@ -535,21 +540,24 @@ body {
 .slide__image img {
     cursor: pointer;
 }
-.tyres-photo{
+
+.tyres-photo {
     margin-top: 15px;
     position: relative;
 }
 
-.tyres-photo img{
+.tyres-photo img {
     width: 100%;
     max-width: 100%;
     max-height: 348px;
-}
-.cost__value.accent{
-    margin-top: 12px;
+    border-radius: 6px;
 }
 
-.tyres-logo img{
+.cost__value.accent {
+    /*margin-top: 12px;*/
+}
+
+.tyres-logo img {
     max-width: 100%;
 }
 
@@ -630,4 +638,162 @@ body {
 .crossover-mode .condition__side .Left-rear-rack {
     top: 26%;
     right: 14.95%;
+}
+.diagnostic-results {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: #4E2EE1;
+    border-radius: 6px;
+    padding: 20px;
+    color: white;
+}
+.diagnostic-results__img svg{
+    width: 47px;
+    height: 41px;
+}
+.diagnostic-results__text {
+    /*font-family: Jost;*/
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 34px;
+    letter-spacing: -0.4000000059604645px;
+    text-align: left;
+
+}
+.diagnostic-results__btn {
+    margin-left: auto;
+    max-width: 100%;
+    width: 348px;
+    padding: 14px;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    background: #FFFFFF;
+    border: 1px solid #4E2FE2;
+    border-radius: 6px;
+    align-items: center;
+
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 22px;
+    letter-spacing: -0.4000000059604645px;
+
+    color: black;
+    text-decoration: none;
+
+}
+
+.diagnostic{
+    padding-top: 25px;
+}
+
+@media screen and (max-width: 568px) {
+
+    .diagnostic-results {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .diagnostic-results__text {
+        grid-column: 1/2;
+        grid-row: 1/2;
+    }
+
+    .diagnostic-results__img {
+        grid-column: 2/3;
+        grid-row: 1/2;
+        margin-right: -20px;
+    }
+
+    .diagnostic-results__img svg{
+        max-width: 100%;
+        height: auto;
+        width: auto;
+    }
+
+    .diagnostic-results__btn {
+        grid-column: 1/3;
+        grid-row: 2/3;
+
+        place-self: center;
+    }
+}
+
+@media(max-width: 768px) {
+
+    .report .container {
+        max-width: 100vw;
+    }
+    .components .h2{
+        font-size: 20px;
+    }
+}
+
+.technical__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    /*font-family: sans-serif;*/
+    border-collapse: collapse;
+}
+
+.technical__item {
+    padding: 1rem;
+    background-color: white;
+}
+
+.technical__title {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+
+@media (max-width: 767px) {
+    .technical__title {
+        font-weight: normal;
+    }
+    .technical__grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0 9px;
+    }
+
+    .technical__item--vin,
+    .technical__item--color {
+        grid-column: 1 / -1;
+    }
+
+
+    .technical__item {
+        border-right: none;
+        border-bottom: 1px rgba(0, 0, 0, .1) solid;
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+@media (min-width: 767px) {
+
+    .technical__item:nth-child(5n-4) {
+        padding-left: 0;
+    }
+
+    .technical__item:nth-child(5n) {
+        padding-right: 0;
+    }
+
+    .technical__item:not(:nth-child(5n)) {
+        border-right: 1px rgba(0, 0, 0, .1) solid;
+    }
+
+    .technical__item:not(:nth-last-child(-n + 5)) {
+        border-bottom: 1px rgba(0, 0, 0, .1) solid;
+    }
+}
+
+@media (max-width: 767px) {
+    .technical__item:nth-child(2n-1) {
+        padding-left: 0;
+    }
+    .technical__item:nth-child(2n) {
+        padding-right: 0;
+    }
 }

@@ -42,13 +42,13 @@ return new class extends Migration
             $table->json('photo_internal_damage')->nullable();
             $table->json('photo_external')->nullable();
             $table->json('photo_internal')->nullable();
-            $table->boolean('functions_check')->nullable();
+            $table->boolean('functions_check')->default(true);
             $table->string('functions_problems')->nullable();
             $table->string('comment')->nullable();
             $table->string('computer_diag')->nullable();
             $table->string('video')->nullable();
             $table->string('price_value')->nullable();
-            $table->string('price_currency')->nullable();
+            $table->string('price_currency')->default('AED');
             $table->string('mileage')->nullable();
             $table->string('gearbox')->nullable();
             $table->string('photo_tech_info')->nullable();

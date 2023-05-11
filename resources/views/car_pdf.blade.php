@@ -42,6 +42,7 @@
 
         section {
             padding-top: 80@else
+
         }
 
         .container {
@@ -362,7 +363,7 @@
             margin-bottom: 50px !important;
         }
 
-        .recommendation__text{
+        .recommendation__text {
             font-size: 24px;
         }
 
@@ -536,7 +537,6 @@
         }
 
 
-
         .report .photo__line img:first-child {
             margin-right: 50px;
         }
@@ -555,7 +555,7 @@
 
         }
 
-        .components table{
+        .components table {
             width: 100%;
         }
 
@@ -618,7 +618,8 @@
             vertical-align: top;
             padding-top: 35px;
         }
-        .footer{
+
+        .footer {
             width: 100%;
         }
 
@@ -852,11 +853,11 @@
             padding-top: 100px;
         }
 
-        .brakes table{
+        .brakes table {
             width: 100%;
         }
 
-        .brakes td{
+        .brakes td {
             padding-bottom: 25px;
         }
 
@@ -906,13 +907,13 @@
     </style>
 
     <style>
-        .tires-text{
+        .tires-text {
             font-size: 22px;
             text-align: center;
             width: 100%;
         }
 
-        .page-number{
+        .page-number {
             position: absolute;
             bottom: 15px;
             right: 15px;
@@ -937,9 +938,11 @@
         .report table img.big {
             max-height: 800px !important;
         }
-        .report table td{
+
+        .report table td {
             padding-bottom: 30px;
         }
+
         .report table img {
             height: 100%;
             margin-bottom: 25px;
@@ -968,7 +971,7 @@
             position: relative;
         }
 
-        .tires-chars__text-text{
+        .tires-chars__text-text {
             display: block;
             position: absolute;
             bottom: 18px;
@@ -978,6 +981,7 @@
             font-size: 30px;
             text-transform: uppercase;
         }
+
         .tires-chars__box {
             width: 30px;
             height: 30px;
@@ -1009,13 +1013,16 @@
 
             object-fit: cover;
         }
+
         .tires-chars__title {
             text-transform: uppercase;
             font-size: 20px;
         }
-        .tires-chars__title-br{
+
+        .tires-chars__title-br {
             height: 25px;
         }
+
         .condition__value img {
             max-width: 20px;
             max-height: 28px;
@@ -1164,52 +1171,56 @@
             vertical-align: top;
         }
 
-        .tires-logo img, .tires-logo .img{
+        .tires-logo img, .tires-logo .img {
             margin-left: 25px;
             margin-right: 25px;
         }
 
-        .tires-logo img:first-child, .tires-logo .img:first-child{
+        .tires-logo img:first-child, .tires-logo .img:first-child {
             margin-top: 20px;
             margin-bottom: 15px;
         }
+
         .tires-logo img:nth-child(2), .tires-logo .img:nth-child(2) {
             margin-left: 45px;
 
 
         }
-        .main-page{
-            text-align: center;
-        }
-        .main-page *{
+
+        .main-page {
             text-align: center;
         }
 
-        .main-page>*{
+        .main-page * {
+            text-align: center;
+        }
+
+        .main-page > * {
             width: 100%;
         }
 
-        .main-page__date{
+        .main-page__date {
             position: absolute;
             bottom: 100px;
             font-size: 30px;
             color: #22222299;
         }
 
-        .main-page__logo{
-            margin: 437px auto 337px ;
+        .main-page__logo {
+            margin: 437px auto 337px;
             width: 700px;
         }
 
-        .main-page__logo img{
+        .main-page__logo img {
             width: 700px;
         }
 
-        .main-page__pre-title{
+        .main-page__pre-title {
             font-size: 30px;
             text-transform: uppercase;
         }
-        .main-page__title{
+
+        .main-page__title {
             font-size: 120px;
             font-weight: 500;
             line-height: 115px;
@@ -1219,21 +1230,21 @@
             margin: 80px 0 100px;
         }
 
-        .main-page__img{
+        .main-page__img {
             width: 200px;
             height: 200px;
         }
 
-        .main-page__img img{
+        .main-page__img img {
             width: 200px;
             height: auto;
         }
 
-        .footer .header__logo img{
+        .footer .header__logo img {
             width: 100%;
         }
 
-        .tires-components table{
+        .tires-components table {
             width: 100%;
         }
 
@@ -1413,13 +1424,22 @@
                         Комплектация
                     </div>
                     <table class="equipment__grid">
+
                         @php
+
                             $equipmentItems = $report->equipment;
-                              $equipmentItems = array_values(array_filter($report->equipment, function($item){
-                                return $item['value'];
-                            }));
+
+                        @endphp
+
+                        @php
+                              $equipmentItems = array_filter($report->equipment, function($item){
+                                return $item;
+                            });
                             $rows = ceil(count($equipmentItems)/4);
 
+                        @endphp
+
+                        @php
                         $equipmentIco = [
                             'tire_pressure_sensor' => '4G',
                             'adaptive_light' => '6E',
@@ -1453,56 +1473,63 @@
                             'door_closers' => '4A',
                         ];
                         $vocabulary = [
-                            'tire_pressure_sensor' => 'Датчик давления в шинах',
-                            'adaptive_light' => 'Адаптивный свет',
-                            'automatic_high_beam' => 'Автоматический дальний свет',
-                            'tow_hitch' => 'Фаркоп',
-                            'cruise_control' => 'Круиз-контроль',
-                            'parking_assistance_system' => 'Система помощи при парковке',
-                            'camera' => 'Камера',
-                            'camera_360' => 'Камера 360',
-                            'head_up_display' => 'Проекционный дисплей',
-                            'hands_free_trunk_opening' => 'Открытие багажника без помощи рук',
-                            'digital_instrument_panel' => 'Электронная приборная панель',
-                            'keyless_entry' => 'Бесключевой доступ',
-                            'electric_folding_mirrors' => 'Электроскладывание зеркал',
-                            'start_stop_system' => 'Система «старт-стоп»',
-                            'leather_interior' => 'Кожанный салон',
-                            'sunroof' => 'Люк',
-                            'panoramic_roof' => 'Панорамная крыша',
-                            'heated_steering_wheel' => 'Обогрев рулевого колеса',
-                            'third_row_of_seats' => 'Третий ряд сидений',
-                            'electric_seat_adjustment' => 'Электрорегулировка сидений',
-                            'seat_position_memory' => 'Память положения сидений',
-                            'heated_seats' => 'Подогрев сидений',
-                            'ventilated_seats' => 'Вентиляция сидений',
-                            'premium_audio_system' => 'Премиум Аудиосистема',
-                            'rear_passenger_multimedia_system' => 'Мультимедиа система для задних пассажиров',
-                            'navigation_system' => 'Навигационная система',
-                            'android_auto_carplay' => 'Android Auto/CarPlay',
-                            'power_outlet_220v' => 'Розетка 220V',
-                            'seat_massage' => 'Массаж сидений',
-                            'door_closers' => 'Доводчики дверей',
-                        ];
+'tire_pressure_sensor' => 'Датчик давления в шинах',
+'cruise_control' => 'Круиз-контроль',
+'parking_sensors' => 'Парковочные датчики',
+'camera' => 'Камера',
+'start_stop' => 'Старт-стоп',
+'leather' => 'Кожаный салон',
+'third_seat_rows' => 'Третий ряд сидений',
+'seats_heating' => 'Подогрев сидений',
+'multimedia_lcd_screen' => 'Мультимедийный ЖК-экран',
+'adaptive_cruise_control' => 'Адаптивный круиз-контроль',
+'camera_360' => 'Камера 360',
+'keyless_entry' => 'Бесключевой доступ',
+'sunroof' => 'Люк',
+'panoramic_roof' => 'Панорамная крыша',
+'electric_seats' => 'Электрические сиденья',
+'seats_memory' => 'Память сидений',
+'steering_wheel_heating' => 'Подогрев руля',
+'seats_ventilation' => 'Вентиляция сидений',
+'android_auto_carplay' => 'Android Auto / CarPlay',
+'electric_folding_mirrors' => 'Электрические складывающиеся зеркала',
+'electric_trunk_lid' => 'Электрическая крышка багажника',
+'virtual_dashboard' => 'Виртуальная приборная панель',
+'power_steering' => 'Усилитель руля',
+'adaptive_lights' => 'Адаптивные фары',
+'automatic_high_beam' => 'Автоматический дальний свет',
+'autopilot' => 'Автопилот',
+'self_parking' => 'Самопарковка',
+'premium_seats_ventilation' => 'Премиум вентиляция сидений',
+'seats_massage' => 'Массаж сидений',
+'multimedia_system_rear_passengers' => 'Мультимедийная система для задних пассажиров',
+'premium_audiosystem' => 'Премиум аудиосистема',
+'windshield_projection' => 'Проекция на лобовое стекло',
+'door_closers' => 'Доводчики дверей',
+];
                         @endphp
                         @for($i = 0; $i< $rows; $i++)
                             <tr>
-
                                 @for($j = 4*$i; $j < 4*($i+1); $j++)
-                                    @isset($equipmentItems[$j])
+                                    @if(array_key_exists($j, $equipmentItems))
+
+                                        @php
+                                            $equipmentItem = $equipmentItems[$j];
+                                            $key = key($equipmentItem);
+                                            $value = current($equipmentItem);
+                                            $icon = isset($equipmentIco[$key]) ? $equipmentIco[$key] : 'no-icon';
+                                        @endphp
 
                                         <td class="equipment__item-2">
+                <span class="">
+                    <img src="{{url('/assets/icons/'.$icon.'.png')}}"/>
+                </span>
                                             <span class="">
-                                                @php $icon = isset($equipmentIco[$equipmentItems[$j]['name']]) ? $equipmentIco[$equipmentItems[$j]['name']] : 'no-icon'  @endphp
-                                              <img src="{{url('/assets/icons/'.$icon.'.png')}}"/>
-                                            </span>
-                                            <span class="">
-                                                {{$vocabulary[$equipmentItems[$j]['name']]}}
-                                            </span>
+                    {{$vocabulary[$key]}}
+                </span>
                                         </td>
                                     @endif
                                 @endfor
-
                             </tr>
 
                         @endfor
@@ -1684,13 +1711,13 @@
                         @endforeach
                         {{--                        <div class="image-color bonner">--}}
 
-                            @if($report->body == 'купе')
-                                <img src="{{url('/assets/car-front-coupe.png') }}" alt="car-front">
-                            @elseif($report->body == 'кроссовер')
-                                <img src="{{url('/assets/car-front-crossover.png') }}" alt="car-front">
-                            @else
-                                <img src="{{url('/assets/car-front.png') }}" alt="car-front">
-                            @endif
+                        @if($report->body == 'купе')
+                            <img src="{{url('/assets/car-front-coupe.png') }}" alt="car-front">
+                        @elseif($report->body == 'кроссовер')
+                            <img src="{{url('/assets/car-front-crossover.png') }}" alt="car-front">
+                        @else
+                            <img src="{{url('/assets/car-front.png') }}" alt="car-front">
+                        @endif
                     </div>
                     <div class="condition__side condition__side-back">
                         @foreach($report->colored as $part => $value)
@@ -1804,7 +1831,7 @@
     </div>
 
 </footer>
-<div class="page-number">стр. </div>
+<div class="page-number">стр.</div>
 
 <div class="page-break"></div>
 
@@ -1859,7 +1886,6 @@
 
                 </tr>
 
-
             @endfor
         </table>
     </div>
@@ -1891,7 +1917,7 @@
     </table>
 
 </footer>
-<div class="page-number">стр. </div>
+<div class="page-number">стр.</div>
 
 <div class="page-break"></div>
 
@@ -2076,7 +2102,7 @@
     </table>
 
 </footer>
-<div class="page-number">стр. </div>
+<div class="page-number">стр.</div>
 
 <div class="page-break"></div>
 
@@ -2159,10 +2185,9 @@
         </table>
 
     </footer>
-    <div class="page-number">стр. </div>
+    <div class="page-number">стр.</div>
 
     <div class="page-break"></div>
-
 
 
     <header class="header ">
@@ -2185,7 +2210,8 @@
         </div>
     </header>
     <br><br>
-    <div class="container"><table>
+    <div class="container">
+        <table>
             @endif
             @endfor
         </table>
@@ -2234,7 +2260,7 @@
     </table>
 
 </footer>
-<div class="page-number">стр. </div>
+<div class="page-number">стр.</div>
 
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
@@ -2250,6 +2276,7 @@
             }
         ');
    }
+
 </script>
 
 </body>

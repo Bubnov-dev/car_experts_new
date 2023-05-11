@@ -52,6 +52,7 @@
 
 
 
+
         }
 
         .container {
@@ -1512,8 +1513,8 @@
                     <table class="equipment__grid">
                         @php
                             $equipmentItems = $report->equipment;
-                              $equipmentItems = array_values(array_filter($report->equipment, function($item){
-                                return $item['value'];
+                              $equipmentItems = (array_filter($report->equipment, function($item){
+                                return $item;
                             }));
 
 
@@ -1552,59 +1553,64 @@ $rows = ceil(count($equipmentItems)/4);
                             'door_closers' => '4A',
                         ];
                         $vocabulary = [
-                            'tire_pressure_sensor' => 'Tire pressure sensor',
-                            'adaptive_light' => 'Adaptive light',
-                            'automatic_high_beam' => 'Automatic high beam',
-                            'tow_hitch' => 'Tow hitch',
-                            'cruise_control' => 'Cruise control',
-                            'parking_assistance_system' => 'Parking assistance system',
-                            'camera' => 'Camera',
-                            'camera_360' => '360° camera',
-                            'head_up_display' => 'Head-up display',
-                            'hands_free_trunk_opening' => 'Hands-free trunk opening',
-                            'digital_instrument_panel' => 'Digital instrument panel',
-                            'keyless_entry' => 'Keyless entry',
-                            'electric_folding_mirrors' => 'Electric folding mirrors',
-                            'start_stop_system' => 'Start-stop system',
-                            'leather_interior' => 'Leather interior',
-                            'sunroof' => 'Sunroof',
-                            'panoramic_roof' => 'Panoramic roof',
-                            'heated_steering_wheel' => 'Heated steering wheel',
-                            'third_row_of_seats' => 'Third row of seats',
-                            'electric_seat_adjustment' => 'Electric seat adjustment',
-                            'seat_position_memory' => 'Seat position memory',
-                            'heated_seats' => 'Heated seats',
-                            'ventilated_seats' => 'Ventilated seats',
-                            'premium_audio_system' => 'Premium audio system',
-                            'rear_passenger_multimedia_system' => 'Rear passenger multimedia system',
-                            'navigation_system' => 'Navigation system',
-                            'android_auto_carplay' => 'Android Auto/CarPlay',
-                            'power_outlet_220v' => '220V power outlet',
-                            'seat_massage' => 'Seat massage',
-                            'door_closers' => 'Door closers',
-                        ];
-
+'tire_pressure_sensor' => 'Tire Pressure Sensor',
+'cruise_control' => 'Cruise Control',
+'parking_sensors' => 'Parking Sensors',
+'camera' => 'Camera',
+'start_stop' => 'Start-Stop',
+'leather' => 'Leather Interior',
+'third_seat_rows' => 'Third Row Seats',
+'seats_heating' => 'Heated Seats',
+'multimedia_lcd_screen' => 'Multimedia LCD Screen',
+'adaptive_cruise_control' => 'Adaptive Cruise Control',
+'camera_360' => '360 Camera',
+'keyless_entry' => 'Keyless Entry',
+'sunroof' => 'Sunroof',
+'panoramic_roof' => 'Panoramic Roof',
+'electric_seats' => 'Electric Seats',
+'seats_memory' => 'Seat Memory',
+'steering_wheel_heating' => 'Heated Steering Wheel',
+'seats_ventilation' => 'Seat Ventilation',
+'android_auto_carplay' => 'Android Auto / CarPlay',
+'electric_folding_mirrors' => 'Electric Folding Mirrors',
+'electric_trunk_lid' => 'Electric Trunk Lid',
+'virtual_dashboard' => 'Virtual Dashboard',
+'power_steering' => 'Power Steering',
+'adaptive_lights' => 'Adaptive Lights',
+'automatic_high_beam' => 'Automatic High Beam',
+'autopilot' => 'Autopilot',
+'self_parking' => 'Self-Parking',
+'premium_seats_ventilation' => 'Premium Seat Ventilation',
+'seats_massage' => 'Seat Massage',
+'multimedia_system_rear_passengers' => 'Rear Passenger Multimedia System',
+'premium_audiosystem' => 'Premium Audio System',
+'windshield_projection' => 'Windshield Projection',
+'door_closers' => 'Door Closers',
+];
 
                         @endphp
                         @for($i = 0; $i< $rows; $i++)
                             <tr>
-
-
                                 @for($j = 4*$i; $j < 4*($i+1); $j++)
-                                    @isset($equipmentItems[$j])
-                                        <td class="equipment__item-2">
-                                        <span class="">
-                                            @php $icon = isset($equipmentIco[$equipmentItems[$j]['name']]) ? $equipmentIco[$equipmentItems[$j]['name']] : 'no-icon'  @endphp
-                                          <img src="{{url('/assets/icons/'.$icon.'.png')}}"/>
-                                        </span>
-                                            <span class="">
-                                                {{ $vocabulary[$equipmentItems[$j]['name']] }}
+                                    @if(array_key_exists($j, $equipmentItems))
 
-                                        </span>
+                                        @php
+                                            $equipmentItem = $equipmentItems[$j];
+                                            $key = key($equipmentItem);
+                                            $value = current($equipmentItem);
+                                            $icon = isset($equipmentIco[$key]) ? $equipmentIco[$key] : 'no-icon';
+                                        @endphp
+
+                                        <td class="equipment__item-2">
+                <span class="">
+                    <img src="{{url('/assets/icons/'.$icon.'.png')}}"/>
+                </span>
+                                            <span class="">
+                    {{$vocabulary[$key]}}
+                </span>
                                         </td>
                                     @endif
                                 @endfor
-
                             </tr>
 
                         @endfor
@@ -2323,6 +2329,7 @@ $rows = ceil(count($equipmentItems)/4);
             }
         ');
    }
+
 
 
 

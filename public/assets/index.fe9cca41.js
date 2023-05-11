@@ -35,7 +35,18 @@ $(".slider-for").slick({
     initialSlide: 1,
     responsive: [{
         breakpoint: 768,
-        settings: {arrows: !1, centerMode: !0, centerPadding: "15px", slidesToShow: 1}
+        settings: {
+            // arrows: !1,
+            // centerMode: !0,
+            centerPadding: "15px",
+            // slidesToShow: 1.3,
+            infinite: true,
+            speed: 300,
+            slidesToShow: 1,
+            centerMode: true,
+            variableWidth: true
+
+        }
     }]
 });
 $(".slider-nav").slick({
