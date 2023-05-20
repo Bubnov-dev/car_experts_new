@@ -15,6 +15,8 @@ class Report extends Model
         'photo_internal_damage' => 'json',
         'photo_external' => 'json',
         'photo_internal' => 'json',
+        'photo_dashboard' => 'json',
+        'tires' => 'json',
         'equipment' => 'json',
         'functions_check' =>  'boolean'
 

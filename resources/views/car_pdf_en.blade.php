@@ -2069,7 +2069,7 @@ $rows = ceil(count($equipmentItems)/4);
                             <div class="tires-chars__text">
                                 <div class="tires-chars__box">
 
-                                    @if($report->tyres_status == 'In good condition')
+                                    @if($report->tire_condition == 'In good condition')
                                         <img src="{{url('/assets/ok.png')}}" alt="">
                                     @else
                                         <img src="{{url('/assets/notOk.png')}}" alt="">
@@ -2077,7 +2077,7 @@ $rows = ceil(count($equipmentItems)/4);
                                 </div>
                                 <div class="tires-chars__text-text">
 
-                                    {{ $report->tyres_status }}
+                                    {{ $report->tire_condition }}
                                 </div>
 
                             </div>

@@ -83,23 +83,29 @@ class ReportController extends Controller
             'tyre_manufacturer' => $data['tyre']['manufacturer'],
             'tyre_year' => $data['tyre']['year'],
             'tyre_photo' => $data['tyre']['photo'],
+            'tire_condition' => $data['tyre']['condition'],
+            'tire_similar' => $data['tire_similar'],
+
+            'tires' => $data['tires'],
             'colored' => $data['colored'],
             'photo_external_damage' => $data['photo_external_damage'],
             'photo_internal_damage' => $data['photo_internal_damage'],
             'photo_external' => $data['photo_external'],
             'photo_internal' => $data['photo_internal'],
+            'photo_dashboard' => $data['photo_dashboard'],
             'functions_check' => $data['functions_check'],
             'functions_problems' => $data['functions_problems'],
             'equipment' => $data['equipment'],
             'comment' => $data['comment'],
             'computer_diag' => $data['computer_diag'],
+            'comment_computer_diag' => $data['comment_computer_diag'],
             'video' => $data['video'],
             'price_value' => $data['price']['value'],
             'price_currency' => $data['price']['currency'],
             'mileage' => $data['mileage'],
             'gearbox' => $data['gearbox'],
-            'photo_vin' => $data['photo_vin']['photo'],
-            'photo_tech_info' => $data['photo_tech_info']['photo']
+            'photo_vin' => $data['photo_vin'],
+            'photo_tech_info' => $data['photo_tech_info'] ,
         ]);
 
 
@@ -131,28 +137,33 @@ class ReportController extends Controller
             'tyre_manufacturer' => $data['tyre']['manufacturer'],
             'tyre_year' => $data['tyre']['year'],
             'tyre_photo' => $data['tyre']['photo'],
+            'tire_condition' => $data['tyre']['condition'],
+            'tire_similar' => $data['tire_similar'],
+            'tires' => $data['tires'],
             'colored' => $data['colored'],
             'photo_external_damage' => $data['photo_external_damage'],
             'photo_internal_damage' => $data['photo_internal_damage'],
             'photo_external' => $data['photo_external'],
             'photo_internal' => $data['photo_internal'],
+            'photo_dashboard' => $data['photo_dashboard'],
             'functions_check' => $data['functions_check'],
             'functions_problems' => $data['functions_problems'],
             'equipment' => $data['equipment'],
             'comment' => $data['comment'],
             'computer_diag' => $data['computer_diag'],
+            'comment_computer_diag' => $data['comment_computer_diag'],
             'video' => $data['video'],
             'price_value' => $data['price']['value'],
             'price_currency' => $data['price']['currency'],
             'mileage' => $data['mileage'],
             'gearbox' => $data['gearbox'],
-            'photo_vin' => $data['photo_vin']['photo'],
-            'photo_tech_info' => $data['photo_tech_info']['photo']
+            'photo_vin' => $data['photo_vin'],
+            'photo_tech_info' => $data['photo_tech_info'] ,
         ]);
 
 //        return;
         $fieldsToTranslate = ['master_name', 'client', 'body', 'body_color', 'drive',
-         'comment', 'gearbox', 'functions_problems'];
+            'comment_computer_diag', 'comment', 'gearbox', 'functions_problems'];
 
         $descFieldsToTranslate = ['photo_internal_damage', 'photo_external_damage'];
 
@@ -171,6 +182,8 @@ class ReportController extends Controller
         unset($attributesToCopy['id']); // Exclude the id field
         $reportToUpdate->fill($attributesToCopy);
         foreach ($fieldsToTranslate as $field) {
+            Log::info($field);
+            Log::info($report->$field);
             if ($report->$field) {
                 if ($field == 'gearbox') {
                     $trarr = [
@@ -188,11 +201,18 @@ class ReportController extends Controller
                 }
             }
         }
+//        foreach ($descFieldsToTranslate as $field) {
+//            foreach ($report->$field as $k => $item){
+//                $report->$field[$k]['description'] = $this->translate($item['description'], $sourceLang, $targetLang);
+//            }
+//            $reportToUpdate->setAttribute($field, $report->$field);
+//        }
         foreach ($descFieldsToTranslate as $field) {
-            foreach ($report->$field as $item){
-                $item['description'] = $this->translate($item['description'], $sourceLang,
-                    $targetLang);
+            $fieldData = $report->$field;  // Assign the property to a variable
+            foreach ($fieldData as $k => $item) {
+                $fieldData[$k]['description'] = $this->translate($item['description'], $sourceLang, $targetLang);
             }
+            $report->$field = $fieldData;  // Set the property to the modified variable
             $reportToUpdate->setAttribute($field, $report->$field);
         }
 
@@ -218,15 +238,18 @@ class ReportController extends Controller
             ->firstOrFail();
 
 
-        foreach (['photo_external_damage', 'photo_internal_damage', 'photo_external', 'photo_internal'] as $photoType) {
+        foreach (['photo_external_damage', 'photo_internal_damage', 'photo_external', 'photo_internal', 'tires'] as $photoType) {
             $photos = $report->{$photoType};
-            $numPhotos = count($photos);
+            if($photos){
+                $numPhotos = count($photos);
+                foreach ($photos as $key => &$photo) {
+                    $photos[$key]['preview'] = Service::getFullPath($photo['photo']);
+                }
 
-            for ($i = 0; $i < $numPhotos; $i++) {
-                $photos[$i]['preview'] = Service::getFullPath($photos[$i]['photo']);
+
+                $report->{$photoType} = $photos;
             }
 
-            $report->{$photoType} = $photos;
         }
 
         $report->tyre_preview = Service::getFullPath($report->tyre_photo);
@@ -253,17 +276,39 @@ class ReportController extends Controller
             $report->tyre_brand_image = $tyreBrand->image;
         }
 
+        if($report->photo_dashboard){
+            $report->photo_internal = array_merge($report->photo_internal,
+                [$report->photo_dashboard]);
+        }
 
-        foreach (['photo_external_damage', 'photo_internal_damage', 'photo_external', 'photo_internal'] as $photoType) {
+        foreach (['photo_external_damage', 'photo_internal_damage', 'photo_external', 'photo_internal', 'tires'] as $photoType) {
             $photos = $report->{$photoType};
             $numPhotos = count($photos);
 
-            for ($i = 0; $i < $numPhotos; $i++) {
-                $photos[$i]['preview'] = Service::getFullPath($photos[$i]['photo']);
+            foreach ($photos as $key => &$photo) {
+                $photos[$key]['preview'] = Service::getFullPath($photo['photo']);
             }
+//            for ($i = 0; $i < $numPhotos; $i++) {
+//                $photos[$i]['preview'] = Service::getFullPath($photos[$i]['photo']);
+//            }
 
             $report->{$photoType} = $photos;
         }
+
+
+        foreach ($report->photo_external_damage as $key=> $item) {
+            if( isset($item['name'])){
+                Log::info(isset($item['chips']));
+                Log::info(implode(', ',  $item['chips']));
+                $item['description'] = $item['name'] . (isset($item['chips']) ?  (' ' . implode(', ',  $item['chips'])) : '') .
+                    (isset($item['comment']) ?  (' ' . $item['comment']) : '');
+                Log::info($item['description']);
+
+            }
+
+        }
+
+        $report->comment = $report->comment_computer_diag . "\n" . $report->comment;
 
         $report->tyre_preview = Service::getFullPath($report->tyre_photo);
 
@@ -273,7 +318,7 @@ class ReportController extends Controller
         $report->computer_diag = Service::getFullPath($report->computer_diag);
 
         if ($request->lang == 'ru') {
-            return view('car_pdf_en', ['report' => $report]);
+            return view('car', ['report' => $report]);
         } else {
             return view('car_en', ['report' => $report]);
 

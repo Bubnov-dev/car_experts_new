@@ -2023,7 +2023,7 @@
                             <div class="tires-chars__text">
                                 <div class="tires-chars__box">
 
-                                    @if($report->tyres_status == 'В норме')
+                                    @if($report->tire_condition == 'В норме')
                                         <img src="{{url('/assets/ok.png')}}" alt="">
                                     @else
                                         <img src="{{url('/assets/notOk.png')}}" alt="">
@@ -2031,7 +2031,7 @@
                                 </div>
                                 <div class="tires-chars__text-text">
 
-                                    {{ $report->tyres_status }}
+                                    {{ $report->tire_condition }}
                                 </div>
 
                             </div>

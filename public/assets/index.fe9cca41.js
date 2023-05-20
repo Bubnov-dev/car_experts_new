@@ -18,6 +18,15 @@
         fetch(e.href, o)
     }
 })();
+
+$(".tires-images").slick({
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: true,
+    dots: false,
+    prevArrow: '<div class="arrow-prev arrow"></div>',
+    nextArrow: '<div class="arrow-next arrow"></div>',
+})
 $(".report__title").on("click", function () {
     $(this).attr("id") == "photo-report" ? ($("#video-report").addClass("not-active"), $(".report__video").addClass("not-active"), $(".report__photo").removeClass("not-active")) : ($("#photo-report").addClass("not-active"), $(".report__photo").addClass("not-active"), $(".report__video").removeClass("not-active")), $(this).removeClass("not-active")
 });

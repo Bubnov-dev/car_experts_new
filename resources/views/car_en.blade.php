@@ -91,37 +91,32 @@
                 <div class="equipment__grid">
                     @php
                         $equipmentIco = [
-                            'tire_pressure_sensor' => '4G',
-                            'adaptive_light' => '6E',
-                            'automatic_high_beam' => '5E',
-                            'tow_hitch' => '5B',
-                            'cruise_control' => '2H',
-                            'parking_assistance_system' => '5E',
-                            'camera' => '1H',
-                            'camera_360' => '6E',
-                            'head_up_display' => '1H',
-                            'hands_free_trunk' => '6A',
-                            'digital_instrument_panel' => '2H',
-                            'keyless_entry' => '4A',
-                            'power_folding_mirrors' => '6E',
-                            'start_stop_system' => '4F',
-                            'leather_interior' => '6G',
-                            'sunroof' => '1C',
-                            'panoramic_roof' => '2G',
-                            'heated_steering_wheel' => '4C',
-                            'third_row_of_seats' => '6G',
-                            'power_seat_adjustment' => '4H',
-                            'seat_position_memory' => '6G',
-                            'heated_seats' => '6G',
-                            'ventilated_seats' => '6G',
-                            'premium_audio_system' => '4D',
-                            'rear_passenger_multimedia' => '4D',
-                            'navigation_system' => '5H',
-                            'android_auto_carplay' => '4D',
-                            'outlet_220V' => '1A',
-                            'seat_massage' => '6G',
-                            'door_closers' => '4A',
-                        ];
+    'tire_pressure_sensor' => '4G',
+    'cruise_control' => '2H',
+    'parking_sensors' => '5E',
+    'camera' => '1H',
+    'camera_360' => '6E',
+    'keyless_entry' => '4A',
+    'sunroof' => '1C',
+    'panoramic_roof' => '2G',
+    'steering_wheel_heating' => '4C',
+    'third_seat_rows' => '6G',
+    'electric_seats' => '4H',
+    'seats_memory' => '6G',
+    'seats_heating' => '6G',
+    'seats_ventilation' => '6G',
+    'premium_audiosystem' => '4D',
+    'multimedia_system_rear_passengers' => '4D',
+    'android_auto_carplay' => '4D',
+    'seats_massage' => '6G',
+    'door_closers' => '4A',
+    'adaptive_lights' => '6E',
+    'automatic_high_beam' => '5E',
+    'electric_folding_mirrors' => '6E',
+    'start_stop' => '4F',
+    'leather' => '6G',
+    'virtual_dashboard' => '2H',
+];
                         $vocabulary = [
 'tire_pressure_sensor' => 'Tire Pressure Sensor',
 'cruise_control' => 'Cruise Control',
@@ -377,56 +372,216 @@
         <div class="container--right">
             <div class="tyres">
                 <div class="h2">Tires</div>
-                <div class="tyres__content">
-                    <div class="tyres-logo">
-                        @if($report->tyre_brand_image)
-                            <img src="{{ $report->tyre_brand_image }}"
-                                 alt="{{$report->tyre_manufacturer}}">
-                        @else
-                            <img src="/assets/tire-up.png" alt="">
-                        @endif
-                    </div>
-                    <div class="tyres-chars">
-                        <div class="tyres-chars__item">
-                            <div class="tyres-chars__title">Manufacturer</div>
-                            <div class="tyres-chars__text">
-                                {{$report->tyre_manufacturer}}
-                            </div>
+                @if ($report->tire_similar || !$report->tires || !count($report->tires))
+                    <div class="tyres__content">
+                        <div class="tyres-logo">
+                            @if($report->tyre_brand_image)
+                                <img src="{{ $report->tyre_brand_image }}"
+                                     alt="{{$report->tyre_manufacturer}}">
+                            @else
+                                <img src="/assets/tire-up.png" alt="">
+                            @endif
                         </div>
-                        <div class="tyres-chars__item">
-                            <div class="tyres-chars__title">
-                                Condition
+                        <div class="tyres-chars">
+                            <div class="tyres-chars__item">
+                                <div class="tyres-chars__title">Manufacturer</div>
+                                <div class="tyres-chars__text">
+                                    {{$report->tyre_manufacturer}}
+                                </div>
                             </div>
-                            <div class="tyres-chars__text">
-                                <div class="tyres-chars__box">
-                                    @if($report->tyres_status)
-                                        <img src="/assets/ok.png" alt="">
+                            <div class="tyres-chars__item">
+                                <div class="tyres-chars__title">
+                                    Condition
+                                </div>
+                                <div class="tyres-chars__text">
+                                    <div class="tyres-chars__box">
+                                        @if($report->tire_condition)
+                                            <img src="/assets/ok.png" alt="">
+                                        @else
+                                            <img src="/assets/notOk.png" alt="">
+                                        @endif
+                                    </div>
+                                    @if($report->tire_condition)
+                                        Good
                                     @else
-                                        <img src="/assets/notOk.png" alt="">
+                                        Poor
                                     @endif
                                 </div>
-                                @if($report->tyres_status)
-                                    Good
-                                @else
-                                    Poor
-                                @endif
+                            </div>
+                            <div class="tyres-chars__item">
+                                <div class="tyres-chars__title">
+                                    Year of Manufacture
+                                </div>
+                                <div class="tyres-chars__text">
+                                    {{ $report->tyre_year }}
+                                </div>
                             </div>
                         </div>
-                        <div class="tyres-chars__item">
-                            <div class="tyres-chars__title">
-                                Year of Manufacture
+                        @if ($report->tyre_preview)
+                            <div class="tyres-photo">
+                                <img src="{{ $report->tyre_preview }}" alt="" data-fancybox="demo" data-caption="Tires">
                             </div>
-                            <div class="tyres-chars__text">
-                                {{ $report->tyre_year }}
-                            </div>
-                        </div>
+                        @endif
                     </div>
-                    @if ($report->tyre_preview)
-                        <div class="tyres-photo">
-                            <img src="{{ $report->tyre_preview }}" alt="" data-fancybox="demo" data-caption="Tires">
+
+                @else
+                    @php
+                        $tire_voc = [
+                            'front_left' => 'Front left',
+                            'front_right' => 'Front Right',
+                            'back_left' => 'Back left',
+                            'back_right' => 'Back right',
+                        ];
+                        function doesTireExist($name, $report) {
+                            foreach ($report->tires as $tire_name => $tire ) {
+                                if ($tire_name == $name) {
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+
+
+                    @endphp
+                    <div class="tyres-multiple">
+                        @foreach($report->tires as $name => $tire)
+                            <div class="tyres-multiple__item">
+                                <div class="tyres-multiple__title">
+                                    {{ $tire_voc[$name] }}
+                                </div>
+                                <div class="tyres-multiple__img">
+                                    <svg width="52" height="110" viewBox="0 0 52 110" fill="none"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M25.8872 1V5.87481M25.8872 1C29.8225 1.25499 32.9064 1.64835 35.6368 2.32529M25.8872 1C21.952 1.25499 18.868 1.64835 16.1376 2.32529M46.6693 7.41423C47.8485 8.18394 48.7379 10.9877 48.7219 15.6244M46.6693 7.41423C45.0371 6.34884 43.5328 5.45792 42.0511 4.71079M46.6693 7.41423H37.9459M48.7219 15.6244H42.5642M48.7219 15.6244C49.7481 15.6244 50.7744 15.881 50.7744 16.9073V33.5843C50.7744 34.0974 50.0047 34.6106 48.7219 34.6106M42.5642 15.6244C41.2813 15.6244 40.5116 16.1376 40.5116 16.9073V25.2458M42.5642 15.6244L37.9459 7.41423M48.7219 34.6106H42.5642C40.7682 34.6106 40.5116 34.0974 40.5116 33.5843V32.0449M48.7219 34.6106V76.4313M48.7219 76.4313H42.5642C42.1716 76.4313 41.827 76.4794 41.5379 76.5681M48.7219 76.4313C49.7481 76.4313 50.7744 76.6879 50.7744 77.7142V94.3912C50.7744 94.9043 50.0047 95.4174 48.7219 95.4174M48.7219 95.4174H42.5642C40.7682 95.4174 40.5116 94.9043 40.5116 94.3912V86.0527M48.7219 95.4174C48.7219 99.7791 48.57 101.658 46.9259 104.397C46.1562 105.68 35.7396 109.108 25.8872 109.016M25.8872 109.016V85.4112M25.8872 109.016C16.0348 109.108 5.61824 105.68 4.84854 104.397C3.20436 101.658 3.05255 99.7791 3.05255 95.4174M40.5116 25.2458L25.8872 24.6044M40.5116 25.2458V32.0449M25.8872 24.6044V29.9923M25.8872 24.6044V5.87481M25.8872 24.6044L11.2628 25.2458M40.5116 86.0527L25.8872 85.4112M40.5116 86.0527V83.8718M25.8872 85.4112V71.8131M25.8872 85.4112L11.2628 86.0527M25.8872 85.4112C17.8032 85.2919 13.9486 85.0861 11.2628 83.8718M25.8872 85.4112C33.0948 85.2773 36.6685 85.0571 40.5116 83.8718M25.8872 32.558C37.2277 33.5127 41.8235 34.9233 45.8996 39.4854C46.6693 40.3468 46.5804 44.105 44.8733 47.1824C43.847 49.0326 43.2354 49.5903 40.5116 48.4653C36.1635 46.6693 32.633 46.4299 25.8872 46.6693M25.8872 32.558V46.6693M25.8872 32.558V29.9923M25.8872 32.558C14.5467 33.5127 9.95094 34.9233 5.87481 39.4854C5.10511 40.3468 5.19401 44.105 6.90109 47.1824C7.92737 49.0326 8.53895 49.5903 11.2628 48.4653C15.6109 46.6693 19.1414 46.4299 25.8872 46.6693M25.8872 46.6693V71.8131M25.8872 71.8131H41.5379V76.5681M25.8872 71.8131H10.2365V76.5681M41.5379 76.5681C40.8823 76.7694 40.5116 77.18 40.5116 77.7142V83.8718M42.0511 4.71079C39.4164 4.92621 38.6328 5.61224 37.9459 7.41423M42.0511 4.71079C39.9659 3.65936 37.9255 2.8927 35.6368 2.32529M40.5116 32.0449C35.025 30.7398 31.8399 30.2474 25.8872 29.9923M25.8872 29.9923C19.9345 30.2474 16.7494 30.7398 11.2628 32.0449M25.8872 5.87481C36.1891 6.09846 42.0511 3.91551 35.6368 2.32529M25.8872 5.87481C15.5853 6.09846 9.72335 3.91551 16.1376 2.32529M5.10511 7.41423C3.92591 8.18394 3.03651 10.9877 3.05255 15.6244M5.10511 7.41423C6.73729 6.34884 8.24164 5.45792 9.72335 4.71079M5.10511 7.41423H13.8285M3.05255 15.6244H9.21021M3.05255 15.6244C2.02628 15.6244 1 15.881 1 16.9073V33.5843C1 34.0974 1.76971 34.6106 3.05255 34.6106M9.21021 15.6244C10.4931 15.6244 11.2628 16.1376 11.2628 16.9073V25.2458M9.21021 15.6244L13.8285 7.41423M3.05255 34.6106H9.21021C11.0062 34.6106 11.2628 34.0974 11.2628 33.5843V32.0449M3.05255 34.6106V76.4313M3.05255 76.4313H9.21021C9.60282 76.4313 9.94736 76.4794 10.2365 76.5681M3.05255 76.4313C2.02628 76.4313 1 76.6879 1 77.7142V94.3912C1 94.9043 1.76971 95.4174 3.05255 95.4174M3.05255 95.4174H9.21021C11.0062 95.4174 11.2628 94.9043 11.2628 94.3912V86.0527M11.2628 25.2458V32.0449M11.2628 86.0527V83.8718M10.2365 76.5681C10.8921 76.7694 11.2628 77.18 11.2628 77.7142V83.8718M9.72335 4.71079C12.358 4.92621 13.1416 5.61224 13.8285 7.41423M9.72335 4.71079C11.8085 3.65936 13.8489 2.8927 16.1376 2.32529M47.6956 42.8208C47.6367 58.7821 48.2198 71.6014 45.8996 73.3525C44.2031 69.2834 44.6466 65.1265 44.8733 58.4715C45.118 51.2875 46.1477 48.3271 47.6956 42.8208ZM4.07883 42.8208C4.13767 58.7821 3.55464 71.6014 5.87481 73.3525C7.5713 69.2834 7.12777 65.1265 6.90109 58.4715C6.65639 51.2875 5.62673 48.3271 4.07883 42.8208Z"
+                                            stroke="#222222"/>
+                                        @if($name == 'front_left')
+                                            <path
+                                                d="M3.05255 15.6245H9.21021C10.4931 15.6245 11.2628 16.1376 11.2628 16.9074V25.2459V32.0449V33.5844C11.2628 34.0975 11.0062 34.6106 9.21021 34.6106H3.05255C1.76971 34.6106 1 34.0975 1 33.5844V16.9074C1 15.8811 2.02628 15.6245 3.05255 15.6245Z"
+                                                fill="#4E2EE1" fill-opacity="0.53" stroke="#482CD9"/>
+                                        @endif
+                                        @if($name == 'back_left')
+                                            <path
+                                                d="M3.05255 76.4316H9.21021C10.4931 76.4316 11.2628 76.9448 11.2628 77.7145V86.053V92.8521V94.3915C11.2628 94.9046 11.0062 95.4178 9.21021 95.4178H3.05255C1.76971 95.4178 1 94.9046 1 94.3915V77.7145C1 76.6882 2.02628 76.4316 3.05255 76.4316Z"
+                                                fill="#4E2EE1" fill-opacity="0.53" stroke="#482CD9"/>
+                                        @endif
+                                        @if($name == 'front_right')
+                                            <path
+                                                d="M48.7219 15.6245H42.5643C41.2814 15.6245 40.5117 16.1376 40.5117 16.9074V25.2459V32.0449V33.5844C40.5117 34.0975 40.7683 34.6106 42.5643 34.6106H48.7219C50.0048 34.6106 50.7745 34.0975 50.7745 33.5844V16.9074C50.7745 15.8811 49.7482 15.6245 48.7219 15.6245Z"
+                                                fill="#4E2EE1" fill-opacity="0.53" stroke="#482CD9"/>
+                                        @endif
+                                        @if($name == 'back_right')
+                                            <path
+                                                d="M48.7219 76.4316H42.5643C41.2814 76.4316 40.5117 76.9448 40.5117 77.7145V86.053V92.8521V94.3915C40.5117 94.9046 40.7683 95.4178 42.5643 95.4178H48.7219C50.0048 95.4178 50.7745 94.9046 50.7745 94.3915V77.7145C50.7745 76.6882 49.7482 76.4316 48.7219 76.4316Z"
+                                                fill="#4E2EE1" fill-opacity="0.53" stroke="#482CD9"/>
+                                        @endif
+                                    </svg>
+
+                                </div>
+                                <div class="tyres-multiple__text">
+                                    <div class="tyres-multiple__text-item">
+                                        <div class="tyres-multiple__text-title">Manufacturer:</div>
+                                        <div class="tyres-multiple__text-value">{{ $tire['manufacturer'] }}</div>
+                                    </div>
+                                    <div class="tyres-multiple__text-item">
+                                        <div class="tyres-multiple__text-title">Condition:</div>
+                                        <div class="tyres-multiple__text-value">
+                                            @if ($tire['condition'])
+                                                <svg width="17" height="12" viewBox="0 0 17 12" fill="none"
+                                                     xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M16 1L5.6875 11L1 6.45455" stroke="#4E2EE1"
+                                                          stroke-width="2" stroke-linecap="round"
+                                                          stroke-linejoin="round"/>
+                                                </svg>
+                                                Normal
+                                            @else
+                                                Bad
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="tyres-multiple__text-item">
+                                        <div class="tyres-multiple__text-title">Year:</div>
+                                        <div class="tyres-multiple__text-value">{{ $tire['year'] }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                        <div class="tyres-multiple__item">
+                            <div class="tyres-multiple__title">
+                                Another
+                            </div>
+                            <div class="tyres-multiple__img">
+                                <svg width="52" height="110" viewBox="0 0 52 110" fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M25.8872 1V5.87481M25.8872 1C29.8225 1.25499 32.9064 1.64835 35.6368 2.32529M25.8872 1C21.952 1.25499 18.868 1.64835 16.1376 2.32529M46.6693 7.41423C47.8485 8.18394 48.7379 10.9877 48.7219 15.6244M46.6693 7.41423C45.0371 6.34884 43.5328 5.45792 42.0511 4.71079M46.6693 7.41423H37.9459M48.7219 15.6244H42.5642M48.7219 15.6244C49.7481 15.6244 50.7744 15.881 50.7744 16.9073V33.5843C50.7744 34.0974 50.0047 34.6106 48.7219 34.6106M42.5642 15.6244C41.2813 15.6244 40.5116 16.1376 40.5116 16.9073V25.2458M42.5642 15.6244L37.9459 7.41423M48.7219 34.6106H42.5642C40.7682 34.6106 40.5116 34.0974 40.5116 33.5843V32.0449M48.7219 34.6106V76.4313M48.7219 76.4313H42.5642C42.1716 76.4313 41.827 76.4794 41.5379 76.5681M48.7219 76.4313C49.7481 76.4313 50.7744 76.6879 50.7744 77.7142V94.3912C50.7744 94.9043 50.0047 95.4174 48.7219 95.4174M48.7219 95.4174H42.5642C40.7682 95.4174 40.5116 94.9043 40.5116 94.3912V86.0527M48.7219 95.4174C48.7219 99.7791 48.57 101.658 46.9259 104.397C46.1562 105.68 35.7396 109.108 25.8872 109.016M25.8872 109.016V85.4112M25.8872 109.016C16.0348 109.108 5.61824 105.68 4.84854 104.397C3.20436 101.658 3.05255 99.7791 3.05255 95.4174M40.5116 25.2458L25.8872 24.6044M40.5116 25.2458V32.0449M25.8872 24.6044V29.9923M25.8872 24.6044V5.87481M25.8872 24.6044L11.2628 25.2458M40.5116 86.0527L25.8872 85.4112M40.5116 86.0527V83.8718M25.8872 85.4112V71.8131M25.8872 85.4112L11.2628 86.0527M25.8872 85.4112C17.8032 85.2919 13.9486 85.0861 11.2628 83.8718M25.8872 85.4112C33.0948 85.2773 36.6685 85.0571 40.5116 83.8718M25.8872 32.558C37.2277 33.5127 41.8235 34.9233 45.8996 39.4854C46.6693 40.3468 46.5804 44.105 44.8733 47.1824C43.847 49.0326 43.2354 49.5903 40.5116 48.4653C36.1635 46.6693 32.633 46.4299 25.8872 46.6693M25.8872 32.558V46.6693M25.8872 32.558V29.9923M25.8872 32.558C14.5467 33.5127 9.95094 34.9233 5.87481 39.4854C5.10511 40.3468 5.19401 44.105 6.90109 47.1824C7.92737 49.0326 8.53895 49.5903 11.2628 48.4653C15.6109 46.6693 19.1414 46.4299 25.8872 46.6693M25.8872 46.6693V71.8131M25.8872 71.8131H41.5379V76.5681M25.8872 71.8131H10.2365V76.5681M41.5379 76.5681C40.8823 76.7694 40.5116 77.18 40.5116 77.7142V83.8718M42.0511 4.71079C39.4164 4.92621 38.6328 5.61224 37.9459 7.41423M42.0511 4.71079C39.9659 3.65936 37.9255 2.8927 35.6368 2.32529M40.5116 32.0449C35.025 30.7398 31.8399 30.2474 25.8872 29.9923M25.8872 29.9923C19.9345 30.2474 16.7494 30.7398 11.2628 32.0449M25.8872 5.87481C36.1891 6.09846 42.0511 3.91551 35.6368 2.32529M25.8872 5.87481C15.5853 6.09846 9.72335 3.91551 16.1376 2.32529M5.10511 7.41423C3.92591 8.18394 3.03651 10.9877 3.05255 15.6244M5.10511 7.41423C6.73729 6.34884 8.24164 5.45792 9.72335 4.71079M5.10511 7.41423H13.8285M3.05255 15.6244H9.21021M3.05255 15.6244C2.02628 15.6244 1 15.881 1 16.9073V33.5843C1 34.0974 1.76971 34.6106 3.05255 34.6106M9.21021 15.6244C10.4931 15.6244 11.2628 16.1376 11.2628 16.9073V25.2458M9.21021 15.6244L13.8285 7.41423M3.05255 34.6106H9.21021C11.0062 34.6106 11.2628 34.0974 11.2628 33.5843V32.0449M3.05255 34.6106V76.4313M3.05255 76.4313H9.21021C9.60282 76.4313 9.94736 76.4794 10.2365 76.5681M3.05255 76.4313C2.02628 76.4313 1 76.6879 1 77.7142V94.3912C1 94.9043 1.76971 95.4174 3.05255 95.4174M3.05255 95.4174H9.21021C11.0062 95.4174 11.2628 94.9043 11.2628 94.3912V86.0527M11.2628 25.2458V32.0449M11.2628 86.0527V83.8718M10.2365 76.5681C10.8921 76.7694 11.2628 77.18 11.2628 77.7142V83.8718M9.72335 4.71079C12.358 4.92621 13.1416 5.61224 13.8285 7.41423M9.72335 4.71079C11.8085 3.65936 13.8489 2.8927 16.1376 2.32529M47.6956 42.8208C47.6367 58.7821 48.2198 71.6014 45.8996 73.3525C44.2031 69.2834 44.6466 65.1265 44.8733 58.4715C45.118 51.2875 46.1477 48.3271 47.6956 42.8208ZM4.07883 42.8208C4.13767 58.7821 3.55464 71.6014 5.87481 73.3525C7.5713 69.2834 7.12777 65.1265 6.90109 58.4715C6.65639 51.2875 5.62673 48.3271 4.07883 42.8208Z"
+                                        stroke="#222222"/>
+                                    @if( !doesTireExist('front_left', $report))
+                                        <path
+                                            d="M3.05255 15.6245H9.21021C10.4931 15.6245 11.2628 16.1376 11.2628 16.9074V25.2459V32.0449V33.5844C11.2628 34.0975 11.0062 34.6106 9.21021 34.6106H3.05255C1.76971 34.6106 1 34.0975 1 33.5844V16.9074C1 15.8811 2.02628 15.6245 3.05255 15.6245Z"
+                                            fill="#4E2EE1" fill-opacity="0.53" stroke="#482CD9"/>
+                                    @endif
+                                    @if(!doesTireExist('back_left', $report))
+                                        <path
+                                            d="M3.05255 76.4316H9.21021C10.4931 76.4316 11.2628 76.9448 11.2628 77.7145V86.053V92.8521V94.3915C11.2628 94.9046 11.0062 95.4178 9.21021 95.4178H3.05255C1.76971 95.4178 1 94.9046 1 94.3915V77.7145C1 76.6882 2.02628 76.4316 3.05255 76.4316Z"
+                                            fill="#4E2EE1" fill-opacity="0.53" stroke="#482CD9"/>
+                                    @endif
+                                    @if(!doesTireExist('front_right', $report))
+                                        <path
+                                            d="M48.7219 15.6245H42.5643C41.2814 15.6245 40.5117 16.1376 40.5117 16.9074V25.2459V32.0449V33.5844C40.5117 34.0975 40.7683 34.6106 42.5643 34.6106H48.7219C50.0048 34.6106 50.7745 34.0975 50.7745 33.5844V16.9074C50.7745 15.8811 49.7482 15.6245 48.7219 15.6245Z"
+                                            fill="#4E2EE1" fill-opacity="0.53" stroke="#482CD9"/>
+                                    @endif
+                                    @if(!doesTireExist( 'back_right', $report))
+                                        <path
+                                            d="M48.7219 76.4316H42.5643C41.2814 76.4316 40.5117 76.9448 40.5117 77.7145V86.053V92.8521V94.3915C40.5117 94.9046 40.7683 95.4178 42.5643 95.4178H48.7219C50.0048 95.4178 50.7745 94.9046 50.7745 94.3915V77.7145C50.7745 76.6882 49.7482 76.4316 48.7219 76.4316Z"
+                                            fill="#4E2EE1" fill-opacity="0.53" stroke="#482CD9"/>
+                                    @endif
+                                </svg>
+
+                            </div>
+                            <div class="tyres-multiple__text">
+                                <div class="tyres-multiple__text-item">
+                                    <div class="tyres-multiple__text-title">Manufacturer:</div>
+                                    <div class="tyres-multiple__text-value">{{ $report->tyre_manufacturer }}</div>
+                                </div>
+                                <div class="tyres-multiple__text-item">
+                                    <div class="tyres-multiple__text-title">Condition:</div>
+                                    <div class="tyres-multiple__text-value">
+                                        @if ($report->tire_condition)
+                                            <svg width="17" height="12" viewBox="0 0 17 12" fill="none"
+                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M16 1L5.6875 11L1 6.45455" stroke="#4E2EE1" stroke-width="2"
+                                                      stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            Normal
+                                        @else
+                                            Bad
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="tyres-multiple__text-item">
+                                    <div class="tyres-multiple__text-title">Year:</div>
+                                    <div class="tyres-multiple__text-value">{{ $report->tyre_year }}</div>
+                                </div>
+                            </div>
                         </div>
-                    @endif
-                </div>
+
+                    </div>
+                    <div class="tires-images">
+                        @foreach($report->tires as $tire)
+                            <!-- TIRE -->
+                            @if(isset($tire['preview']) && $tire['preview'])
+                                <img src="{{ $tire['preview'] }}" alt="">
+                            @endif
+                        @endforeach
+                        <!-- TIRE main -->
+                        @if(isset($report->tyre_preview) && $report->tyre_preview)
+
+                            <img src="{{ $report->tyre_preview }}" alt="">
+                        @endif
+
+                    </div>
+                @endif
             </div>
         </div>
     </div>
@@ -578,15 +733,37 @@
 <section class="components">
     <div class="container">
         <div class="h2">Damage</div>
+        @php
 
+
+            $translations_damage = array(
+              "scratch" => "Scratch",
+              "chip" => "Chip",
+              "dent" => "Dent",
+              "rust" => "Rust",
+              "disassembly_marks" => "Disassembly marks",
+              "deformation" => "Deformation"
+            );
+
+        @endphp
         @if(count(array_merge($report->photo_external_damage, $report->photo_internal_damage))>0)
             <div class="flex ">
 
                 @foreach((array_merge($report->photo_external_damage, $report->photo_internal_damage)) as $badPart)
                     <div class="components__item item">
                         <img class="item__image" src="{{ $badPart['preview'] }}" alt="vin" data-fancybox="demo"
-                             data-caption="Повреждение – {{ $badPart['description'] }}">
+                             data-caption="Damage – @isset($badPart['chips'])
+                                @foreach($badPart['chips'] as $chip)
+                                    {{ $translations_damage[strtolower($chip)] }},
+
+                                @endforeach
+                            @endif{{ $badPart['description'] }}">
                         <div class="item__desc">
+                            @isset($badPart['chips'])
+                                @foreach($badPart['chips'] as $chip)
+                                    {{ $translations_damage[strtolower($chip)] }},
+                                @endforeach
+                            @endif
                             {{ $badPart['description'] }}
                         </div>
                     </div>
