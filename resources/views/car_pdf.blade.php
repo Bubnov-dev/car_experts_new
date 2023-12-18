@@ -9,28 +9,17 @@
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css"/>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;700&display=swap" rel="stylesheet">
+{{--    <link rel="preconnect" href="https://fonts.googleapis.com">--}}
+{{--    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>--}}
+{{--    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;700&display=swap" rel="stylesheet">--}}
     <!--    <link rel="stylesheet" href="style/style.sass">-->
     {{--
     <script type="module" crossorigin src="{{url('/storage/assets/index.a2dc5af3.js') }}"></script>
     --}}
     <style>
-        @font-face {
-            font-family: 'Futura PT';
-            src: url('/storage/fonts/FuturaPT-Book.ttf');
-            font-weight: 400
-        }
-
-        @font-face {
-            font-family: 'Futura PT';
-            src: url('/storage/fonts/FuturaPT-Book.ttf');
-            font-weight: 500
-        }
 
         body, * {
-            font-family: 'Jost', sans-serif;
+            font-family: 'DejaVu Sans', sans-serif;
             font-size: 24px;
             line-height: 110%;
             letter-spacing: -.02em
@@ -41,7 +30,7 @@
         }
 
         section {
-            padding-top: 80@else
+            padding-top: 80px
 
         }
 
@@ -63,14 +52,14 @@
         h1, .h1 {
             font-size: 70px;
             line-height: 110%;
-            font-weight: 500;
+
             margin-bottom: 60px
         }
 
         h2, .h2 {
             font-size: 48px;
             line-height: 110%;
-            font-weight: 500;
+
             margin-bottom: 60px
         }
 
@@ -83,7 +72,6 @@
 
         .accent {
             font-size: 30px;
-            font-weight: 500
         }
 
         .link {
@@ -101,7 +89,7 @@
             padding: 15px 95px;
             border: 1px #222222 solid;
             border-radius: 6px;
-            font-weight: 500;
+
             font-size: 30px
         }
 
@@ -837,8 +825,8 @@
         }
 
         h1 {
+            font-weight: 400 !important;
             font-size: 120px !important;
-            font-weight: 500 !important;
             line-height: 132px !important;
             letter-spacing: -0.02em !important;
             text-align: left;
@@ -1222,7 +1210,7 @@
 
         .main-page__title {
             font-size: 120px;
-            font-weight: 500;
+
             line-height: 115px;
             letter-spacing: -0.02em;
             text-align: center;
@@ -1350,8 +1338,8 @@
 
     <div class="main-page__img">
         <img
-            src="{{ $report->brand_image ? url($report->brand_image) : '' }}"
-            alt="car-logo">
+                src="{{ $report->brand_image ? url($report->brand_image) : '' }}"
+                alt="car-logo">
     </div>
 
     <div class="main-page__date">
@@ -1363,7 +1351,7 @@
             "-03-" => "мар", "-04-" => "апр", "-05-" => "мая", "-06-" => "июн",
             "-07-" => "июл", "-08-" => "авг", "-09-" => "сен",
             "-10-" => "окт", "-11-" => "ноя", "-12-" => "дек");
-            $_mD = date("-m-"); //для замены
+            $_mD = date_create( (($report->updated_at  && $report->updated_at != $report->created_at) ? $report->updated_at : $report->created_at))->format('-m-');
 
             $currentDate =  date_create($report->updated_at)->format('d-m-Y');
             $currentDate = str_replace($_mD, " ".$_monthsList[$_mD]." ", $currentDate);
@@ -1383,7 +1371,7 @@
         <div class="header__right">
             <div class="header__qr">
                 <img
-                    src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(140)->generate('https://www.car-experts.ae/')) !!} ">
+                        src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(140)->generate('https://www.car-experts.ae/')) !!} ">
             </div>
 
         </div>
@@ -1402,9 +1390,9 @@
                 <div class="overview__logo left">
 
                     <img
-                        src="{{ $report->brand_image ? url($report->brand_image) : '' }}"
+                            src="{{ $report->brand_image ? url($report->brand_image) : '' }}"
 
-                        alt="car-logo">
+                            alt="car-logo">
 
                     {{--                    <img--}}
                     {{--                        src="{{'/assets/brands/'.strtolower(str_replace (' ', '-', $report->brand)).'-logo.png'}}"--}}
@@ -1432,47 +1420,53 @@
                         @endphp
 
                         @php
-                              $equipmentItems = array_filter($report->equipment, function($item){
-                                return $item;
-                            });
-                            $rows = ceil(count($equipmentItems)/4);
-
+                            $equipmentItems = array_filter($report->equipment, function($item){
+                              return $item;
+                          });
+                          $rows = ceil(count($equipmentItems)/4);
+                            $equipmentKeys = array_keys($report->equipment);
                         @endphp
 
+
                         @php
-                        $equipmentIco = [
-                            'tire_pressure_sensor' => '4G',
-                            'adaptive_light' => '6E',
-                            'automatic_high_beam' => '5E',
-                            'tow_hitch' => '5B',
-                            'cruise_control' => '2H',
-                            'parking_assistance_system' => '5E',
-                            'camera' => '1H',
-                            'camera_360' => '6E',
-                            'head_up_display' => '1H',
-                            'hands_free_trunk' => '6A',
-                            'digital_instrument_panel' => '2H',
-                            'keyless_entry' => '4A',
-                            'power_folding_mirrors' => '6E',
-                            'start_stop_system' => '4F',
-                            'leather_interior' => '6G',
-                            'sunroof' => '1C',
-                            'panoramic_roof' => '2G',
-                            'heated_steering_wheel' => '4C',
-                            'third_row_of_seats' => '6G',
-                            'power_seat_adjustment' => '4H',
-                            'seat_position_memory' => '6G',
-                            'heated_seats' => '6G',
-                            'ventilated_seats' => '6G',
-                            'premium_audio_system' => '4D',
-                            'rear_passenger_multimedia' => '4D',
-                            'navigation_system' => '5H',
-                            'android_auto_carplay' => '4D',
-                            'outlet_220V' => '1A',
-                            'seat_massage' => '6G',
-                            'door_closers' => '4A',
-                        ];
-                        $vocabulary = [
+                            $equipmentIco = [
+        'tire_pressure_sensor' => '4G',
+        'cruise_control' => 'cc',
+        'adaptive_cruise_control' => 'cc',
+        'parking_sensors' => '5E',
+        'camera' => 'cam',
+        'camera_360' => '360',
+        'keyless_entry' => '4A',
+        'sunroof' => '1C',
+        'panoramic_roof' => 'pr',
+        'steering_wheel_heating' => '4C',
+        'third_seat_rows' => '3s',
+        'electric_seats' => 'es',
+        'seats_memory' => 'rs',
+        'seats_heating' => 'hs',
+        'seats_ventilation' => 'sv',
+        'premium_audiosystem' => 'pa',
+        'multimedia_system_rear_passengers' => 'mr',
+        'android_auto_carplay' => 'aa',
+        'seats_massage' => 'ms',
+        'door_closers' => '4A',
+        'adaptive_lights' => 'ab',
+        'automatic_high_beam' => 'ahb',
+        'electric_folding_mirrors' => '6E',
+        'start_stop' => 'pts',
+        'leather' => '6G',
+        'virtual_dashboard' => 'pw',
+        'windshield_projection' => 'pw',
+        'hands_free_trunk_opening' => 'aot',
+        'electric_trunk_lid' => 'aot',
+        'multimedia_lcd_screen' => 'md',
+        'sunroof' => 'hatch',
+        'electric_folding_mirrors' => 'em',
+        'power_steering' => '4H',
+        'self_parking' => '4C',
+        'autopilot' => '4C'
+    ];
+         $vocabulary = [
 'tire_pressure_sensor' => 'Датчик давления в шинах',
 'cruise_control' => 'Круиз-контроль',
 'parking_sensors' => 'Парковочные датчики',
@@ -1495,43 +1489,58 @@
 'electric_folding_mirrors' => 'Электрические складывающиеся зеркала',
 'electric_trunk_lid' => 'Электрическая крышка багажника',
 'virtual_dashboard' => 'Виртуальная приборная панель',
-'power_steering' => 'Усилитель руля',
+'power_steering' => 'Электропривод рулевой колонки',
 'adaptive_lights' => 'Адаптивные фары',
 'automatic_high_beam' => 'Автоматический дальний свет',
 'autopilot' => 'Автопилот',
 'self_parking' => 'Самопарковка',
-'premium_seats_ventilation' => 'Премиум вентиляция сидений',
+'premium_seats_ventilation' => 'Мультимедийная система для задних пассажиров',
 'seats_massage' => 'Массаж сидений',
 'multimedia_system_rear_passengers' => 'Мультимедийная система для задних пассажиров',
 'premium_audiosystem' => 'Премиум аудиосистема',
 'windshield_projection' => 'Проекция на лобовое стекло',
 'door_closers' => 'Доводчики дверей',
+
+'adaptive_light' => 'Адаптивный свет', // added missing translation
+    'digital_instrument_panel' => 'Цифровая приборная панель', // added missing translation
+    'electric_seat_adjustment' => 'Регулировка сидений', // added missing translation
+    'hands_free_trunk_opening' => 'Бесконтактное открытие багажника', // added missing translation
+    'head_up_display' => 'Проекция на лобовое стекло', // added missing translation
+    'leather_interior' => 'Кожаный интерьер', // added missing translation
+    'navigation_system' => 'Навигационная система', // added missing translation
+    'parking_assistance_system' => 'Система помощи при парковке', // added missing translation
+    'power_outlet_220v' => 'Розетка 220V', // added missing translation
+    'premium_audio_system' => 'Премиум аудиосистема', // added missing translation
+    'rear_passenger_multimedia_system' => 'Мультимедийная система для задних пассажиров', // added missing translation
+    'seat_massage' => 'Массаж сидений', // added missing translation
+    'seat_position_memory' => 'Память положения сидений', // added missing translation
+    'start_stop_system' => 'Система старт-стоп', // added missing translation
+    'third_row_of_seats' => 'Третий ряд сидений', // added missing translation
+    'ventilated_seats' => 'Вентилируемые сидения', // added missing translation
+    'tow_hitch' => 'Фаркоп',
+
 ];
                         @endphp
-                        @for($i = 0; $i< $rows; $i++)
+                        @for($i = 0; $i < $rows; $i++)
                             <tr>
-                                @for($j = 4*$i; $j < 4*($i+1); $j++)
-                                    @if(array_key_exists($j, $equipmentItems))
-
+                                @for($j = 4 * $i; $j < 4 * ($i + 1); $j++)
+                                    @if(isset($equipmentKeys[$j]))
                                         @php
-                                            $equipmentItem = $equipmentItems[$j];
-                                            $key = key($equipmentItem);
-                                            $value = current($equipmentItem);
+                                            $key = $equipmentKeys[$j];
                                             $icon = isset($equipmentIco[$key]) ? $equipmentIco[$key] : 'no-icon';
                                         @endphp
 
                                         <td class="equipment__item-2">
-                <span class="">
-                    <img src="{{url('/assets/icons/'.$icon.'.png')}}"/>
-                </span>
+                    <span class="">
+                        <img src="{{url('/assets/icons/'.$icon.'.png')}}"/>
+                    </span>
                                             <span class="">
-                    {{$vocabulary[$key]}}
-                </span>
+                        {{$vocabulary[$key]}}
+                    </span>
                                         </td>
                                     @endif
                                 @endfor
                             </tr>
-
                         @endfor
                     </table>
                 </div>
@@ -1660,10 +1669,10 @@
         <div class="h2">Состояние кузова</div>
         <table class="condition__content container
                 @if($report->body == 'купе')
-                    coupe-mode
-                @elseif($report->body == 'кроссовер')
-                                    crossover-mode
-                @endif
+                coupe-mode
+@elseif($report->body == 'кроссовер')
+                crossover-mode
+@endif
                 ">
             <tr>
                 @php
@@ -1695,19 +1704,21 @@
 
                     <div class="condition__side condition__side-front">
                         @foreach($report->colored as $part => $value)
-                            <div class="condition__value {{ $translate[$part] }}">
-                                @if($value == "5")
-                                    <img src="{{url('/assets/1000.png')}}" alt="">
-                                @elseif($value == "4")
-                                    <img src="{{url('/assets/800.png') }}" alt="">
-                                @elseif($value == 3)
-                                    <img src="{{url('/assets/500.png') }}" alt="">
-                                @elseif($value == 2)
-                                    <img src="{{url('/assets/300.png') }}" alt="">
-                                @elseif($value == 1)
-                                    <img src="{{url('/assets/100.png') }}" alt="">
-                                @endif
-                            </div>
+                            @isset($translate[$part])
+                                <div class="condition__value {{ $translate[$part] }}">
+                                    @if($value == "5")
+                                        <img src="{{url('/assets/1000.png')}}" alt="">
+                                    @elseif($value == "4")
+                                        <img src="{{url('/assets/800.png') }}" alt="">
+                                    @elseif($value == 3)
+                                        <img src="{{url('/assets/500.png') }}" alt="">
+                                    @elseif($value == 2)
+                                        <img src="{{url('/assets/300.png') }}" alt="">
+                                    @elseif($value == 1)
+                                        <img src="{{url('/assets/100.png') }}" alt="">
+                                    @endif
+                                </div>
+                            @endif
                         @endforeach
                         {{--                        <div class="image-color bonner">--}}
 
@@ -1721,19 +1732,22 @@
                     </div>
                     <div class="condition__side condition__side-back">
                         @foreach($report->colored as $part => $value)
-                            <div class="condition__value {{ $translate[$part] }}">
-                                @if($value == "5")
-                                    <img src="{{url('/assets/1000.png')}}" alt="">
-                                @elseif($value == "4")
-                                    <img src="{{url('/assets/800.png') }}" alt="">
-                                @elseif($value == 3)
-                                    <img src="{{url('/assets/500.png') }}" alt="">
-                                @elseif($value == 2)
-                                    <img src="{{url('/assets/300.png') }}" alt="">
-                                @elseif($value == 1)
-                                    <img src="{{url('/assets/100.png') }}" alt="">
-                                @endif
-                            </div>
+                            @isset($translate[$part])
+
+                                <div class="condition__value {{ $translate[$part] }}">
+                                    @if($value == "5")
+                                        <img src="{{url('/assets/1000.png')}}" alt="">
+                                    @elseif($value == "4")
+                                        <img src="{{url('/assets/800.png') }}" alt="">
+                                    @elseif($value == 3)
+                                        <img src="{{url('/assets/500.png') }}" alt="">
+                                    @elseif($value == 2)
+                                        <img src="{{url('/assets/300.png') }}" alt="">
+                                    @elseif($value == 1)
+                                        <img src="{{url('/assets/100.png') }}" alt="">
+                                    @endif
+                                </div>
+                            @endif
                         @endforeach
 
                         @if($report->body == 'купе')
@@ -1772,6 +1786,11 @@
                 <p>
                     {{ $report->comment }}
                 </p>
+                @if($report->comment_computer_diag)
+                    <p>
+                        Компьютерная диагностика: {{ $report->comment_computer_diag }}
+                    </p>
+                @endif
                 {{--                <p>--}}
                 {{--                    {{ $report->smells ? 'Посторонние запахи отстуствуют' : 'Посторонние запахи присуствуют' }}--}}
                 {{--                </p>--}}
@@ -1791,8 +1810,8 @@
         </div>
         <div class="recommendation__cost right">
             <img
-                src="{{ url('/assets/money.png') }}"
-                alt="cost">
+                    src="{{ url('/assets/money.png') }}"
+                    alt="cost">
             <div class="h3">Цена</div>
             <div class="cost__value accent">{{ number_format($report->price_value, 0, ' ', ' ') }} AED</div>
 
@@ -1818,7 +1837,7 @@
             </span>
             <span class="footer__qr right">
                 <img
-                    src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(140)->generate(URL::to('/'.$report->pseudoId))) !!} ">
+                        src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(140)->generate(URL::to('/'.$report->pseudoId))) !!} ">
             </span>
             <span class="header__qr-text">
                 <div class="header__qr-text">
@@ -1843,7 +1862,7 @@
         <div class="header__right">
             <div class="header__qr">
                 <img
-                    src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(140)->generate('https://www.car-experts.ae/')) !!} ">
+                        src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(140)->generate('https://www.car-experts.ae/')) !!} ">
             </div>
 
         </div>
@@ -1864,7 +1883,7 @@
         {{--        <table>--}}
         {{--            <tr class="photo__line">--}}
         {{--                <td width="65%" class="">--}}
-        {{--                    <img class="big" src="{{ $photos[0]['preview'] }}" alt="slide">--}}
+        {{--                    <img class="big" src="{{ $photos[0]['photo'] }}" alt="slide">--}}
         {{--                </td>--}}
 
         {{--            </tr>--}}
@@ -1874,13 +1893,13 @@
                 <tr class="photo__line">
                     @isset($photos[$i])
                         <td>
-                            <img src="{{ url($photos[$i++]['preview']) }}" alt="slide">
+                            <img src="{{ url($photos[$i++]['photo']) }}" alt="slide">
                         </td>
                     @endif
                     @isset($photos[$i])
 
                         <td>
-                            <img src="{{ url($photos[$i]['preview']) }}" alt="slide">
+                            <img src="{{ url($photos[$i]['photo']) }}" alt="slide">
                         </td>
                     @endif
 
@@ -1910,7 +1929,7 @@
             </td>
             <td class="footer__qr right">
                 <img
-                    src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(140)->generate(URL::to('/'.$report->pseudoId))) !!} ">
+                        src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(140)->generate(URL::to('/'.$report->pseudoId))) !!} ">
             </td>
         </tr>
 
@@ -1930,7 +1949,7 @@
         <div class="header__right">
             <div class="header__qr">
                 <img
-                    src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(140)->generate('https://www.car-experts.ae/')) !!} ">
+                        src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(140)->generate('https://www.car-experts.ae/')) !!} ">
             </div>
 
         </div>
@@ -2023,7 +2042,7 @@
                             <div class="tires-chars__text">
                                 <div class="tires-chars__box">
 
-                                    @if($report->tire_condition == 'В норме')
+                                    @if($report->tire_condition && date('Y')-3 <= $report->tyre_year)
                                         <img src="{{url('/assets/ok.png')}}" alt="">
                                     @else
                                         <img src="{{url('/assets/notOk.png')}}" alt="">
@@ -2031,7 +2050,13 @@
                                 </div>
                                 <div class="tires-chars__text-text">
 
-                                    {{ $report->tire_condition }}
+                                    @if(!$report->tire_condition )
+                                        Не в норме
+                                    @elseif(date('Y')-3 > $report->tyre_year)
+                                        Не проходное
+                                    @else
+                                        В норме
+                                    @endif
                                 </div>
 
                             </div>
@@ -2065,9 +2090,9 @@
                     </div>
                 </td>
                 <td class="components__item item" width="847">
-                    @if($report->tyre_preview)
+                    @if($report->tyre_photo)
                         <div class="tires-photo">
-                            <img src="{{ $report->tyre_preview }}" alt="">
+                            <img src="{{ $report->tyre_photo }}" alt="">
                         </div>
                     @endif
                 </td>
@@ -2095,7 +2120,7 @@
             </td>
             <td class="footer__qr right">
                 <img
-                    src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(140)->generate(URL::to('/'.$report->pseudoId))) !!} ">
+                        src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(140)->generate(URL::to('/'.$report->pseudoId))) !!} ">
             </td>
         </tr>
 
@@ -2115,7 +2140,7 @@
         <div class="header__right">
             <div class="header__qr">
                 <img
-                    src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(140)->generate('https://www.car-experts.ae/')) !!} ">
+                        src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(140)->generate('https://www.car-experts.ae/')) !!} ">
             </div>
 
         </div>
@@ -2136,19 +2161,19 @@
             <table>
                 @for($i = 0; $i<count($badParts); $i++)
                     <tr class="photo__line">
-                        @isset($badParts[$i])
+                        @if(isset($badParts[$i]) && isset($badParts[$i]['photo']))
                             <td>
-                                <img src="{{ $badParts[$i]['preview'] }}" alt="slide">
+                                <img src="{{ $badParts[$i]['photo'] }}" alt="slide">
                                 <br>
-                                {{ $badParts[$i]['description'] }}
+                                @isset( $badParts[$i]['description'] ) {{ $badParts[$i]['description'] }}@endif
                             </td>
                         @endif
-                        @if($badParts[$i++] && $i<count($badParts) )
+                        @if($badParts[$i++] && $i<count($badParts) && isset($badParts[$i]['photo']) )
 
                             <td>
-                                <img src="{{ $badParts[$i]['preview'] }}" alt="slide">
+                                <img src="{{ $badParts[$i]['photo'] }}" alt="slide">
                                 <br>
-                                {{ $badParts[$i]['description'] }}
+                                @isset( $badParts[$i]['description'] ) {{ $badParts[$i]['description'] }}@endif
                             </td>
                         @endif
 
@@ -2178,7 +2203,7 @@
                 </td>
                 <td class="footer__qr right">
                     <img
-                        src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(140)->generate(URL::to('/'.$report->pseudoId))) !!} ">
+                            src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(140)->generate(URL::to('/'.$report->pseudoId))) !!} ">
                 </td>
             </tr>
 
@@ -2198,7 +2223,7 @@
             <div class="header__right">
                 <div class="header__qr">
                     <img
-                        src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(140)->generate('https://www.car-experts.ae/')) !!} ">
+                            src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(140)->generate('https://www.car-experts.ae/')) !!} ">
                 </div>
 
             </div>
@@ -2224,8 +2249,8 @@
                 <div class="no-trash__like">
                     <svg width="115" height="120" viewBox="0 0 115 120" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
-                            d="M8.15885 56.9702V99.9123H26.3389L27.2569 100.02C44.1349 103.956 55.3189 106.794 60.8929 108.552C68.2969 110.886 71.0569 111.456 76.079 111.792C79.835 112.05 84.101 110.604 86.045 108.624C87.119 107.532 87.923 105.288 88.241 101.808C88.3068 101.079 88.5677 100.38 88.9963 99.7856C89.4249 99.1913 90.0054 98.7232 90.677 98.4303C92.171 97.7823 93.413 96.7262 94.451 95.1902C95.411 93.7862 96.035 91.1702 96.149 87.3842C96.169 86.6882 96.3664 86.0088 96.7223 85.4103C97.0782 84.8119 97.581 84.3141 98.183 83.9642C101.675 81.9422 103.403 79.6622 103.763 76.9862C104.159 74.0282 103.199 70.6982 100.685 66.9062C100.095 66.0169 99.8754 64.9325 100.073 63.8838C100.27 62.835 100.868 61.9045 101.741 61.2902C104.147 59.5982 105.467 57.2462 105.797 53.9102C106.325 48.5942 102.935 44.6642 95.261 43.8782C88.4262 43.2022 81.5254 43.7776 74.8969 45.5762C74.145 45.7727 73.3526 45.7503 72.613 45.5118C71.8734 45.2732 71.2172 44.8284 70.7218 44.2296C70.2264 43.6308 69.9123 42.903 69.8165 42.1318C69.7207 41.3605 69.8471 40.578 70.1809 39.8762C73.1809 33.5282 74.849 28.2902 75.239 24.2341C75.749 18.8521 74.507 14.9521 71.6029 11.7361C69.4009 9.30012 65.8789 7.90812 64.5589 8.19612C62.8189 8.56812 61.6849 9.57612 60.2089 13.1041C59.3389 15.1921 58.9189 16.9681 58.1989 21.1141C57.5089 25.0501 57.1309 26.8262 56.3449 29.1542C53.9749 36.2102 48.1609 43.5242 40.3549 48.5702C34.8841 52.1025 28.9549 54.8682 22.7329 56.7902C22.3442 56.91 21.9396 56.9707 21.5329 56.9702H8.15885ZM7.90685 108.09C5.96885 108.144 4.22885 107.712 2.77085 106.692C0.910843 105.39 0.0348418 103.338 0.0168418 100.974L0.0348418 57.0362C-0.169158 54.6962 0.520842 52.5482 2.15284 50.9522C3.68285 49.4522 5.68085 48.7442 7.79285 48.7922H20.9029C26.206 47.1024 31.262 44.7177 35.9389 41.7002C42.2269 37.6322 46.8589 31.8002 48.6289 26.5441C49.2349 24.7321 49.5589 23.2321 50.1709 19.7041C50.9989 14.9701 51.5149 12.7681 52.7029 9.93612C55.1629 4.04412 58.3909 1.16411 62.8429 0.198111C67.2229 -0.749891 73.601 1.77611 77.633 6.24012C82.103 11.1841 84.077 17.3701 83.345 25.0141C83.033 28.3022 82.121 31.9802 80.621 36.0782C85.7436 35.3316 90.9387 35.2188 96.089 35.7422C108.131 36.9722 114.893 44.8142 113.909 54.7262C113.477 58.9982 111.929 62.6282 109.295 65.4782C111.509 69.7442 112.391 73.9622 111.839 78.0782C111.203 82.8182 108.563 86.7662 104.171 89.8322C103.829 93.9902 102.875 97.3083 101.183 99.7923C99.8498 101.799 98.1103 103.504 96.077 104.796C95.429 108.9 94.067 112.11 91.841 114.366C88.151 118.122 81.557 120.36 75.533 119.952C69.8149 119.568 66.4309 118.872 58.4509 116.352C53.1889 114.69 42.2929 111.93 25.8709 108.09H7.90085H7.90685ZM18.1129 55.1042C18.1113 54.5674 18.2157 54.0355 18.42 53.5392C18.6243 53.0428 18.9246 52.5916 19.3036 52.2114C19.6826 51.8313 20.133 51.5297 20.6287 51.3239C21.1245 51.1181 21.6561 51.0122 22.1929 51.0122C22.7287 51.0138 23.2589 51.1208 23.7533 51.3273C24.2477 51.5338 24.6966 51.8357 25.0744 52.2157C25.4521 52.5956 25.7513 53.0463 25.9549 53.5419C26.1585 54.0375 26.2625 54.5684 26.2609 55.1042V101.172C26.2617 101.708 26.1569 102.239 25.9526 102.734C25.7483 103.229 25.4484 103.68 25.0701 104.059C24.6918 104.438 24.2425 104.74 23.7478 104.945C23.2531 105.151 22.7227 105.257 22.1869 105.258C21.6511 105.257 21.1207 105.151 20.626 104.945C20.1313 104.74 19.6819 104.438 19.3036 104.059C18.9253 103.68 18.6255 103.229 18.4211 102.734C18.2168 102.239 18.1121 101.708 18.1129 101.172V55.1042Z"
-                            fill="#222222"/>
+                                d="M8.15885 56.9702V99.9123H26.3389L27.2569 100.02C44.1349 103.956 55.3189 106.794 60.8929 108.552C68.2969 110.886 71.0569 111.456 76.079 111.792C79.835 112.05 84.101 110.604 86.045 108.624C87.119 107.532 87.923 105.288 88.241 101.808C88.3068 101.079 88.5677 100.38 88.9963 99.7856C89.4249 99.1913 90.0054 98.7232 90.677 98.4303C92.171 97.7823 93.413 96.7262 94.451 95.1902C95.411 93.7862 96.035 91.1702 96.149 87.3842C96.169 86.6882 96.3664 86.0088 96.7223 85.4103C97.0782 84.8119 97.581 84.3141 98.183 83.9642C101.675 81.9422 103.403 79.6622 103.763 76.9862C104.159 74.0282 103.199 70.6982 100.685 66.9062C100.095 66.0169 99.8754 64.9325 100.073 63.8838C100.27 62.835 100.868 61.9045 101.741 61.2902C104.147 59.5982 105.467 57.2462 105.797 53.9102C106.325 48.5942 102.935 44.6642 95.261 43.8782C88.4262 43.2022 81.5254 43.7776 74.8969 45.5762C74.145 45.7727 73.3526 45.7503 72.613 45.5118C71.8734 45.2732 71.2172 44.8284 70.7218 44.2296C70.2264 43.6308 69.9123 42.903 69.8165 42.1318C69.7207 41.3605 69.8471 40.578 70.1809 39.8762C73.1809 33.5282 74.849 28.2902 75.239 24.2341C75.749 18.8521 74.507 14.9521 71.6029 11.7361C69.4009 9.30012 65.8789 7.90812 64.5589 8.19612C62.8189 8.56812 61.6849 9.57612 60.2089 13.1041C59.3389 15.1921 58.9189 16.9681 58.1989 21.1141C57.5089 25.0501 57.1309 26.8262 56.3449 29.1542C53.9749 36.2102 48.1609 43.5242 40.3549 48.5702C34.8841 52.1025 28.9549 54.8682 22.7329 56.7902C22.3442 56.91 21.9396 56.9707 21.5329 56.9702H8.15885ZM7.90685 108.09C5.96885 108.144 4.22885 107.712 2.77085 106.692C0.910843 105.39 0.0348418 103.338 0.0168418 100.974L0.0348418 57.0362C-0.169158 54.6962 0.520842 52.5482 2.15284 50.9522C3.68285 49.4522 5.68085 48.7442 7.79285 48.7922H20.9029C26.206 47.1024 31.262 44.7177 35.9389 41.7002C42.2269 37.6322 46.8589 31.8002 48.6289 26.5441C49.2349 24.7321 49.5589 23.2321 50.1709 19.7041C50.9989 14.9701 51.5149 12.7681 52.7029 9.93612C55.1629 4.04412 58.3909 1.16411 62.8429 0.198111C67.2229 -0.749891 73.601 1.77611 77.633 6.24012C82.103 11.1841 84.077 17.3701 83.345 25.0141C83.033 28.3022 82.121 31.9802 80.621 36.0782C85.7436 35.3316 90.9387 35.2188 96.089 35.7422C108.131 36.9722 114.893 44.8142 113.909 54.7262C113.477 58.9982 111.929 62.6282 109.295 65.4782C111.509 69.7442 112.391 73.9622 111.839 78.0782C111.203 82.8182 108.563 86.7662 104.171 89.8322C103.829 93.9902 102.875 97.3083 101.183 99.7923C99.8498 101.799 98.1103 103.504 96.077 104.796C95.429 108.9 94.067 112.11 91.841 114.366C88.151 118.122 81.557 120.36 75.533 119.952C69.8149 119.568 66.4309 118.872 58.4509 116.352C53.1889 114.69 42.2929 111.93 25.8709 108.09H7.90085H7.90685ZM18.1129 55.1042C18.1113 54.5674 18.2157 54.0355 18.42 53.5392C18.6243 53.0428 18.9246 52.5916 19.3036 52.2114C19.6826 51.8313 20.133 51.5297 20.6287 51.3239C21.1245 51.1181 21.6561 51.0122 22.1929 51.0122C22.7287 51.0138 23.2589 51.1208 23.7533 51.3273C24.2477 51.5338 24.6966 51.8357 25.0744 52.2157C25.4521 52.5956 25.7513 53.0463 25.9549 53.5419C26.1585 54.0375 26.2625 54.5684 26.2609 55.1042V101.172C26.2617 101.708 26.1569 102.239 25.9526 102.734C25.7483 103.229 25.4484 103.68 25.0701 104.059C24.6918 104.438 24.2425 104.74 23.7478 104.945C23.2531 105.151 22.7227 105.257 22.1869 105.258C21.6511 105.257 21.1207 105.151 20.626 104.945C20.1313 104.74 19.6819 104.438 19.3036 104.059C18.9253 103.68 18.6255 103.229 18.4211 102.734C18.2168 102.239 18.1121 101.708 18.1129 101.172V55.1042Z"
+                                fill="#222222"/>
                     </svg>
                 </div>
             </div>
@@ -2253,7 +2278,7 @@
             </td>
             <td class="footer__qr right">
                 <img
-                    src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(140)->generate(URL::to('/'.$report->pseudoId))) !!} ">
+                        src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(140)->generate(URL::to('/'.$report->pseudoId))) !!} ">
             </td>
         </tr>
 
@@ -2276,6 +2301,8 @@
             }
         ');
    }
+
+
 
 </script>
 

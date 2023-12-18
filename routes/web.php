@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/pdf/{lang}/{id}', [\App\Http\Controllers\ReportController::class, 'getReportPdf']);
+Route::get('/pdfWeb/{lang}/{id}', [\App\Http\Controllers\ReportController::class, 'getReportPdfWeb']);
 
 Route::get('/translate', [\App\Http\Controllers\ReportController::class, 'translate2']);
 Route::get('/{lang}/{id}', [\App\Http\Controllers\ReportController::class, 'getReport']);

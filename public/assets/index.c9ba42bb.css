@@ -330,7 +330,7 @@ h3, .h3 {
 }
 
 .overview__logo {
-    display: grid;
+    /*display: grid;*/
     place-content: center;
     padding: 40px;
     width: 215px;

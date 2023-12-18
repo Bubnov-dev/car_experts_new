@@ -210,8 +210,11 @@ class ReportController extends Controller
         foreach ($descFieldsToTranslate as $field) {
             $fieldData = $report->$field;  // Assign the property to a variable
             foreach ($fieldData as $k => $item) {
-                $fieldData[$k]['description'] = $this->translate($item['description'], $sourceLang, $targetLang);
+                if(isset($fieldData[$k]['description'])) {
+                    $fieldData[$k]['description'] = $this->translate($item['description'], $sourceLang, $targetLang);
+                }
             }
+
             $report->$field = $fieldData;  // Set the property to the modified variable
             $reportToUpdate->setAttribute($field, $report->$field);
         }
@@ -243,7 +246,9 @@ class ReportController extends Controller
             if($photos){
                 $numPhotos = count($photos);
                 foreach ($photos as $key => &$photo) {
-                    $photos[$key]['preview'] = Service::getFullPath($photo['photo']);
+                    if (isset($photo['photo'])) {
+                        $photos[$key]['preview'] = Service::getFullPath($photo['photo']);
+                    }
                 }
 
 
@@ -251,6 +256,17 @@ class ReportController extends Controller
             }
 
         }
+
+        $photo_dashboard = $report->photo_dashboard;
+        if (isset($photo_dashboard['photo'])) {
+                $photo_dashboard['preview'] = Service::getFullPath($photo_dashboard['photo']);
+        }
+        else{
+            $photo_dashboard = array();
+            $photo_dashboard['preview'] = '';
+            $photo_dashboard['photo'] = '';
+        }
+        $report->photo_dashboard = $photo_dashboard;
 
         $report->tyre_preview = Service::getFullPath($report->tyre_photo);
         $report->photo_vin = ['photo' => $report->photo_vin, 'preview' => Service::getFullPath
@@ -276,52 +292,15 @@ class ReportController extends Controller
             $report->tyre_brand_image = $tyreBrand->image;
         }
 
-        if($report->photo_dashboard){
+        if($report->photo_dashboard && $report->photo_dashboard['photo']){
             $report->photo_internal = array_merge($report->photo_internal,
                 [$report->photo_dashboard]);
         }
-
-        foreach (['photo_external_damage', 'photo_internal_damage', 'photo_external', 'photo_internal', 'tires'] as $photoType) {
-            $photos = $report->{$photoType};
-            $numPhotos = count($photos);
-
-            foreach ($photos as $key => &$photo) {
-                $photos[$key]['preview'] = Service::getFullPath($photo['photo']);
-            }
-//            for ($i = 0; $i < $numPhotos; $i++) {
-//                $photos[$i]['preview'] = Service::getFullPath($photos[$i]['photo']);
-//            }
-
-            $report->{$photoType} = $photos;
-        }
-
-
-        foreach ($report->photo_external_damage as $key=> $item) {
-            if( isset($item['name'])){
-                Log::info(isset($item['chips']));
-                Log::info(implode(', ',  $item['chips']));
-                $item['description'] = $item['name'] . (isset($item['chips']) ?  (' ' . implode(', ',  $item['chips'])) : '') .
-                    (isset($item['comment']) ?  (' ' . $item['comment']) : '');
-                Log::info($item['description']);
-
-            }
-
-        }
-
-        $report->comment = $report->comment_computer_diag . "\n" . $report->comment;
-
-        $report->tyre_preview = Service::getFullPath($report->tyre_photo);
-
-        $report->photo_vin = Service::getFullPath($report->photo_vin);
-        $report->photo_tech_info = Service::getFullPath($report->photo_tech_info);
-        $report->video = Service::getFullPath($report->video);
-        $report->computer_diag = Service::getFullPath($report->computer_diag);
 
         if ($request->lang == 'ru') {
             return view('car', ['report' => $report]);
         } else {
             return view('car_en', ['report' => $report]);
-
         }
 
     }
@@ -343,21 +322,7 @@ class ReportController extends Controller
         }
 
 
-        foreach (['photo_external_damage', 'photo_internal_damage', 'photo_external', 'photo_internal'] as $photoType) {
-            $photos = $report->{$photoType};
-            $numPhotos = count($photos);
 
-            for ($i = 0; $i < $numPhotos; $i++) {
-                $photos[$i]['preview'] = Service::getFullPath($photos[$i]['photo']);
-            }
-
-            $report->{$photoType} = $photos;
-        }
-
-        $report->tyre_preview = Service::getFullPath($report->tyre_photo);
-
-        $report->photo_vin = Service::getFullPath($report->photo_vin);
-        $report->photo_tech_info = Service::getFullPath($report->photo_tech_info);
 
         Log::info('report got');
         $contxt = stream_context_create([

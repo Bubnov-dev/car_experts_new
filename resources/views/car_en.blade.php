@@ -6,6 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Car Experts</title>
 
+
+    <meta name="description" content="{{ $report->brand }} {{ $report->model }} {{ $report->year }} {{ number_format($report->price_value, 0, ' ', ' ') }} {{ $report->price_currency }}" />
+    <meta property="og:title" content="Report Car Experts">
+    <meta property="og:url" content="{{ url()->current() }}" />
+    @isset($report->photo_external[0])
+    <meta property="og:image" content="{{$report->photo_external[0]['photo']}}">
+    @endif
+    <meta property="og:description" content="{{ $report->brand }} {{ $report->model }}<br>{{ $report->year }} | {{ $report->specification }}<br>{{ number_format($report->price_value, 0, ' ', ' ') }} {{ $report->price_currency }}">
+
+
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css"/>
@@ -18,8 +28,8 @@
     <script type="module" crossorigin src="/assets/index.fe9cca41.js"></script>
     <link rel="stylesheet" href="/assets/index.c9ba42bb.css">
     <link rel="stylesheet" href="/assets/add.css">
-    <link rel="preload" as="image"
-          href="/assets/brands/{{strtolower(str_replace (' ', '-', $report->brand)).'-logo.png'}}">
+{{--    <link rel="preload" href="{{ $report->tyre_brand_image }}" as="image" />--}}
+{{--    <link rel="preload" href="{{ $report->brand_image }}" as="image" />--}}
 </head>
 <body>
 <header class="header">
@@ -39,10 +49,10 @@
                     "-03-" => "Mar", "-04-" => "Apr", "-05-" => "May", "-06-" => "Jun",
                     "-07-" => "Jul", "-08-" => "Aug", "-09-" => "Sep",
                     "-10-" => "Oct", "-11-" => "Nov", "-12-" => "Dec");
-                    $_mD = date("-m-"); //for replacement
+                    $_mD = date_create( (($report->updated_at  && $report->updated_at != $report->created_at) ? $report->updated_at : $report->created_at))->format('-m-');
 
                     $currentDate = date_create((($report->updated_at && $report->updated_at != $report->created_at) ? $report->updated_at : $report->created_at))->format('d-m-Y');;
-                    $currentDate = str_replace($_mD, " ".$_monthsList[$_mD]." ", $currentDate);
+                    $currentDate = str_replace($_mD, " ". $_monthsList[$_mD]." ", $currentDate);
                 @endphp
                 {{$currentDate}}
             </div>
@@ -64,7 +74,7 @@
         <div class="overview__content">
             <div class="overview__logo-wrapper">
                 @isset($report->photo_external[0])
-                    <img src="{{$report->photo_external[0]['preview']}}" alt="photo">
+                    <img src="{{$report->photo_external[0]['photo']}}" alt="photo">
                 @endif
                 <div class="overview__logo">
                     <img
@@ -85,73 +95,86 @@
             </div>
             <div class="overview__equipment">
                 <div class="equipment__title h3">
-                    Equipment
+                    Features
                 </div>
 
                 <div class="equipment__grid">
                     @php
                         $equipmentIco = [
     'tire_pressure_sensor' => '4G',
-    'cruise_control' => '2H',
+    'cruise_control' => 'cc',
+    'adaptive_cruise_control' => 'cc',
     'parking_sensors' => '5E',
-    'camera' => '1H',
-    'camera_360' => '6E',
+    'camera' => 'cam',
+    'camera_360' => '360',
     'keyless_entry' => '4A',
     'sunroof' => '1C',
-    'panoramic_roof' => '2G',
+    'panoramic_roof' => 'pr',
     'steering_wheel_heating' => '4C',
-    'third_seat_rows' => '6G',
-    'electric_seats' => '4H',
-    'seats_memory' => '6G',
-    'seats_heating' => '6G',
-    'seats_ventilation' => '6G',
-    'premium_audiosystem' => '4D',
-    'multimedia_system_rear_passengers' => '4D',
-    'android_auto_carplay' => '4D',
-    'seats_massage' => '6G',
+    'third_seat_rows' => '3s',
+    'electric_seats' => 'es',
+    'seats_memory' => 'rs',
+    'seats_heating' => 'hs',
+    'seats_ventilation' => 'sv',
+    'premium_audiosystem' => 'pa',
+    'multimedia_system_rear_passengers' => 'mr',
+    'android_auto_carplay' => 'aa',
+    'seats_massage' => 'ms',
     'door_closers' => '4A',
-    'adaptive_lights' => '6E',
-    'automatic_high_beam' => '5E',
+    'adaptive_lights' => 'ab',
+    'automatic_high_beam' => 'ahb',
     'electric_folding_mirrors' => '6E',
-    'start_stop' => '4F',
+    'start_stop' => 'pts',
     'leather' => '6G',
-    'virtual_dashboard' => '2H',
+    'virtual_dashboard' => 'pw',
+    'windshield_projection' => 'pw',
+    'hands_free_trunk_opening' => 'aot',
+    'electric_trunk_lid' => 'aot',
+    'multimedia_lcd_screen' => 'md',
+    'sunroof' => 'hatch',
+    'electric_folding_mirrors' => 'em',
+    'power_steering' => '4H',
+    'self_parking' => '4C',
+    'autopilot' => '4C'
 ];
-                        $vocabulary = [
-'tire_pressure_sensor' => 'Tire Pressure Sensor',
-'cruise_control' => 'Cruise Control',
-'parking_sensors' => 'Parking Sensors',
-'camera' => 'Camera',
-'start_stop' => 'Start-Stop',
-'leather' => 'Leather Interior',
-'third_seat_rows' => 'Third Row Seats',
-'seats_heating' => 'Heated Seats',
-'multimedia_lcd_screen' => 'Multimedia LCD Screen',
-'adaptive_cruise_control' => 'Adaptive Cruise Control',
-'camera_360' => '360 Camera',
-'keyless_entry' => 'Keyless Entry',
-'sunroof' => 'Sunroof',
-'panoramic_roof' => 'Panoramic Roof',
-'electric_seats' => 'Electric Seats',
-'seats_memory' => 'Seat Memory',
-'steering_wheel_heating' => 'Heated Steering Wheel',
-'seats_ventilation' => 'Seat Ventilation',
-'android_auto_carplay' => 'Android Auto / CarPlay',
-'electric_folding_mirrors' => 'Electric Folding Mirrors',
-'electric_trunk_lid' => 'Electric Trunk Lid',
-'virtual_dashboard' => 'Virtual Dashboard',
-'power_steering' => 'Power Steering',
-'adaptive_lights' => 'Adaptive Lights',
-'automatic_high_beam' => 'Automatic High Beam',
-'autopilot' => 'Autopilot',
-'self_parking' => 'Self-Parking',
-'premium_seats_ventilation' => 'Premium Seat Ventilation',
-'seats_massage' => 'Seat Massage',
-'multimedia_system_rear_passengers' => 'Rear Passenger Multimedia System',
-'premium_audiosystem' => 'Premium Audio System',
-'windshield_projection' => 'Windshield Projection',
-'door_closers' => 'Door Closers',
-];
+
+
+
+$vocabulary = [
+       'tire_pressure_sensor' => 'Tyres pressure monitor system',
+       'cruise_control' => 'Cruise Control',
+       'parking_sensors' => 'Parking Sensors',
+       'camera' => 'Camera',
+       'start_stop' => 'Push-to-start',
+       'leather' => 'Leather Interior',
+       'third_seat_rows' => 'Third row seating',
+       'seats_heating' => 'Seats heating',
+       'multimedia_lcd_screen' => 'Multimedia with LCD screen',
+       'adaptive_cruise_control' => 'Adaptive Cruise Control',
+       'camera_360' => '360 Cameras',
+       'keyless_entry' => 'Keyless Entry',
+       'sunroof' => 'Sunroof',
+       'panoramic_roof' => 'Panoramic Roof',
+       'electric_seats' => 'Power seats',
+       'seats_memory' => 'Seat Memory',
+       'steering_wheel_heating' => 'Steering wheel heating',
+       'seats_ventilation' => 'Seat Ventilation',
+       'android_auto_carplay' => 'CarPlay / Android Auto',
+       'electric_folding_mirrors' => 'Electric Folding Mirrors',
+       'electric_trunk_lid' => 'Electric Trunk Lid',
+       'virtual_dashboard' => 'Virtual Dashboard',
+       'power_steering' => 'Steering column with power adjustment',
+       'adaptive_lights' => 'Adaptive headlights',
+       'automatic_high_beam' => 'Automatic High Beam',
+       'autopilot' => 'Autopilot',
+       'self_parking' => 'Parking pilot',
+       'premium_seats_ventilation' => 'Seat ventilation',
+       'seats_massage' => 'Seat Massage',
+       'multimedia_system_rear_passengers' => 'Multimedia system for rear passengers',
+       'premium_audiosystem' => 'Premium Audio System',
+       'windshield_projection' => 'Head up display',
+       'door_closers' => 'Soft close',
+       ];
                     @endphp
 
                     @foreach($report->equipment as $key => $value)
@@ -203,7 +226,7 @@
             </div>
             <div class="technical__item">
                 <div class="technical__title">
-                    Drive
+                    Wheel Drive
                 </div>
                 <div class="technical__value">
                     {{ $report->drive }}
@@ -292,13 +315,14 @@
 
             @endphp
             <div class="condition__content
-                @if($report->body == 'coupe')
+                @if(mb_strtolower($report->body) == 'coupe')
                                     coupe-mode
-                @elseif($report->body == 'crossover')
+                @elseif(mb_strtolower($report->body) == 'crossover')
                                     crossover-mode
                 @endif">
                 <div class="condition__side condition__side-front">
                     @foreach($report->colored as $part => $value)
+                        @isset($translate[$part])
                         <div class="condition__value {{ $translate[$part] }}">
                             @if($value == "5")
                                 <img src="/assets/1000.png" alt="">
@@ -312,15 +336,16 @@
                                 <img src="/assets/300.png" alt="">
                             @endif
                         </div>
+                        @endif
                     @endforeach
                     {{--                @foreach($translate as $item)--}}
                     {{--                    <div class="condition__value {{ $item}}">--}}
                     {{--                            <img src="/assets/paint-1000.png" alt="">--}}
                     {{--                    </div>--}}
                     {{--                @endforeach--}}
-                    @if($report->body == 'coupe')
+                    @if(mb_strtolower($report->body) == 'coupe')
                         <img src="/assets/car-front-coupe.png" alt="car-front">
-                    @elseif($report->body == 'crossover')
+                    @elseif(mb_strtolower($report->body) == 'crossover')
                         <img src="/assets/car-front-crossover.png" alt="car-front">
                     @else
                         <img src="/assets/car-front.png" alt="car-front">
@@ -333,6 +358,7 @@
                     {{--                    </div>--}}
                     {{--                @endforeach--}}
                     @foreach($report->colored as $part => $value)
+                        @isset($translate[$part])
 
                         <div class="condition__value {{ $translate[$part] }}">
                             @if($value == "5")
@@ -347,11 +373,12 @@
                                 <img src="/assets/300.png" alt="">
                             @endif
                         </div>
+                        @endif
                     @endforeach
 
-                    @if($report->body == 'coupe')
+                    @if(mb_strtolower($report->body) == 'coupe')
                         <img src="/assets/car-back-coupe.png" alt="car-front">
-                    @elseif($report->body == 'crossover')
+                    @elseif(mb_strtolower($report->body) == 'crossover')
                         <img src="/assets/car-back-crossover.png" alt="car-front">
                     @else
                         <img src="/assets/car-back.png" alt="car-front">
@@ -359,11 +386,11 @@
                 </div>
                 <div class="condition__measurement">
                     <div class="measurement__titles">
-                        <div class="titles__item">1000 + мкм</div>
-                        <div class="titles__item">до 800 мкм</div>
-                        <div class="titles__item">до 500 мкм</div>
-                        <div class="titles__item">до 300 мкм</div>
-                        <div class="titles__item">100 мкм</div>
+                        <div class="titles__item">1000 + µm</div>
+                        <div class="titles__item">800 µm</div>
+                        <div class="titles__item">500 µm</div>
+                        <div class="titles__item">300 µm</div>
+                        <div class="titles__item">100 µm</div>
                     </div>
                     <div class="measurement__values"></div>
                 </div>
@@ -375,11 +402,12 @@
                 @if ($report->tire_similar || !$report->tires || !count($report->tires))
                     <div class="tyres__content">
                         <div class="tyres-logo">
+                            <img src="/assets/tire-up.png" alt="">
+                            <br>
+
                             @if($report->tyre_brand_image)
                                 <img src="{{ $report->tyre_brand_image }}"
                                      alt="{{$report->tyre_manufacturer}}">
-                            @else
-                                <img src="/assets/tire-up.png" alt="">
                             @endif
                         </div>
                         <div class="tyres-chars">
@@ -395,16 +423,18 @@
                                 </div>
                                 <div class="tyres-chars__text">
                                     <div class="tyres-chars__box">
-                                        @if($report->tire_condition)
+                                        @if($report->tire_condition && date('Y')-3 <= $report->tyre_year)
                                             <img src="/assets/ok.png" alt="">
                                         @else
                                             <img src="/assets/notOk.png" alt="">
                                         @endif
                                     </div>
-                                    @if($report->tire_condition)
-                                        Good
-                                    @else
+                                    @if(!$report->tire_condition )
                                         Poor
+                                    @elseif(date('Y')-3 > $report->tyre_year)
+                                        Test failed
+                                    @else
+                                        Good
                                     @endif
                                 </div>
                             </div>
@@ -417,9 +447,9 @@
                                 </div>
                             </div>
                         </div>
-                        @if ($report->tyre_preview)
+                        @if ($report->tyre_photo)
                             <div class="tyres-photo">
-                                <img src="{{ $report->tyre_preview }}" alt="" data-fancybox="demo" data-caption="Tires">
+                                <img src="{{ $report->tyre_photo }}" alt="" data-fancybox="demo" data-caption="Tires">
                             </div>
                         @endif
                     </div>
@@ -429,8 +459,8 @@
                         $tire_voc = [
                             'front_left' => 'Front left',
                             'front_right' => 'Front Right',
-                            'back_left' => 'Back left',
-                            'back_right' => 'Back right',
+                            'back_left' => 'Rear left',
+                            'back_right' => 'Rear right',
                         ];
                         function doesTireExist($name, $report) {
                             foreach ($report->tires as $tire_name => $tire ) {
@@ -486,16 +516,18 @@
                                     <div class="tyres-multiple__text-item">
                                         <div class="tyres-multiple__text-title">Condition:</div>
                                         <div class="tyres-multiple__text-value">
-                                            @if ($tire['condition'])
+                                            @if(!$tire['condition'] )
+                                                Poor
+                                            @elseif(date('Y')-3 > $tire['year'])
+                                                Test failed
+                                            @else
                                                 <svg width="17" height="12" viewBox="0 0 17 12" fill="none"
                                                      xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M16 1L5.6875 11L1 6.45455" stroke="#4E2EE1"
                                                           stroke-width="2" stroke-linecap="round"
                                                           stroke-linejoin="round"/>
                                                 </svg>
-                                                Normal
-                                            @else
-                                                Bad
+                                                Good
                                             @endif
                                         </div>
                                     </div>
@@ -506,7 +538,9 @@
                                 </div>
                             </div>
                         @endforeach
-                        <div class="tyres-multiple__item">
+                        @if(count($report->tires)<4)
+
+                            <div class="tyres-multiple__item">
                             <div class="tyres-multiple__title">
                                 Another
                             </div>
@@ -566,18 +600,19 @@
                             </div>
                         </div>
 
+                        @endif
                     </div>
                     <div class="tires-images">
                         @foreach($report->tires as $tire)
                             <!-- TIRE -->
-                            @if(isset($tire['preview']) && $tire['preview'])
-                                <img src="{{ $tire['preview'] }}" alt="">
+                            @if(isset($tire['photo']) && $tire['photo'])
+                                <img src="{{ $tire['photo'] }}" alt="">
                             @endif
                         @endforeach
                         <!-- TIRE main -->
-                        @if(isset($report->tyre_preview) && $report->tyre_preview)
+                        @if(isset($report->tyre_photo) && $report->tyre_photo)
 
-                            <img src="{{ $report->tyre_preview }}" alt="">
+                            <img src="{{ $report->tyre_photo }}" alt="">
                         @endif
 
                     </div>
@@ -592,14 +627,19 @@
             <div class="h2">Recommendations and Conclusions</div>
             <div class="recommendation__text">
                 <p>
-                    {{ $report->comment }}
+                    {{ htmlspecialchars_decode($report->comment) }}
                 </p>
+                    @if($report->comment_computer_diag)
+                    <p>
+                        Computer diagnostics: {{ htmlspecialchars_decode($report->comment_computer_diag) }}
+                    </p>
+                    @endif
                 <p>
-                    {{ $report->equipmentStatus }}
+                    {{ htmlspecialchars_decode($report->equipmentStatus) }}
                 </p>
                 @if($report->functions_check)
                     <p>
-                        {{ $report->functions_problems }}
+                        {{ htmlspecialchars_decode($report->functions_problems) }}
                     </p>
                 @endif
             </div>
@@ -631,7 +671,7 @@
                     @foreach($report->photo_external as $photo)
                         <div class="slide">
                             <div class="slide__image">
-                                <img src="{{ $photo['preview'] }}" alt="slide" data-fancybox="demo"
+                                <img src="{{ $photo['photo'] }}" alt="slide" data-fancybox="demo"
                                      data-caption="Photo Report">
                             </div>
                         </div>
@@ -639,7 +679,7 @@
                     @foreach($report->photo_internal as $photo)
                         <div class="slide">
                             <div class="slide__image">
-                                <img src="{{ $photo['preview'] }}" alt="slide" data-fancybox="demo"
+                                <img src="{{ $photo['photo'] }}" alt="slide" data-fancybox="demo"
                                      data-caption="Photo Report">
                             </div>
 
@@ -652,7 +692,7 @@
 
                         <div class="slide">
                             <div class="slide__image-wrapper">
-                                <img src="{{ $photo['preview'] }}" alt="slide">
+                                <img src="{{ $photo['photo'] }}" alt="slide">
                             </div>
                         </div>
                     @endforeach
@@ -660,7 +700,7 @@
 
                         <div class="slide">
                             <div class="slide__image-wrapper">
-                                <img src="{{ $photo['preview'] }}" alt="slide">
+                                <img src="{{ $photo['photo'] }}" alt="slide">
                             </div>
                         </div>
                     @endforeach
@@ -679,7 +719,7 @@
         </div>
     </div>
 </section>
-
+@if($report->computer_diag)
 <section class="diagnostic">
     <div class="container">
         <div class="diagnostic-results">
@@ -689,7 +729,7 @@
                     <path d="M57.9272 19.9864H38.4031V30.3716H53.3577V33.6949H38.8185L31.3411 47.8188H15.971V62.7735H11.4016V47.8188H0.185547V71.9124H2.67799V93.5136H11.4016V78.559H15.971V93.5136L30.0949 93.929L41.7263 106.391H57.9272V100.576H45.0496L32.1719 86.8671H23.033V54.4653H35.0798L42.5571 40.3414H57.9272V19.9864Z" fill="white"/>
                 </svg>
             </div>
-            <div class="diagnostic-results__text">Результаты компьютерной диагностики</div>
+            <div class="diagnostic-results__text">Computer diagnostics report</div>
 
             <a href="{{$report->computer_diag}}" target="_blank" class="diagnostic-results__btn">
                 <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -698,11 +738,12 @@
                     <path d="M12.0858 0.000244141H4.05294C2.87942 0.000244141 1.92431 0.956025 1.92431 2.12888V10.0002H1.7164C1.24276 10.0002 0.858643 10.3839 0.858643 10.858V16.06C0.858643 16.534 1.24272 16.9177 1.7164 16.9177H1.92431V17.8716C1.92431 19.0457 2.87942 20.0002 4.05294 20.0002H15.0134C16.1861 20.0002 17.1414 19.0457 17.1414 17.8716V5.03816L12.0858 0.000244141ZM3.1089 11.7968C3.36028 11.7543 3.71362 11.7223 4.21145 11.7223C4.71454 11.7223 5.0731 11.8183 5.31403 12.0112C5.54417 12.193 5.69948 12.493 5.69948 12.8461C5.69948 13.1991 5.58179 13.4992 5.36767 13.7025C5.08916 13.9647 4.67728 14.0824 4.19547 14.0824C4.08824 14.0824 3.99213 14.0771 3.91697 14.0667V15.3566H3.1089V11.7968ZM15.0134 18.6966H4.05294C3.59855 18.6966 3.22854 18.3266 3.22854 17.8716V16.9177H13.4459C13.9196 16.9177 14.3037 16.534 14.3037 16.06V10.858C14.3037 10.3839 13.9196 10.0002 13.4459 10.0002H3.22854V2.12888C3.22854 1.67515 3.59859 1.30513 4.05294 1.30513L11.5981 1.29725V4.08619C11.5981 4.90081 12.259 5.5624 13.0743 5.5624L15.8063 5.55456L15.8371 17.8715C15.8371 18.3266 15.4677 18.6966 15.0134 18.6966ZM6.22053 15.3402V11.7968C6.52024 11.7491 6.91087 11.7223 7.32311 11.7223C8.00823 11.7223 8.4525 11.8452 8.80061 12.1073C9.17523 12.3858 9.41056 12.8298 9.41056 13.4671C9.41056 14.1575 9.15918 14.6341 8.81102 14.9283C8.43117 15.244 7.85296 15.3938 7.14657 15.3938C6.72354 15.3938 6.42383 15.367 6.22053 15.3402ZM12.0623 13.2423V13.9058H10.7668V15.3566H9.94795V11.7491H12.1531V12.4178H10.7668V13.2423H12.0623Z" fill="black"/>
                 </svg>
 
-                Посмотреть отчёт
+                View report
             </a>
         </div>
     </div>
 </section>
+@endif
 <section class="components">
     <div class="container">
         <div class="h2">Registration data</div>
@@ -745,28 +786,44 @@
               "deformation" => "Deformation"
             );
 
+        $name_voc = [
+    'bumper_front' => 'Front bumper',
+    'front_left_rack' => 'Front left rack',
+    'fenderfrontright' => 'Fender front right',
+    'hood' => 'Hood',
+    'front_right_rack' => 'Front right rack',
+    'doorfrontright' => 'Door front right',
+    'middle_right_rack' => 'Middle right rack',
+    'doorbackright' => 'Door rear right',
+    'back_right_rack' => 'Rear right rack',
+    'fenderbackright' => 'Fender rear right',
+    'hoodback' => 'Rear Bumper',
+    'trunk' => 'Trunk',
+    'roof' => 'Roof',
+    'fenderfrontleft' => 'Fender front left',
+    'doorfrontleft' => 'Door front left',
+    'doorbackleft' => 'Door rear left',
+    'middle_left_rack' => 'Middle left rack',
+    'back_left_rack' => 'Rear left rack',
+    'fenderbackleft' => 'Fender rear left',
+];
+
         @endphp
         @if(count(array_merge($report->photo_external_damage, $report->photo_internal_damage))>0)
             <div class="flex ">
 
                 @foreach((array_merge($report->photo_external_damage, $report->photo_internal_damage)) as $badPart)
-                    <div class="components__item item">
-                        <img class="item__image" src="{{ $badPart['preview'] }}" alt="vin" data-fancybox="demo"
-                             data-caption="Damage – @isset($badPart['chips'])
-                                @foreach($badPart['chips'] as $chip)
-                                    {{ $translations_damage[strtolower($chip)] }},
-
-                                @endforeach
-                            @endif{{ $badPart['description'] }}">
-                        <div class="item__desc">
-                            @isset($badPart['chips'])
-                                @foreach($badPart['chips'] as $chip)
-                                    {{ $translations_damage[strtolower($chip)] }},
-                                @endforeach
-                            @endif
-                            {{ $badPart['description'] }}
+                    @isset($badPart['photo'])
+                        <div class="components__item item">
+                            <img class="item__image" src="{{ $badPart['photo'] }}" alt="photo" data-fancybox="demo"
+                                 data-caption="@if( isset( $badPart['name'] ) && array_key_exists( $badPart['name'], $name_voc)) {{ $name_voc[$badPart['name']] }}@else Damage @endif
+                                 @isset( $badPart['description'] ) – {{ $badPart['description'] }}@endif">
+                            <div class="item__desc">
+                                @if( isset( $badPart['name'] ) && array_key_exists( $badPart['name'], $name_voc)) {{ $name_voc[$badPart['name']] }}:@else Damage: @endif
+                                @isset( $badPart['description'] ){{ htmlspecialchars_decode($badPart['description']) }} @endif
+                            </div>
                         </div>
-                    </div>
+                    @endif
                 @endforeach
             </div>
         @else
@@ -793,7 +850,7 @@
         </div>
         <div class="header__date">
             <div class="date__title">
-                Date of diagnosis
+                Inspection date
             </div>
             <div class="date__date accent">
 
@@ -803,10 +860,10 @@
                     "-03-" => "Mar", "-04-" => "Apr", "-05-" => "May", "-06-" => "Jun",
                     "-07-" => "Jul", "-08-" => "Aug", "-09-" => "Sep",
                     "-10-" => "Oct", "-11-" => "Nov", "-12-" => "Dec");
-                    $_mD = date("-m-"); //for replacement
+                    $_mD = date_create( (($report->updated_at  && $report->updated_at != $report->created_at) ? $report->updated_at : $report->created_at))->format('-m-');
 
                     $currentDate =  date_create( (($report->updated_at  && $report->updated_at != $report->created_at) ? $report->updated_at : $report->created_at))->format('d-m-Y');;
-                    $currentDate = str_replace($_mD, " ".$_monthsList[$_mD]." ", $currentDate);
+                    $currentDate = str_replace($_mD, " ". $_monthsList[$_mD]." ", $currentDate);
                 @endphp
                 {{$currentDate}}
             </div>

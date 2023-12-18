@@ -556,7 +556,9 @@ body {
 .cost__value.accent {
     /*margin-top: 12px;*/
 }
-
+.tyres-logo{
+    text-align: center;
+}
 .tyres-logo img {
     max-width: 100%;
 }
@@ -715,7 +717,7 @@ body {
     .diagnostic-results__btn {
         grid-column: 1/3;
         grid-row: 2/3;
-
+        width: 100%;
         place-self: center;
     }
 }
@@ -831,7 +833,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    font-size: 20px;
+    font-size: 18px;
 }
 .tyres-multiple__text-item{
     display: flex;
@@ -849,6 +851,10 @@ body {
     }
 
     .tyres-multiple__text {
-        font-size: 18px;
+        font-size: 16px;
     }
+}
+
+.d-none{
+    display: none;
 }

@@ -9,9 +9,9 @@
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css"/>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;700&display=swap" rel="stylesheet">
+{{--    <link rel="preconnect" href="https://fonts.googleapis.com">--}}
+{{--    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>--}}
+{{--    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;400;700&display=swap" rel="stylesheet">--}}
     <!--    <link rel="stylesheet" href="style/style.sass">-->
     {{--
     <script type="module" crossorigin src="{{url('/storage/assets/index.a2dc5af3.js') }}"></script>
@@ -33,7 +33,7 @@
         @font-face {
             font-family: 'Futura PT';
             src: url('/storage/fonts/FuturaPT-Book.ttf');
-            font-weight: 500
+            font-weight: 400
         }
 
         body, * {
@@ -73,14 +73,14 @@
         h1, .h1 {
             font-size: 70px;
             line-height: 110%;
-            font-weight: 500;
+            font-weight: 400;
             margin-bottom: 60px
         }
 
         h2, .h2 {
             font-size: 48px;
             line-height: 110%;
-            font-weight: 500;
+            font-weight: 400;
             margin-bottom: 60px
         }
 
@@ -93,7 +93,7 @@
 
         .accent {
             font-size: 30px;
-            font-weight: 500
+            font-weight: 400
         }
 
         .link {
@@ -111,7 +111,7 @@
             padding: 15px 95px;
             border: 1px #222222 solid;
             border-radius: 6px;
-            font-weight: 500;
+            font-weight: 400;
             font-size: 30px
         }
 
@@ -771,7 +771,7 @@
         }
 
         .photo__with-comment .right {
-            /*max-width: 500px;*/
+            /*max-width: 400px;*/
         }
 
         .photo__with-comment .h2 {
@@ -847,7 +847,7 @@
 
         h1 {
             font-size: 120px !important;
-            font-weight: 500 !important;
+            font-weight: 400 !important;
             line-height: 132px !important;
             letter-spacing: -0.02em !important;
             text-align: left;
@@ -855,7 +855,7 @@
         }
 
         .mw960 {
-            max-width: 1500px;
+            max-width: 1400px;
         }
 
         .brakes {
@@ -1228,7 +1228,7 @@
 
         .main-page__title {
             font-size: 120px;
-            font-weight: 500;
+            font-weight: 400;
             line-height: 115px;
             letter-spacing: -0.02em;
             text-align: center;
@@ -1426,7 +1426,7 @@
     </div>
 
     <div class="main-page__pre-title">
-        REPORT ON VEHICLE INSPECTION
+        VEHICLE INSPECTION REPORT
     </div>
     <div class="main-page__title">
         {{ $report->brand }} <br>
@@ -1446,14 +1446,17 @@
         @php
 
 
-            $_monthsList = array("-01-" => "Jan", "-02-" => "Feb",
-            "-03-" => "Mar", "-04-" => "Apr", "-05-" => "May", "-06-" => "Jun",
-            "-07-" => "Jul", "-08-" => "Aug", "-09-" => "Sep",
-            "-10-" => "Oct", "-11-" => "Nov", "-12-" => "Dec");
-            $_mD = date("-m-"); // for replacement
 
-            $currentDate =  date_create($report->updated_at)->format('d-m-Y');
-            $currentDate = str_replace($_mD, " ".$_monthsList[$_mD]." ", $currentDate);
+            $_monthsList = array("-01-" => "Jan", "-02-" => "Feb",
+                    "-03-" => "Mar", "-04-" => "Apr", "-05-" => "May", "-06-" => "Jun",
+                    "-07-" => "Jul", "-08-" => "Aug", "-09-" => "Sep",
+                    "-10-" => "Oct", "-11-" => "Nov", "-12-" => "Dec");
+
+            $_mD = date_create( (($report->updated_at  && $report->updated_at != $report->created_at) ? $report->updated_at : $report->created_at))->format('-m-');
+
+
+    $currentDate =  date_create($report->updated_at)->format('d-m-Y');
+    $currentDate = str_replace(" ".$_mD, " ".$_monthsList[$_mD], $currentDate);
         @endphp
         {{$currentDate}}
 
@@ -1508,7 +1511,7 @@
                 <div class="overview__divider left"></div>
                 <div class="overview__equipment left">
                     <div class="equipment__title h3">
-                        Equipment
+                        Features
                     </div>
                     <table class="equipment__grid">
                         @php
@@ -1517,102 +1520,103 @@
                                 return $item;
                             }));
 
-
-$rows = ceil(count($equipmentItems)/4);
+                            $equipmentKeys = array_keys($report->equipment);
+                            $rows = ceil(count($equipmentItems)/4);
 
                          $equipmentIco = [
-                            'tire_pressure_sensor' => '4G',
-                            'adaptive_light' => '6E',
-                            'automatic_high_beam' => '5E',
-                            'tow_hitch' => '5B',
-                            'cruise_control' => '2H',
-                            'parking_assistance_system' => '5E',
-                            'camera' => '1H',
-                            'camera_360' => '6E',
-                            'head_up_display' => '1H',
-                            'hands_free_trunk' => '6A',
-                            'digital_instrument_panel' => '2H',
-                            'keyless_entry' => '4A',
-                            'power_folding_mirrors' => '6E',
-                            'start_stop_system' => '4F',
-                            'leather_interior' => '6G',
-                            'sunroof' => '1C',
-                            'panoramic_roof' => '2G',
-                            'heated_steering_wheel' => '4C',
-                            'third_row_of_seats' => '6G',
-                            'power_seat_adjustment' => '4H',
-                            'seat_position_memory' => '6G',
-                            'heated_seats' => '6G',
-                            'ventilated_seats' => '6G',
-                            'premium_audio_system' => '4D',
-                            'rear_passenger_multimedia' => '4D',
-                            'navigation_system' => '5H',
-                            'android_auto_carplay' => '4D',
-                            'outlet_220V' => '1A',
-                            'seat_massage' => '6G',
-                            'door_closers' => '4A',
-                        ];
-                        $vocabulary = [
-'tire_pressure_sensor' => 'Tire Pressure Sensor',
-'cruise_control' => 'Cruise Control',
-'parking_sensors' => 'Parking Sensors',
-'camera' => 'Camera',
-'start_stop' => 'Start-Stop',
-'leather' => 'Leather Interior',
-'third_seat_rows' => 'Third Row Seats',
-'seats_heating' => 'Heated Seats',
-'multimedia_lcd_screen' => 'Multimedia LCD Screen',
-'adaptive_cruise_control' => 'Adaptive Cruise Control',
-'camera_360' => '360 Camera',
-'keyless_entry' => 'Keyless Entry',
-'sunroof' => 'Sunroof',
-'panoramic_roof' => 'Panoramic Roof',
-'electric_seats' => 'Electric Seats',
-'seats_memory' => 'Seat Memory',
-'steering_wheel_heating' => 'Heated Steering Wheel',
-'seats_ventilation' => 'Seat Ventilation',
-'android_auto_carplay' => 'Android Auto / CarPlay',
-'electric_folding_mirrors' => 'Electric Folding Mirrors',
-'electric_trunk_lid' => 'Electric Trunk Lid',
-'virtual_dashboard' => 'Virtual Dashboard',
-'power_steering' => 'Power Steering',
-'adaptive_lights' => 'Adaptive Lights',
-'automatic_high_beam' => 'Automatic High Beam',
-'autopilot' => 'Autopilot',
-'self_parking' => 'Self-Parking',
-'premium_seats_ventilation' => 'Premium Seat Ventilation',
-'seats_massage' => 'Seat Massage',
-'multimedia_system_rear_passengers' => 'Rear Passenger Multimedia System',
-'premium_audiosystem' => 'Premium Audio System',
-'windshield_projection' => 'Windshield Projection',
-'door_closers' => 'Door Closers',
+    'tire_pressure_sensor' => '4G',
+    'cruise_control' => 'cc',
+    'adaptive_cruise_control' => 'cc',
+    'parking_sensors' => '5E',
+    'camera' => 'cam',
+    'camera_360' => '360',
+    'keyless_entry' => '4A',
+    'sunroof' => '1C',
+    'panoramic_roof' => 'pr',
+    'steering_wheel_heating' => '4C',
+    'third_seat_rows' => '3s',
+    'electric_seats' => 'es',
+    'seats_memory' => 'rs',
+    'seats_heating' => 'hs',
+    'seats_ventilation' => 'sv',
+    'premium_audiosystem' => 'pa',
+    'multimedia_system_rear_passengers' => 'mr',
+    'android_auto_carplay' => 'aa',
+    'seats_massage' => 'ms',
+    'door_closers' => '4A',
+    'adaptive_lights' => 'ab',
+    'automatic_high_beam' => 'ahb',
+    'electric_folding_mirrors' => '6E',
+    'start_stop' => 'pts',
+    'leather' => '6G',
+    'virtual_dashboard' => 'pw',
+    'windshield_projection' => 'pw',
+    'hands_free_trunk_opening' => 'aot',
+    'electric_trunk_lid' => 'aot',
+    'multimedia_lcd_screen' => 'md',
+    'sunroof' => 'hatch',
+    'electric_folding_mirrors' => 'em',
+    'power_steering' => '4H',
+    'self_parking' => '4C',
+    'autopilot' => '4C'
 ];
-
+            $vocabulary = [
+       'tire_pressure_sensor' => 'Tyres pressure monitor system',
+       'cruise_control' => 'Cruise Control',
+       'parking_sensors' => 'Parking Sensors',
+       'camera' => 'Camera',
+       'start_stop' => 'Push-to-start',
+       'leather' => 'Leather Interior',
+       'third_seat_rows' => 'Third row seating',
+       'seats_heating' => 'Seats heating',
+       'multimedia_lcd_screen' => 'Multimedia with LCD screen',
+       'adaptive_cruise_control' => 'Adaptive Cruise Control',
+       'camera_360' => '360 Cameras',
+       'keyless_entry' => 'Keyless Entry',
+       'sunroof' => 'Sunroof',
+       'panoramic_roof' => 'Panoramic Roof',
+       'electric_seats' => 'Power seats',
+       'seats_memory' => 'Seat Memory',
+       'steering_wheel_heating' => 'Steering wheel heating',
+       'seats_ventilation' => 'Seat Ventilation',
+       'android_auto_carplay' => 'CarPlay / Android Auto',
+       'electric_folding_mirrors' => 'Electric Folding Mirrors',
+       'electric_trunk_lid' => 'Electric Trunk Lid',
+       'virtual_dashboard' => 'Virtual Dashboard',
+       'power_steering' => 'Steering column with power adjustment',
+       'adaptive_lights' => 'Adaptive headlights',
+       'automatic_high_beam' => 'Automatic High Beam',
+       'autopilot' => 'Autopilot',
+       'self_parking' => 'Parking pilot',
+       'premium_seats_ventilation' => 'Seat ventilation',
+       'seats_massage' => 'Seat Massage',
+       'multimedia_system_rear_passengers' => 'Multimedia system for rear passengers',
+       'premium_audiosystem' => 'Premium Audio System',
+       'windshield_projection' => 'Head up display',
+       'door_closers' => 'Soft close',
+       ];
                         @endphp
-                        @for($i = 0; $i< $rows; $i++)
-                            <tr>
-                                @for($j = 4*$i; $j < 4*($i+1); $j++)
-                                    @if(array_key_exists($j, $equipmentItems))
 
+                        @for($i = 0; $i < $rows; $i++)
+                            <tr>
+                                @for($j = 4 * $i; $j < 4 * ($i + 1); $j++)
+                                    @if(isset($equipmentKeys[$j]))
                                         @php
-                                            $equipmentItem = $equipmentItems[$j];
-                                            $key = key($equipmentItem);
-                                            $value = current($equipmentItem);
+                                            $key = $equipmentKeys[$j];
                                             $icon = isset($equipmentIco[$key]) ? $equipmentIco[$key] : 'no-icon';
                                         @endphp
 
                                         <td class="equipment__item-2">
-                <span class="">
-                    <img src="{{url('/assets/icons/'.$icon.'.png')}}"/>
-                </span>
+                    <span class="">
+                        <img src="{{url('/assets/icons/'.$icon.'.png')}}"/>
+                    </span>
                                             <span class="">
-                    {{$vocabulary[$key]}}
-                </span>
+                        {{$vocabulary[$key]}}
+                    </span>
                                         </td>
                                     @endif
                                 @endfor
                             </tr>
-
                         @endfor
                     </table>
                 </div>
@@ -1773,19 +1777,21 @@ $rows = ceil(count($equipmentItems)/4);
 
                     <div class="condition__side condition__side-front">
                         @foreach($report->colored as $part => $value)
+                            @isset( $translate[$part] )
                             <div class="condition__value {{ $translate[$part] }}">
                                 @if($value == "5")
                                     <img src="{{url('/assets/1000.png')}}" alt="">
                                 @elseif($value == "4")
                                     <img src="{{url('/assets/800.png') }}" alt="">
                                 @elseif($value == 3)
-                                    <img src="{{url('/assets/500.png') }}" alt="">
+                                    <img src="{{url('/assets/400.png') }}" alt="">
                                 @elseif($value == 2)
                                     <img src="{{url('/assets/300.png') }}" alt="">
                                 @elseif($value == 1)
                                     <img src="{{url('/assets/100.png') }}" alt="">
                                 @endif
                             </div>
+                            @endif
                         @endforeach
                         {{--                        <div class="image-color bonner">--}}
 
@@ -1799,19 +1805,22 @@ $rows = ceil(count($equipmentItems)/4);
                     </div>
                     <div class="condition__side condition__side-back">
                         @foreach($report->colored as $part => $value)
+                            @isset( $translate[$part] )
+
                             <div class="condition__value {{ $translate[$part] }}">
                                 @if($value == "5")
                                     <img src="{{url('/assets/1000.png')}}" alt="">
                                 @elseif($value == "4")
                                     <img src="{{url('/assets/800.png') }}" alt="">
                                 @elseif($value == 3)
-                                    <img src="{{url('/assets/500.png') }}" alt="">
+                                    <img src="{{url('/assets/400.png') }}" alt="">
                                 @elseif($value == 2)
                                     <img src="{{url('/assets/300.png') }}" alt="">
                                 @elseif($value == 1)
                                     <img src="{{url('/assets/100.png') }}" alt="">
                                 @endif
                             </div>
+                            @endif
                         @endforeach
 
                         @if($report->body == 'coupe')
@@ -1831,7 +1840,7 @@ $rows = ceil(count($equipmentItems)/4);
                     <div class="measurement__titles">
                         <div class="titles__item">1000 + μm</div>
                         <div class="titles__item">Up to 800 μm</div>
-                        <div class="titles__item">Up to 500 μm</div>
+                        <div class="titles__item">Up to 400 μm</div>
                         <div class="titles__item">Up to 300 μm</div>
                         <div class="titles__item">100 μm</div>
 
@@ -1850,6 +1859,11 @@ $rows = ceil(count($equipmentItems)/4);
                 <p>
                     {{ $report->comment }}
                 </p>
+                @if($report->comment_computer_diag)
+                    <p>
+                        Computer diagnostics: {{ $report->comment_computer_diag }}
+                    </p>
+                @endif
                 <p>
                     {{ $report->equipmentStatus }}
                 </p>
@@ -1884,7 +1898,7 @@ $rows = ceil(count($equipmentItems)/4);
                     <div class="date__title">
                         @php
                             $currentDate =  date_create( (($report->updated_at  && $report->updated_at != $report->created_at) ? $report->updated_at : $report->created_at))->format('d-m-Y');;
-                            $currentDate = str_replace($_mD, " ".$_monthsList[$_mD]." ", $currentDate);
+                            $currentDate = str_replace(" ".$_mD, " ".$_monthsList[$_mD], $currentDate);
                         @endphp
                         {{$currentDate}}
                     </div>
@@ -1936,7 +1950,7 @@ $rows = ceil(count($equipmentItems)/4);
         {{--        <table>--}}
         {{--            <tr class="photo__line">--}}
         {{--                <td width="65%" class="">--}}
-        {{--                    <img class="big" src="{{ $photos[0]['preview'] }}" alt="slide">--}}
+        {{--                    <img class="big" src="{{ $photos[0]['photo'] }}" alt="slide">--}}
         {{--                </td>--}}
 
         {{--            </tr>--}}
@@ -1946,13 +1960,13 @@ $rows = ceil(count($equipmentItems)/4);
                 <tr class="photo__line">
                     @isset($photos[$i])
                         <td>
-                            <img src="{{ $photos[$i++]['preview'] }}" alt="slide">
+                            <img src="{{ $photos[$i++]['photo'] }}" alt="slide">
                         </td>
                     @endif
                     @isset($photos[$i])
 
                         <td>
-                            <img src="{{ $photos[$i]['preview'] }}" alt="slide">
+                            <img src="{{ $photos[$i]['photo'] }}" alt="slide">
                         </td>
                     @endif
 
@@ -1976,7 +1990,7 @@ $rows = ceil(count($equipmentItems)/4);
 
             <td class="header__qr-text">
                 <div class="header__qr-text">
-                    Отсканируй QR-код, чтобы просмотреть детальный отчет онлайн
+                    Scan the QR code to view the detailed report online
 
                 </div>
             </td>
@@ -2069,15 +2083,20 @@ $rows = ceil(count($equipmentItems)/4);
                             <div class="tires-chars__text">
                                 <div class="tires-chars__box">
 
-                                    @if($report->tire_condition == 'In good condition')
+                                    @if($report->tire_condition && date('Y')-3 <= $report->tyre_year)
                                         <img src="{{url('/assets/ok.png')}}" alt="">
                                     @else
                                         <img src="{{url('/assets/notOk.png')}}" alt="">
                                     @endif
                                 </div>
                                 <div class="tires-chars__text-text">
-
-                                    {{ $report->tire_condition }}
+                                    @if(!$report->tire_condition )
+                                        Poor
+                                    @elseif(date('Y')-3 > $report->tyre_year)
+                                        Test failed
+                                    @else
+                                        Good
+                                    @endif
                                 </div>
 
                             </div>
@@ -2111,9 +2130,9 @@ $rows = ceil(count($equipmentItems)/4);
                     </div>
                 </td>
                 <td class="components__item item" width="847">
-                    @if($report->tyre_preview)
+                    @if($report->tyre_photo)
                         <div class="tires-photo">
-                            <img src="{{ $report->tyre_preview }}" alt="">
+                            <img src="{{ $report->tyre_photo }}" alt="">
                         </div>
                     @endif
                 </td>
@@ -2133,7 +2152,7 @@ $rows = ceil(count($equipmentItems)/4);
                     <div class="date__title">
                         @php
                             $currentDate =  date_create( (($report->updated_at  && $report->updated_at != $report->created_at) ? $report->updated_at : $report->created_at))->format('d-m-Y');;
-                            $currentDate = str_replace($_mD, " ".$_monthsList[$_mD]." ", $currentDate);
+                            $currentDate = str_replace(" ".$_mD, " ".$_monthsList[$_mD], $currentDate);
                         @endphp
                         {{$currentDate}}
                     </div>
@@ -2186,19 +2205,19 @@ $rows = ceil(count($equipmentItems)/4);
             <table>
                 @for($i = 0; $i<count($badParts); $i++)
                     <tr class="photo__line">
-                        @isset($badParts[$i])
+                        @if(isset($badParts[$i]) && isset($badParts[$i]['photo']))
                             <td>
-                                <img src="{{ $badParts[$i]['preview'] }}" alt="slide">
+                                <img src="{{ $badParts[$i]['photo'] }}" alt="slide">
                                 <br>
-                                {{ $badParts[$i]['description'] }}
+                                @isset( $badParts[$i]['description'] ) {{ $badParts[$i]['description'] }}@endif
                             </td>
                         @endif
-                        @if($badParts[$i++] && $i<count($badParts) )
+                        @if($badParts[$i++] && $i<count($badParts) && isset($badParts[$i]['photo']) )
 
                             <td>
-                                <img src="{{ $badParts[$i]['preview'] }}" alt="slide">
+                                <img src="{{ $badParts[$i]['photo'] }}" alt="slide">
                                 <br>
-                                {{ $badParts[$i]['description'] }}
+                                @isset( $badParts[$i]['description'] ) {{ $badParts[$i]['description'] }}@endif
                             </td>
                         @endif
 
@@ -2294,7 +2313,7 @@ $rows = ceil(count($equipmentItems)/4);
                     <div class="date__title">
                         @php
                             $currentDate =  date_create( (($report->updated_at  && $report->updated_at != $report->created_at) ? $report->updated_at : $report->created_at))->format('d-m-Y');;
-                            $currentDate = str_replace($_mD, " ".$_monthsList[$_mD]." ", $currentDate);
+                            $currentDate = str_replace(" ".$_mD, " ".$_monthsList[$_mD], $currentDate);
                         @endphp
                         {{$currentDate}}
                     </div>
