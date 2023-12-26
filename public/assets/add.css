@@ -818,6 +818,12 @@ body {
     gap: 20px;
 }
 
+@media(min-width: 1024px) and (max-width: 1440px){
+    .tyres-multiple__item {
+        width: 100%;
+    }
+}
+
 
 .tyres-multiple__title{
     grid-column: 1/3;
