@@ -140,41 +140,42 @@
 
 
 
-$vocabulary = [
-       'tire_pressure_sensor' => 'Tyres pressure monitor system',
-       'cruise_control' => 'Cruise Control',
-       'parking_sensors' => 'Parking Sensors',
-       'camera' => 'Camera',
-       'start_stop' => 'Push-to-start',
-       'leather' => 'Leather Interior',
-       'third_seat_rows' => 'Third row seating',
-       'seats_heating' => 'Seats heating',
-       'multimedia_lcd_screen' => 'Multimedia with LCD screen',
-       'adaptive_cruise_control' => 'Adaptive Cruise Control',
-       'camera_360' => '360 Cameras',
-       'keyless_entry' => 'Keyless Entry',
-       'sunroof' => 'Sunroof',
-       'panoramic_roof' => 'Panoramic Roof',
-       'electric_seats' => 'Power seats',
-       'seats_memory' => 'Seat Memory',
-       'steering_wheel_heating' => 'Steering wheel heating',
-       'seats_ventilation' => 'Seat Ventilation',
-       'android_auto_carplay' => 'CarPlay / Android Auto',
-       'electric_folding_mirrors' => 'Electric Folding Mirrors',
-       'electric_trunk_lid' => 'Electric Trunk Lid',
-       'virtual_dashboard' => 'Virtual Dashboard',
-       'power_steering' => 'Steering column with power adjustment',
-       'adaptive_lights' => 'Adaptive headlights',
-       'automatic_high_beam' => 'Automatic High Beam',
-       'autopilot' => 'Autopilot',
-       'self_parking' => 'Parking pilot',
-       'premium_seats_ventilation' => 'Seat ventilation',
-       'seats_massage' => 'Seat Massage',
-       'multimedia_system_rear_passengers' => 'Multimedia system for rear passengers',
-       'premium_audiosystem' => 'Premium Audio System',
-       'windshield_projection' => 'Head up display',
-       'door_closers' => 'Soft close',
-       ];
+    $vocabulary = [
+        'tire_pressure_sensor' => 'Tyre Pressure Sensor',
+        'cruise_control' => 'Cruise Control',
+        'parking_sensors' => 'Parking Sensors',
+        'camera' => 'Camera',
+        'start_stop' => 'Engine Start Button',
+        'leather' => 'Leather Interior',
+        'third_seat_rows' => 'Third Row Seating',
+        'seats_heating' => 'Seats Heating',
+        'multimedia_lcd_screen' => 'Multimedia With LCD Screen',
+        'adaptive_cruise_control' => 'Adaptive Cruise Control',
+        'camera_360' => '360 Cameras',
+        'keyless_entry' => 'Keyless Entry',
+        'sunroof' => 'Sunroof',
+        'panoramic_roof' => 'Panoramic Roof',
+        'electric_seats' => 'Power Seats',
+        'seats_memory' => 'Seat Memory',
+        'steering_wheel_heating' => 'Steering Wheel Heating',
+        'seats_ventilation' => 'Seat Ventilation',
+        'android_auto_carplay' => 'CarPlay / Android Auto',
+        'electric_folding_mirrors' => 'Electric Folding Mirrors',
+        'electric_trunk_lid' => 'Electric Trunk Lid',
+        'virtual_dashboard' => 'Virtual Dashboard',
+        'power_steering' => 'Steering Column With Power Adjustment',
+        'adaptive_lights' => 'Adaptive Headlights',
+        'automatic_high_beam' => 'Automatic High Beam',
+        'autopilot' => 'Autopilot',
+        'self_parking' => 'Self Parking System',
+        'premium_seats_ventilation' => 'Seat Ventilation',
+        'seats_massage' => 'Seat Massage',
+        'multimedia_system_rear_passengers' => 'Multimedia System For Rear Passengers',
+        'premium_audiosystem' => 'Premium Audio System',
+        'windshield_projection' => 'Head Up Display',
+        'door_closers' => 'Soft Close',
+    ];
+
                     @endphp
 
                     @foreach($report->equipment as $key => $value)
@@ -261,7 +262,8 @@ $vocabulary = [
                     Warranty
                 </div>
                 <div class="technical__value">
-                    {{ $report->guarantee_check ? 'Until ' . ($report->guarantee_mileage ? $report->guarantee_mileage . ' / ' : '') . ($report->guarantee_month ? $report->guarantee_month . ' / ' : ' ')  .$report->guarantee_year : 'No' }}
+                    <!-- {{ $report->guarantee_check ? 'Until ' . ($report->guarantee_mileage ? $report->guarantee_mileage . ' / ' : '') . ($report->guarantee_month ? $report->guarantee_month . ' / ' : ' ')  .$report->guarantee_year : 'No' }} -->
+                    {{ $report->guarantee_check ? 'Until ' . ($report->guarantee_mileage ? $report->guarantee_mileage . ' km / ' : '') .  ($report->guarantee_month ? $report->guarantee_month . ' / ' : ' ') .  $report->guarantee_year : 'No' }}
                 </div>
             </div>
             <div class="technical__item technical__item--vin">
@@ -794,25 +796,26 @@ $vocabulary = [
             );
 
         $name_voc = [
-    'bumper_front' => 'Front bumper',
-    'front_left_rack' => 'Front left rack',
-    'fenderfrontright' => 'Fender front right',
-    'hood' => 'Hood',
-    'front_right_rack' => 'Front right rack',
-    'doorfrontright' => 'Door front right',
-    'middle_right_rack' => 'Middle right rack',
-    'doorbackright' => 'Door rear right',
-    'back_right_rack' => 'Rear right rack',
-    'fenderbackright' => 'Fender rear right',
-    'hoodback' => 'Rear Bumper',
-    'trunk' => 'Trunk',
-    'roof' => 'Roof',
-    'fenderfrontleft' => 'Fender front left',
-    'doorfrontleft' => 'Door front left',
-    'doorbackleft' => 'Door rear left',
-    'middle_left_rack' => 'Middle left rack',
-    'back_left_rack' => 'Rear left rack',
-    'fenderbackleft' => 'Fender rear left',
+        'bumper_front' => 'Front Bumper',
+        'front_left_rack' => 'Front Left Pillar',
+        'fenderfrontright' => 'Front Right Fender',
+        'hood' => 'Hood',
+        'front_right_rack' => 'Front Right Pillar',
+        'doorfrontright' => 'Front Right Door',
+        'middle_right_rack' => 'Middle Right Pillar',
+        'doorbackright' => 'Rear Right Door',
+        'back_right_rack' => 'Rear Right Pillar',
+        'fenderbackright' => 'Rear Right Fender',
+        'hoodback' => 'Rear Bumper',
+        'trunk' => 'Trunk Lid',
+        'roof' => 'Roof',
+        'fenderfrontleft' => 'Front Left Fender',
+        'doorfrontleft' => 'Front Left Door',
+        'doorbackleft' => 'Rear Left Door',
+        'middle_left_rack' => 'Middle Left Pillar',
+        'back_left_rack' => 'Rear Left Pillar',
+        'fenderbackleft' => 'Rear Left Fender',
+
 ];
 
         @endphp
