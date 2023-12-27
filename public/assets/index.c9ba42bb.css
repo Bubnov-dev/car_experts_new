@@ -9,6 +9,7 @@ body {
     body {
         font-size: 14px
     }
+
 }
 
 * {
@@ -29,6 +30,11 @@ section {
     section {
         padding-top: 40px
     }
+
+    section.overview {
+        padding-top: 20px;
+    }
+
 }
 
 .container {
@@ -452,7 +458,7 @@ h3, .h3 {
     .overview__equipment .equipment__title {
         font-size: 30px;
         margin-bottom: 20px;
-        margin-top: 60px;
+        margin-top: 10px;
         text-transform: unset;
         font-weight: 500;
     }
@@ -618,7 +624,7 @@ h3, .h3 {
 
 @media screen and (max-width: 1024px) {
     .condition__content {
-        margin: 0 auto 70px;
+        margin: 0 auto 40px;
         /*    display: grid;*/
         /*    grid-template-columns:66% 24%;*/
         /*    gap: 30px*/

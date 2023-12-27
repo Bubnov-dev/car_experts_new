@@ -384,7 +384,7 @@ img {
 
 @media (max-width: 568px) {
     .report {
-        margin-top: 40px;
+        margin-top: 10px;
         padding-bottom: 30px;
 
     }

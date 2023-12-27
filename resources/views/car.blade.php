@@ -609,20 +609,26 @@
 
                             @endif
                     </div>
+                    @php
+
+                        $photos = array_map(function ($tire) {
+                            return isset($tire['photo']) ? $tire['photo'] : null;
+                        }, $report->tires);
+                        // Filtering out null values if some tires do not have a photo
+                        $photos = array_filter($photos);
+                        if(isset($report->tyre_preview) && $report->tyre_preview){
+                            $photos[] = $report->tyre_preview;
+                        }
+
+
+                    @endphp
+                    @if (count($photos))
                     <div class="tires-images">
-                    @foreach($report->tires as $tire)
-                        <!-- TIRE -->
-                            @if(isset($tire['photo']) && $tire['photo'])
-                                <img src="{{ $tire['photo'] }}" alt="">
-                            @endif
+                        @foreach($photos as $tire)
+                            <img src="{{ $tire }}" alt="">
                         @endforeach
-                    <!-- TIRE main -->
-                        @if(isset($report->tyre_preview) && $report->tyre_preview)
-
-                            <img src="{{ $report->tyre_preview }}" alt="">
-                        @endif
-
                     </div>
+                    @endif
                 @endif
 
             </div>
@@ -962,7 +968,14 @@
 <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+<script>
+    $('.footer__btn').on('click', function(){
+        alert('Сейчас начнется загрузка PDF отчета! \n' +
+            '\n' +
+            'Файл содержит фото в высоком разрешении, загрузка может занять до 30 секунд! ⏱')
+    })
 
+</script>
 
 </body>
 </html>

@@ -82,9 +82,3 @@ $(".video-wrapper").on("click", function () {
     var i = $("video").get(0);
     i.play(), $(this).addClass("after-hidden")
 });
-//
-// $('.footer__btn').on('click', function(){
-//     alert('Сейчас начнется загрузка PDF отчета! \n' +
-//         '\n' +
-//         'Файл содержит фото в высоком разрешении, загрузка может занять до 30 секунд! ⏱')
-// })

@@ -602,20 +602,27 @@ $vocabulary = [
 
                         @endif
                     </div>
-                    <div class="tires-images">
-                        @foreach($report->tires as $tire)
-                            <!-- TIRE -->
-                            @if(isset($tire['photo']) && $tire['photo'])
-                                <img src="{{ $tire['photo'] }}" alt="">
-                            @endif
-                        @endforeach
-                        <!-- TIRE main -->
-                        @if(isset($report->tyre_photo) && $report->tyre_photo)
+                    @php
 
-                            <img src="{{ $report->tyre_photo }}" alt="">
-                        @endif
+                        $photos = array_map(function ($tire) {
+                            return isset($tire['photo']) ? $tire['photo'] : null;
+                        }, $report->tires);
+                        // Filtering out null values if some tires do not have a photo
+                        $photos = array_filter($photos);
+                        if(isset($report->tyre_preview) && $report->tyre_preview){
+                            $photos[] = $report->tyre_preview;
+                        }
 
-                    </div>
+
+                    @endphp
+                    @if (count($photos))
+                        <div class="tires-images">
+                            @foreach($photos as $tire)
+                                <img src="{{ $tire }}" alt="">
+                            @endforeach
+                        </div>
+                    @endif
+
                 @endif
             </div>
         </div>
@@ -885,6 +892,14 @@ $vocabulary = [
 <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+<script>
+    $('.footer__btn').on('click', function(){
+        alert('The PDF report is about to start downloading! \n' +
+            '\n' +
+            'The file contains a high-resolution photo, it can take up to 30 seconds to download! ⏱')
+    })
+
+</script>
 
 
 </body>
