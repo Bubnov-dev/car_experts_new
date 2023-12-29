@@ -194,7 +194,18 @@ class ReportController extends Controller
                     ];
                     $reportToUpdate->setAttribute($field, $trarr[$report->$field]);
 
-                } else {
+                } else if ($field == 'drive'){
+                    $trarr = [
+                        'All' => 'Полный',
+                        'Front' => 'Передний',
+                        'Rear' => 'Задний',
+                        'Полный' => 'All',
+                        'Передний' => 'Front',
+                        'Задний' => 'Rear'
+                    ];
+                    $reportToUpdate->setAttribute($field, $trarr[$report->$field]);
+                } else
+                {
 
                     $reportToUpdate->setAttribute($field, $this->translate($report->$field,
                         $sourceLang, $targetLang));
