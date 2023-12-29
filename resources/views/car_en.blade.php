@@ -141,10 +141,10 @@
 
 
     $vocabulary = [
-        'tire_pressure_sensor' => 'Tyre Pressure Sensor',
+        'tire_pressure_sensor' => 'Tyre Pressure Monitoring System',
         'cruise_control' => 'Cruise Control',
         'parking_sensors' => 'Parking Sensors',
-        'camera' => 'Camera',
+        'camera' => 'Rear View Camera',
         'start_stop' => 'Engine Start Button',
         'leather' => 'Leather Interior',
         'third_seat_rows' => 'Third Row Seating',
@@ -156,20 +156,20 @@
         'sunroof' => 'Sunroof',
         'panoramic_roof' => 'Panoramic Roof',
         'electric_seats' => 'Power Seats',
-        'seats_memory' => 'Seat Memory',
+        'seats_memory' => 'Seats Memory',
         'steering_wheel_heating' => 'Steering Wheel Heating',
-        'seats_ventilation' => 'Seat Ventilation',
+        'seats_ventilation' => 'Seats Ventilation',
         'android_auto_carplay' => 'CarPlay / Android Auto',
-        'electric_folding_mirrors' => 'Electric Folding Mirrors',
-        'electric_trunk_lid' => 'Electric Trunk Lid',
+        'electric_folding_mirrors' => 'Power Folding Mirrors',
+        'electric_trunk_lid' => 'Power Trunk Lid',
         'virtual_dashboard' => 'Virtual Dashboard',
         'power_steering' => 'Steering Column With Power Adjustment',
         'adaptive_lights' => 'Adaptive Headlights',
         'automatic_high_beam' => 'Automatic High Beam',
         'autopilot' => 'Autopilot',
         'self_parking' => 'Self Parking System',
-        'premium_seats_ventilation' => 'Seat Ventilation',
-        'seats_massage' => 'Seat Massage',
+        'premium_seats_ventilation' => 'Seats Ventilation',
+        'seats_massage' => 'Seats Massage',
         'multimedia_system_rear_passengers' => 'Multimedia System For Rear Passengers',
         'premium_audiosystem' => 'Premium Audio System',
         'windshield_projection' => 'Head Up Display',
@@ -263,7 +263,7 @@
                 </div>
                 <div class="technical__value">
                     <!-- {{ $report->guarantee_check ? 'Until ' . ($report->guarantee_mileage ? $report->guarantee_mileage . ' / ' : '') . ($report->guarantee_month ? $report->guarantee_month . ' / ' : ' ')  .$report->guarantee_year : 'No' }} -->
-                    {{ $report->guarantee_check ? 'Until ' . ($report->guarantee_mileage ? $report->guarantee_mileage . ' km / ' : '') .  ($report->guarantee_month ? $report->guarantee_month . ' / ' : ' ') .  $report->guarantee_year : 'No' }}
+                    {{ $report->guarantee_check ? 'Until ' . ($report->guarantee_mileage ? $report->guarantee_mileage . ' km or ' : '') .  ($report->guarantee_month ? $report->guarantee_month . ' / ' : ' ') .  $report->guarantee_year : 'No' }}
                 </div>
             </div>
             <div class="technical__item technical__item--vin">

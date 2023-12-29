@@ -142,7 +142,7 @@
        'tire_pressure_sensor' => 'Датчик давления в шинах',
        'cruise_control' => 'Круиз-контроль',
        'parking_sensors' => 'Парктроники',
-       'camera' => 'Камера',
+       'camera' => 'Камера заднего вида',
        'start_stop' => 'Кнопка «Start engine»',
        'leather' => 'Кожаный салон',
        'third_seat_rows' => 'Третий ряд сидений',
@@ -167,7 +167,7 @@
        'autopilot' => 'Автопилот',
        'self_parking' => 'Автоматическая парковка',
        'premium_seats_ventilation' => 'Вентиляция сидений',
-       'seats_massage' => 'Массаж сидений',
+       'seats_massage' => 'Сиденья с массажем',
        'multimedia_system_rear_passengers' => 'Мультимедийная система для задних пассажиров',
        'premium_audiosystem' => 'Премиум аудиосистема',
        'windshield_projection' => 'Проекция на лобовое стекло',
@@ -264,7 +264,7 @@
                     Гарантия
                 </div>
                 <div class="technical__value">
-                    {{ $report->guarantee_check ? 'До ' . ($report->guarantee_mileage ? $report->guarantee_mileage . ' / ' : '') . ($report->guarantee_month ? $report->guarantee_month . ' / ' : ' ')  .$report->guarantee_year : 'Нет' }}
+                    {{ $report->guarantee_check ? 'До ' . ($report->guarantee_mileage ? $report->guarantee_mileage . ' Км  или' : '') . ($report->guarantee_month ? $report->guarantee_month . ' / ' : ' ')  .$report->guarantee_year : 'Нет' }}
                 </div>
             </div>
             <div class="technical__item technical__item--vin">
